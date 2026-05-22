@@ -25,7 +25,74 @@
     --glow-pink: rgba(255, 77, 255, 0.25);
     --glow-orange: rgba(255, 122, 41, 0.25);
 }
+/* AURA NEON DO LOGO */
+.footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: var(--text-main);
+    position: relative;
 
+    text-shadow:
+        0 0 12px var(--neon-blue),
+        0 0 22px var(--neon-pink),
+        0 0 32px var(--neon-orange);
+    
+    animation: logoPulse 6s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+    0% {
+        text-shadow:
+            0 0 12px var(--neon-blue),
+            0 0 22px var(--neon-pink),
+            0 0 32px var(--neon-orange);
+    }
+    50% {
+        text-shadow:
+            0 0 18px var(--neon-blue),
+            0 0 28px var(--neon-pink),
+            0 0 42px var(--neon-orange);
+    }
+    100% {
+        text-shadow:
+            0 0 12px var(--neon-blue),
+            0 0 22px var(--neon-pink),
+            0 0 32px var(--neon-orange);
+    }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* FUNDO HIPNÓTICO NEON */
+body {
+    background: radial-gradient(circle at center,
+        rgba(0, 200, 255, 0.12),
+        rgba(255, 77, 255, 0.08),
+        rgba(255, 122, 41, 0.05),
+        #000000 70%
+    );
+    background-size: 200% 200%;
+    animation: pulseBG 18s ease-in-out infinite;
+}
+
+@keyframes pulseBG {
+    0% { background-position: 50% 50%; }
+    50% { background-position: 48% 52%; }
+    100% { background-position: 50% 50%; }
+}
 
 
 html { scroll-behavior: smooth; }
@@ -805,6 +872,17 @@ footer {
 </style>
 </head>
 <body>
+<!-- CURSOR CINEMATOGRÁFICO -->
+<div class="cursor-light" id="cursorLight"></div>
+
+<script>
+document.addEventListener("mousemove", (e) => {
+    const light = document.getElementById("cursorLight");
+    light.style.opacity = 1;
+    light.style.left = e.clientX + "px";
+    light.style.top = e.clientY + "px";
+});
+</script>
 
 <!-- CURSOR -->
 <div id="cursor"></div>
