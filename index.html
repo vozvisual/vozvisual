@@ -4,45 +4,39 @@
   <meta charset="UTF-8">
   <title>Voz Visual — Galeria Viva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     :root {
       --bg-main: #050509;
-      --bg-card: rgba(10, 10, 18, 0.92);
+      --bg-card: rgba(10, 10, 18, 0.75);
       --accent-1: #00c8ff;
       --accent-2: #ff4dff;
       --accent-3: #ff7a29;
       --text-main: #f5f5f7;
       --text-soft: #b3b3c2;
-      --border-soft: rgba(255, 255, 255, 0.08);
+      --border-soft: rgba(255, 255, 255, 0.06);
       --radius-lg: 18px;
       --radius-md: 12px;
-      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.65);
+      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.45);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* FUNDO HIPNÓTICO NEON — VOZ VISUAL */
+    /* FUNDO HIPNÓTICO */
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      font-family: system-ui, sans-serif;
       color: var(--text-main);
-      line-height: 1.75;
-      min-height: 100vh;
-      overflow-x: hidden;
       background: radial-gradient(circle at center,
-        rgba(0, 200, 255, 0.22),
-        rgba(255, 77, 255, 0.18),
-        rgba(255, 122, 41, 0.16),
+        rgba(0,200,255,0.22),
+        rgba(255,77,255,0.18),
+        rgba(255,122,41,0.16),
         #050509
       );
       background-size: 200% 200%;
       animation: pulseBG 18s ease-in-out infinite;
       padding: 32px 16px 64px;
+      min-height: 100vh;
     }
 
     @keyframes pulseBG {
@@ -51,296 +45,224 @@
       100% { background-position: 50% 0%; }
     }
 
-    /* Grain overlay */
     body::before {
-      content: '';
+      content: "";
       position: fixed; inset: 0; z-index: -1;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: .7;
       pointer-events: none;
-      opacity: 0.7;
     }
 
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1120px; margin: 0 auto; }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 32px;
     }
 
     .logo {
       font-size: 20px;
-      letter-spacing: 0.18em;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--text-main);
     }
 
     nav a {
+      margin-left: 18px;
       color: var(--text-soft);
       text-decoration: none;
-      margin-left: 18px;
       font-size: 14px;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
     }
 
-    nav a:hover {
-      color: var(--accent-1);
+    nav a:hover { color: var(--accent-1); }
+
+    /* VIDEO HERO */
+    .video-hero {
+      width: 100%;
+      height: 60vh;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 32px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow-soft);
     }
 
+    .video-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.85) contrast(1.1);
+    }
+
+    /* HERO */
     .hero {
       margin-bottom: 32px;
-      padding: 24px 20px;
+      padding: 32px 28px;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
       background: radial-gradient(circle at top left,
-        rgba(0, 200, 255, 0.12),
-        rgba(255, 77, 255, 0.08),
-        rgba(5, 5, 9, 0.96)
+        rgba(0,200,255,0.12),
+        rgba(255,77,255,0.08),
+        rgba(5,5,9,0.96)
       );
       box-shadow: var(--shadow-soft);
     }
 
     .hero-kicker {
       font-size: 13px;
-      letter-spacing: 0.22em;
+      letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--accent-1);
       margin-bottom: 8px;
     }
 
-    .hero-title {
-      font-size: 32px;
-      max-width: 520px;
-      margin-bottom: 12px;
-    }
+    .hero-title { font-size: 32px; max-width: 520px; margin-bottom: 12px; }
+    .hero-sub { max-width: 620px; color: var(--text-soft); margin-bottom: 18px; }
 
-    .hero-sub {
-      max-width: 620px;
-      color: var(--text-soft);
-      font-size: 15px;
-      margin-bottom: 18px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
     .btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 0.18s ease-out;
+      transition: .18s;
     }
 
     .btn-primary {
       background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
       color: #050509;
-      border-color: transparent;
+      border: none;
     }
 
-    .btn-primary:hover {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
     .btn-ghost {
-      color: var(--text-main);
-      background: rgba(5, 5, 9, 0.7);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent-1);
-      color: var(--accent-1);
-    }
-
-    .metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    .metric {
-      min-width: 90px;
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 18px;
+      background: rgba(5,5,9,0.7);
       color: var(--text-main);
     }
 
+    .btn-ghost:hover { color: var(--accent-1); border-color: var(--accent-1); }
+
+    .metrics { display: flex; gap: 16px; margin-top: 16px; }
+    .metric strong { font-size: 18px; display: block; }
+
+    /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 20px;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
       margin-top: 28px;
     }
 
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media(max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
+    /* CARD */
     .card {
       background: var(--bg-card);
+      backdrop-filter: blur(12px);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
       padding: 18px 16px;
       box-shadow: var(--shadow-soft);
     }
 
-    .card h2 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      font-size: 14px;
-      color: var(--text-soft);
-      margin-bottom: 12px;
-    }
+    .card h2 { margin-bottom: 8px; }
+    .card p { color: var(--text-soft); margin-bottom: 12px; }
 
     textarea, input {
       width: 100%;
-      background: rgba(5, 5, 12, 0.9);
+      background: rgba(5,5,12,0.9);
       border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.08);
       color: var(--text-main);
       padding: 10px 12px;
-      font-size: 14px;
-      resize: vertical;
-      outline: none;
+      margin-bottom: 10px;
     }
 
     textarea:focus, input:focus {
       border-color: var(--accent-1);
-      box-shadow: 0 0 0 1px rgba(0, 200, 255, 0.35);
+      box-shadow: 0 0 0 1px rgba(0,200,255,0.35);
     }
 
     .field-label {
       font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: .16em;
       color: var(--text-soft);
       margin-bottom: 6px;
     }
 
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
 
+    /* CHAT */
     .chat-window {
-      background: rgba(5, 5, 12, 0.9);
+      background: rgba(5,5,12,0.9);
       border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.08);
       padding: 10px;
       height: 260px;
       overflow-y: auto;
       font-size: 13px;
     }
 
-    .msg {
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
+    .msg { margin-bottom: 8px; }
+    .msg.user { color: var(--accent-1); }
+    .msg.ia { color: var(--text-main); }
 
-    .msg.user {
-      color: var(--accent-1);
-    }
-
-    .msg.ia {
-      color: var(--text-main);
-    }
-
+    /* GALERIA */
     .gallery-preview {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3,1fr);
       gap: 8px;
       margin-top: 10px;
     }
 
     .gallery-item {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 4/5;
       border-radius: 12px;
-      background: radial-gradient(circle at top,
-        rgba(0, 200, 255, 0.16),
-        rgba(255, 77, 255, 0.12),
-        rgba(5, 5, 9, 1)
-      );
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      overflow: hidden;
+      background: rgba(10,10,18,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
       color: var(--text-soft);
-      text-align: center;
       padding: 6px;
+      text-align: center;
     }
 
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .tagline {
-      font-size: 12px;
-      color: var(--text-soft);
-      margin-top: 6px;
-    }
-
-    .audio-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 8px;
-      font-size: 13px;
-    }
-
+    /* ÁUDIO */
+    .audio-list { display: flex; flex-direction: column; gap: 12px; }
     .audio-item {
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(5, 5, 12, 0.9);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      background: rgba(10,10,18,0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     footer {
       margin-top: 32px;
+      text-align: center;
       font-size: 11px;
       color: var(--text-soft);
-      text-align: center;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
     <header>
       <div class="logo">VOZ VISUAL</div>
       <nav>
@@ -352,6 +274,14 @@
       </nav>
     </header>
 
+    <!-- VIDEO HERO -->
+    <section class="video-hero">
+      <video autoplay muted loop playsinline class="video-bg">
+        <source src="SEU_VIDEO_AQUI.mp4" type="video/mp4">
+      </video>
+    </section>
+
+    <!-- HERO -->
     <section class="hero">
       <div class="hero-kicker">Cinema ◆ Arte por IA ◆ Filosofia Visual</div>
       <h1 class="hero-title">Algumas emoções não têm palavras. Têm imagens.</h1>
@@ -365,121 +295,174 @@
       </div>
 
       <div class="metrics">
-        <div class="metric">
-          <strong>12K+</strong>
-          Inscritos
-        </div>
-        <div class="metric">
-          <strong>848</strong>
-          Artes publicadas
-        </div>
-        <div class="metric">
-          <strong>96%</strong>
-          Satisfação
-        </div>
-        <div class="metric">
-          <strong>4</strong>
-          Cursos ativos
-        </div>
+        <div class="metric"><strong>12K+</strong>Inscritos</div>
+        <div class="metric"><strong>848</strong>Artes publicadas</div>
+        <div class="metric"><strong>96%</strong>Satisfação</div>
+        <div class="metric"><strong>4</strong>Cursos ativos</div>
       </div>
     </section>
 
+    <!-- GRID 1 -->
     <section class="grid">
-      <!-- GERADOR DE PROMPT VOZ VISUAL -->
+
+      <!-- GERADOR DE PROMPT -->
       <div class="card" id="prompt">
         <h2>Gerador de Prompt — Voz Visual</h2>
-        <p>Descreva o sentimento, o clima, o enquadramento. A IA te ajuda a transformar isso em um prompt cinematográfico.</p>
+        <p>Descreva o sentimento, o clima, o enquadramento.</p>
 
         <div class="stack">
           <div>
             <div class="field-label">Sentimento / atmosfera</div>
-            <input id="feeling" placeholder="Ex.: melancolia luminosa, silêncio depois da tempestade">
+            <input id="feeling" placeholder="Ex.: melancolia luminosa">
           </div>
+
           <div>
             <div class="field-label">Elementos visuais</div>
-            <input id="visual" placeholder="Ex.: janela embaçada, cidade à noite, reflexos em neon">
+            <input id="visual" placeholder="Ex.: janela embaçada, neon">
           </div>
+
           <div>
             <div class="field-label">Estilo / referência</div>
-            <input id="style" placeholder="Ex.: cinema asiático, Tarkovski, cyberpunk suave">
+            <input id="style" placeholder="Ex.: Tarkovski, cinema asiático">
           </div>
-          <button class="btn btn-primary" id="btn-build-prompt" type="button">
-            Gerar prompt cinematográfico
-          </button>
+
+          <button class="btn btn-primary" id="btn-build-prompt">Gerar prompt</button>
+
           <div>
             <div class="field-label">Prompt final</div>
-            <textarea id="final-prompt" rows="4" placeholder="O prompt gerado aparece aqui..."></textarea>
+            <textarea id="final-prompt" rows="4"></textarea>
           </div>
         </div>
       </div>
 
-      <!-- CHAT TIPO GROK -->
+      <!-- CHAT -->
       <div class="card" id="chat">
-        <h2>Chat Voz Visual (tipo Grok)</h2>
-        <p>Converse com a IA sobre estética, narrativa visual, composição e filosofia da imagem.</p>
+        <h2>Chat Voz Visual</h2>
+        <p>Converse com a IA sobre estética e narrativa visual.</p>
 
         <div class="stack">
           <div class="chat-window" id="chat-window">
-            <div class="msg ia">Bem-vindo ao Voz Visual. O que você quer transformar em imagem hoje?</div>
+            <div class="msg ia">Bem-vindo ao Voz Visual. O que você quer criar hoje?</div>
           </div>
+
           <form id="chat-form">
             <div class="field-label">Sua pergunta</div>
-            <input id="chat-input" placeholder="Pergunte sobre uma cena, um conceito, um frame que você sente...">
+            <input id="chat-input" placeholder="Pergunte algo...">
           </form>
         </div>
       </div>
+
     </section>
 
+    <!-- GRID 2 -->
     <section class="grid" style="margin-top: 24px;">
-      <!-- GERADOR DE IMAGEM (FRONTEND) -->
+
+      <!-- GERADOR DE IMAGEM -->
       <div class="card" id="imagem">
-        <h2>Gerar Imagem — Galeria Viva</h2>
-        <p>Use o prompt cinematográfico para gerar uma imagem que pode ir direto para a Galeria Viva.</p>
+        <h2>Gerar Imagem</h2>
+        <p>Use o prompt cinematográfico para gerar uma imagem.</p>
 
         <div class="stack">
-          <div>
-            <div class="field-label">Prompt para a IA de imagem</div>
-            <textarea id="img-prompt" rows="4" placeholder="Cole aqui o prompt gerado ou escreva o seu..."></textarea>
-          </div>
-          <button class="btn btn-primary" id="btn-generate-img" type="button">
-            Gerar imagem
-          </button>
+          <textarea id="img-prompt" rows="4" placeholder="Cole o prompt aqui..."></textarea>
+
+          <button class="btn btn-primary" id="btn-generate-img">Gerar imagem</button>
+
           <div id="img-result" class="tagline">
-            A prévia da imagem gerada aparece aqui (quando você conectar a API).
+            A prévia aparecerá aqui quando você conectar a API.
           </div>
-          <button class="btn btn-ghost" id="btn-publicar" type="button">
-            Publicar na Galeria Viva
-          </button>
+
+          <button class="btn btn-ghost" id="btn-publicar">Publicar na Galeria Viva</button>
         </div>
       </div>
 
       <!-- GALERIA VIVA -->
       <div class="card" id="galeria">
-        <h2>Galeria Viva — Últimas criações</h2>
-        <p>Quando você conectar o backend, as imagens geradas pelos membros aparecem aqui em tempo real.</p>
+        <h2>Galeria Viva</h2>
+        <p>As imagens publicadas aparecem aqui.</p>
 
         <div class="gallery-preview" id="galeria-viva">
-          <div class="gallery-item">As imagens publicadas aparecerão aqui.</div>
-          <div class="gallery-item">Cada peça é um fragmento de sentimento.</div>
-          <div class="gallery-item">Voz Visual como rede viva de imagens.</div>
+          <div class="gallery-item">Aguardando imagens...</div>
+          <div class="gallery-item">Voz Visual em movimento.</div>
+          <div class="gallery-item">Criações da comunidade.</div>
         </div>
-        <p class="tagline">Cada imagem é um fragmento de sentimento traduzido em luz.</p>
       </div>
+
     </section>
 
+    <!-- GRID 3 -->
     <section class="grid" style="margin-top: 24px;">
+
       <!-- GALERIA DE ÁUDIO -->
       <div class="card" id="audio">
         <h2>Galeria de Áudio</h2>
-        <p>Espaço para paisagens sonoras, narrações, trilhas e experimentos sonoros da comunidade Voz Visual.</p>
+        <p>Ouça e baixe trilhas e paisagens sonoras.</p>
 
-        <div class="stack">
-          <div>
-            <div class="field-label">Título do áudio</div>
-            <input id="audio-title" placeholder="Ex.: Chuva sobre neon, Voz Visual #01">
+        <div class="audio-list" id="audio-list">
+          <div class="audio-item">
+            <strong>Exemplo de Áudio</strong>
+            <audio controls>
+              <source src="audio/exemplo.mp3" type="audio/mpeg">
+            </audio>
+            <a class="btn btn-ghost" href="audio/exemplo.mp3" download>Baixar</a>
           </div>
-          <div>
-            <div class="field-label">Descrição</div>
-            <textarea id="audio-desc" rows="3" placeholder="Descreva o clima, a intenção, a cena sonora..."></textarea>
-          </div>
-          <button class="btn btn-primary" id="btn-publicar-audio" type
+        </div>
+      </div>
+
+      <!-- COMUNIDADE -->
+      <div class="card" id="comunidade">
+        <h2>Comunidade Voz Visual</h2>
+        <p>
+          Área para membros, uploads, materiais e mentorias.
+        </p>
+        <p>
+          • Login / membros<br>
+          • Upload de imagens, áudios e vídeos<br>
+          • Loja de cursos e packs<br>
+          • Integração com pagamentos<br>
+          • Conteúdos exclusivos
+        </p>
+      </div>
+
+    </section>
+
+    <footer>
+      Voz Visual — cinema, IA e filosofia visual.
+    </footer>
+
+  </div>
+
+  <script>
+    // GERADOR DE PROMPT
+    const feelingEl = document.getElementById('feeling');
+    const visualEl = document.getElementById('visual');
+    const styleEl = document.getElementById('style');
+    const finalPromptEl = document.getElementById('final-prompt');
+    const btnBuildPrompt = document.getElementById('btn-build-prompt');
+    const imgPromptEl = document.getElementById('img-prompt');
+
+    btnBuildPrompt.addEventListener('click', () => {
+      const f = feelingEl.value.trim();
+      const v = visualEl.value.trim();
+      const s = styleEl.value.trim();
+
+      const prompt =
+        `cinematic still, ${f || 'emoção contida'}, ` +
+        `${v || 'elementos visuais sutis'}, ` +
+        `${s || 'estética voz visual, soft neon, grain, 35mm'}, ` +
+        `philosophical mood, film still`;
+
+      finalPromptEl.value = prompt;
+      imgPromptEl.value = prompt;
+    });
+
+    // CHAT
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatWindow = document.getElementById('chat-window');
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      chatWindow.innerHTML += `<div class="msg
