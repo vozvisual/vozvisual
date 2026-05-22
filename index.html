@@ -1,468 +1,1568 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Voz Visual — Galeria Viva</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOZ VISUAL — Portal Cinematográfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg:         #050505;
+  --bg2:        #0C0C09;
+  --bg3:        #111108;
+  --bg4:        #161610;
+  --surface:    #1A1A12;
+  --gold:       #C8A84B;
+  --gold-dim:   #8B6914;
+  --gold-glow:  rgba(200,168,75,0.12);
+  --gold-line:  rgba(200,168,75,0.25);
+  --gold-line2: rgba(200,168,75,0.08);
+  --cream:      #E2D9CC;
+  --cream-dim:  #A09080;
+  --cream-hint: #605848;
+  --red-warn:   #C84B4B;
+  --green-ok:   #4BC87A;
+  --border:     1px solid var(--gold-line);
+  --border-sub: 1px solid var(--gold-line2);
+  --r:          8px;
+  --r-lg:       14px;
+  --shadow:     0 8px 40px rgba(0,0,0,0.6);
+  --font-disp:  'Cinzel', serif;
+  --font-body:  'Crimson Pro', serif;
+  --font-ui:    'DM Sans', sans-serif;
+}
 
-  <style>
-    :root {
-      --bg-main: #050509;
-      --bg-card: rgba(10, 10, 18, 0.75);
-      --accent-1: #00c8ff;
-      --accent-2: #ff4dff;
-      --accent-3: #ff7a29;
-      --text-main: #f5f5f7;
-      --text-soft: #b3b3c2;
-      --border-soft: rgba(255, 255, 255, 0.06);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.45);
-    }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+}
 
-    /* FUNDO HIPNÓTICO */
-    body {
-      font-family: system-ui, sans-serif;
-      color: var(--text-main);
-      background: radial-gradient(circle at center,
-        rgba(0,200,255,0.22),
-        rgba(255,77,255,0.18),
-        rgba(255,122,41,0.16),
-        #050509
-      );
-      background-size: 200% 200%;
-      animation: pulseBG 18s ease-in-out infinite;
-      padding: 32px 16px 64px;
-      min-height: 100vh;
-    }
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+}
 
-    @keyframes pulseBG {
-      0% { background-position: 50% 0%; }
-      50% { background-position: 50% 100%; }
-      100% { background-position: 50% 0%; }
-    }
+#cursor {
+  position: fixed; z-index: 10000;
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+  mix-blend-mode: screen;
+}
+#cursor.hover { width: 32px; height: 32px; background: var(--gold-glow); }
+#cursor-dot {
+  position: fixed; z-index: 10001;
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
 
-    body::before {
-      content: "";
-      position: fixed; inset: 0; z-index: -1;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      opacity: .7;
-      pointer-events: none;
-    }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
 
-    .container { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-disp); font-weight: 600; color: var(--cream); letter-spacing: 0.06em; line-height: 1.15; }
+h4, h5, label, .label { font-family: var(--font-ui); }
+p { font-family: var(--font-body); color: var(--cream-dim); }
+a { color: var(--gold); text-decoration: none; }
 
-    header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 32px;
-    }
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  flex: 1; max-width: 40px; height: 1px;
+  background: var(--gold-line);
+}
 
-    .logo {
-      font-size: 20px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
+.container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+section { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header h2 { font-size: clamp(28px, 4vw, 42px); margin-top: 16px; }
+.section-header p { font-size: 18px; max-width: 560px; margin: 14px auto 0; }
 
-    nav a {
-      margin-left: 18px;
-      color: var(--text-soft);
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
+.btn {
+  font-family: var(--font-ui);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border: none; border-radius: var(--r);
+  cursor: pointer; transition: all 0.25s ease;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-gold {
+  background: linear-gradient(135deg, #C8A84B 0%, #A08030 50%, #C8A84B 100%);
+  background-size: 200% 100%;
+  color: #050505; padding: 14px 32px;
+}
+.btn-gold:hover { background-position: 100% 0; box-shadow: 0 0 28px rgba(200,168,75,0.3); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  padding: 13px 30px;
+}
+.btn-outline:hover { background: var(--gold-glow); border-color: var(--gold); }
+.btn-ghost {
+  background: transparent; color: var(--cream-dim);
+  border: var(--border-sub); padding: 10px 20px; font-size: 12px;
+}
+.btn-ghost:hover { color: var(--cream); border-color: var(--gold-line); }
+.btn-sm { padding: 8px 18px !important; font-size: 11px !important; }
+.btn-icon {
+  background: var(--bg3); border: var(--border-sub);
+  color: var(--cream-dim); padding: 10px; border-radius: var(--r);
+  font-size: 15px; cursor: pointer; transition: all 0.2s;
+}
+.btn-icon:hover { border-color: var(--gold-line); color: var(--gold); }
 
-    nav a:hover { color: var(--accent-1); }
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+  font-family: var(--font-ui);
+}
+#nav.scrolled {
+  background: rgba(5,5,5,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom-color: var(--gold-line2);
+}
+.nav-logo {
+  font-family: var(--font-disp);
+  font-size: 18px; font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  cursor: pointer;
+}
+.nav-logo span { color: var(--cream); }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-link {
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-dim);
+  padding: 8px 16px; border-radius: 6px;
+  cursor: pointer; transition: all 0.2s;
+  background: none; border: none;
+}
+.nav-link:hover, .nav-link.active { color: var(--gold); background: var(--gold-glow); }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.user-badge {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--cream-dim);
+}
+.avatar-sm {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #050505;
+  font-family: var(--font-ui); cursor: pointer;
+}
+.admin-badge {
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  background: rgba(200,168,75,0.15); color: var(--gold);
+  border: 1px solid var(--gold-line); padding: 2px 8px; border-radius: 20px;
+}
 
-    /* VIDEO HERO */
-    .video-hero {
-      width: 100%;
-      height: 60vh;
-      border-radius: 18px;
-      overflow: hidden;
-      margin-bottom: 32px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow-soft);
-    }
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  margin: 0;
+}
+.ornament {
+  text-align: center;
+  font-family: var(--font-disp);
+  color: var(--gold-dim);
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  padding: 8px 0;
+}
 
-    .video-bg {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(.85) contrast(1.1);
-    }
+.card {
+  background: var(--bg3);
+  border: var(--border);
+  border-radius: var(--r-lg);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover { border-color: rgba(200,168,75,0.4); box-shadow: 0 4px 40px rgba(200,168,75,0.06); }
 
-    /* HERO */
-    .hero {
-      margin-bottom: 32px;
-      padding: 32px 28px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      background: radial-gradient(circle at top left,
-        rgba(0,200,255,0.12),
-        rgba(255,77,255,0.08),
-        rgba(5,5,9,0.96)
-      );
-      box-shadow: var(--shadow-soft);
-    }
+.inp {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid #2a2510;
+  border-radius: var(--r);
+  color: var(--cream);
+  padding: 12px 16px;
+  font-family: var(--font-ui); font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+.inp:focus { border-color: var(--gold-dim); }
+.inp::placeholder { color: var(--cream-hint); }
+textarea.inp { resize: vertical; min-height: 100px; }
+.inp-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+.inp-group label {
+  font-family: var(--font-ui); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-hint);
+}
 
-    .hero-kicker {
-      font-size: 13px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--accent-1);
-      margin-bottom: 8px;
-    }
+.page { display: none; }
+.page.active { display: block; }
 
-    .hero-title { font-size: 32px; max-width: 520px; margin-bottom: 12px; }
-    .hero-sub { max-width: 620px; color: var(--text-soft); margin-bottom: 18px; }
+#page-home { padding-top: 0; }
 
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 65% 40%, rgba(200,168,75,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 20% 60%, rgba(200,168,75,0.02) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg) 0%, #070705 100%);
+}
+.hero-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(90deg, var(--gold-line2) 1px, transparent 1px),
+    linear-gradient(180deg, var(--gold-line2) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 120px 0 80px;
+  max-width: 820px;
+}
+.hero-content .eyebrow { margin-bottom: 28px; justify-content: flex-start; }
+.hero-content .eyebrow::after { display: none; }
+.hero-h1 {
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 700; line-height: 1.08;
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+.hero-h1 em {
+  font-style: italic; font-weight: 300;
+  color: var(--gold);
+}
+.hero-lead {
+  font-size: clamp(17px, 2vw, 21px);
+  color: var(--cream-dim); line-height: 1.7;
+  max-width: 580px; margin-bottom: 44px;
+}
+.hero-cta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 72px; }
+.hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+.stat-item { display: flex; flex-direction: column; gap: 4px; }
+.stat-num {
+  font-family: var(--font-disp); font-size: 28px;
+  font-weight: 600; color: var(--gold); letter-spacing: 0.05em;
+}
+.stat-lbl {
+  font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-hint);
+}
+.hero-visual {
+  position: absolute; right: -60px; top: 50%;
+  transform: translateY(-50%);
+  width: 520px; height: 520px;
+  border: 1px solid var(--gold-line2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0.5;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; inset: 20px;
+  border: 1px solid var(--gold-line2);
+  border-radius: 50%;
+}
+.hero-visual::after {
+  content: '◆';
+  font-family: var(--font-disp); font-size: 60px;
+  color: var(--gold-dim); opacity: 0.4;
+}
 
-    .btn {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 13px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: .18s;
-    }
+/* VIDEO HERO NOVO */
+.video-hero {
+  margin-top: 68px;
+  border-bottom: 1px solid var(--gold-line2);
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(200,168,75,0.08), transparent 70%);
+}
+.video-hero-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 32px 20px;
+}
+.video-frame {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  box-shadow: var(--shadow);
+  background: #000;
+}
+.video-frame video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    .btn-primary {
-      background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
-      color: #050509;
-      border: none;
-    }
+/* YOUTUBE */
+.yt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.yt-card { cursor: pointer; overflow: hidden; }
+.yt-thumb {
+  position: relative; aspect-ratio: 16/9;
+  border-radius: var(--r) var(--r) 0 0; overflow: hidden;
+  background: var(--bg4);
+  display: flex; align-items: center; justify-content: center;
+}
+.yt-thumb-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  filter: brightness(0.6);
+  transition: transform 0.4s ease, filter 0.3s;
+}
+.yt-card:hover .yt-thumb-bg { transform: scale(1.04); filter: brightness(0.75); }
+.yt-play {
+  position: relative; z-index: 1;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(200,168,75,0.85);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #050505;
+  transition: transform 0.2s, background 0.2s;
+  padding-left: 4px;
+}
+.yt-card:hover .yt-play { transform: scale(1.1); background: var(--gold); }
+.yt-duration {
+  position: absolute; bottom: 8px; right: 10px;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+  background: rgba(0,0,0,0.7); color: var(--cream);
+  padding: 2px 6px; border-radius: 4px;
+}
+.yt-info { padding: 16px 18px 18px; }
+.yt-title { font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--cream); line-height: 1.45; margin-bottom: 8px; }
+.yt-meta { font-family: var(--font-ui); font-size: 11px; color: var(--cream-hint); display: flex; gap: 12px; }
 
-    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+/* GALERIA (CSS original) */
+.upload-zone {
+  border: 2px dashed var(--gold-line);
+  border-radius: var(--r);
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+  background: var(--gold-line2);
+}
+.upload-zone:hover, .upload-zone.drag { border-color: var(--gold); background: var(--gold-glow); }
+.upload-zone-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.5; }
+.upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.masonry-grid {
+  columns: 4 240px; gap: 18px;
+}
+.masonry-item {
+  break-inside: avoid; margin-bottom: 18px;
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); overflow: hidden;
+  transition: border-color 0.3s, transform 0.25s;
+  cursor: pointer;
+}
+.masonry-item:hover { border-color: rgba(200,168,75,0.4); transform: translateY(-3px); }
+.masonry-img {
+  width: 100%; display: block;
+  background: var(--bg4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px; opacity: 0.12;
+  transition: opacity 0.3s;
+}
+.masonry-item:hover .masonry-img { opacity: 0.2; }
+.masonry-body { padding: 14px 16px 12px; }
+.masonry-title { font-family: var(--font-disp); font-size: 14px; font-weight: 600; color: var(--cream); margin-bottom: 4px; letter-spacing: 0.04em; }
+.masonry-author { font-family: var(--font-ui); font-size: 11px; color: var(--cream-hint); margin-bottom: 8px; }
+.masonry-prompt { font-size: 13px; font-style: italic; color: var(--cream-hint); line-height: 1.5; margin-bottom: 12px; border-left: 2px solid var(--gold-line); padding-left: 10px; }
+.masonry-actions { display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--gold-line2); padding-top: 10px; margin-top: 4px; }
+.like-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  color: var(--cream-hint); padding: 6px 10px;
+  border-radius: 6px; transition: all 0.2s;
+}
+.like-btn:hover, .like-btn.liked { color: var(--gold); background: var(--gold-glow); }
+.like-btn.liked .like-heart { filter: none; }
+.like-heart { transition: transform 0.15s; }
+.like-btn.liked .like-heart { transform: scale(1.3); }
+.comment-toggle {
+  display: flex; align-items: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-ui); font-size: 12px;
+  color: var(--cream-hint); padding: 6px 10px;
+  border-radius: 6px; transition: all 0.2s;
+}
+.comment-toggle:hover { color: var(--cream); background: rgba(255,255,255,0.04); }
+.comments-section {
+  display: none; border-top: 1px solid var(--gold-line2);
+  padding: 12px 16px; background: var(--bg2);
+}
+.comments-section.open { display: block; }
+.comment-item { font-size: 13px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--gold-line2); }
+.comment-item:last-child { border-bottom: none; margin-bottom: 0; }
+.comment-item strong { color: var(--gold); font-weight: 500; font-family: var(--font-ui); font-size: 12px; }
+.comment-form { display: flex; gap: 8px; margin-top: 10px; }
+.comment-input {
+  flex: 1; background: var(--bg3); border: 1px solid #2a2510;
+  border-radius: 6px; color: var(--cream);
+  padding: 8px 12px; font-size: 13px; font-family: var(--font-ui);
+  outline: none;
+}
+.comment-input:focus { border-color: var(--gold-dim); }
+.comment-send {
+  background: var(--gold-glow); border: var(--border);
+  color: var(--gold); padding: 8px 14px;
+  border-radius: 6px; cursor: pointer; font-size: 13px;
+  transition: all 0.2s;
+}
+.comment-send:hover { background: rgba(200,168,75,0.2); }
 
-    .btn-ghost {
-      background: rgba(5,5,9,0.7);
-      color: var(--text-main);
-    }
+/* ÁUDIO NOVO */
+.audio-section {
+  padding: 80px 0 40px;
+}
+.audio-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 26px;
+}
+.audio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+.audio-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--gold-line2);
+  background: var(--bg2);
+}
+.audio-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--cream);
+}
+.audio-meta {
+  font-size: 11px;
+  color: var(--cream-hint);
+}
+.audio-item audio {
+  width: 100%;
+  margin-top: 4px;
+}
+.audio-actions {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+}
 
-    .btn-ghost:hover { color: var(--accent-1); border-color: var(--accent-1); }
+/* (demais CSS: mentor, ensino, comunidade, admin, toast, footer, animações, responsivo) */
+footer {
+  padding: 48px 0 32px;
+  border-top: 1px solid var(--gold-line2);
+  text-align: center;
+}
+.footer-logo { font-family: var(--font-disp); font-size: 20px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 8px; }
+.footer-tagline { font-size: 14px; color: var(--cream-hint); font-style: italic; margin-bottom: 20px; }
+.footer-copy { font-family: var(--font-ui); font-size: 11px; color: var(--cream-hint); letter-spacing: 0.1em; }
 
-    .metrics { display: flex; gap: 16px; margin-top: 16px; }
-    .metric strong { font-size: 18px; display: block; }
+.fade-in { animation: fadeIn 0.6s ease forwards; }
+.fade-in-up { animation: fadeInUp 0.7s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.35s; opacity: 0; }
+.stagger-4 { animation-delay: 0.5s; opacity: 0; }
+.stagger-5 { animation-delay: 0.65s; opacity: 0; }
 
-    /* GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 32px;
-      margin-top: 28px;
-    }
-
-    @media(max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-
-    /* CARD */
-    .card {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      padding: 18px 16px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .card h2 { margin-bottom: 8px; }
-    .card p { color: var(--text-soft); margin-bottom: 12px; }
-
-    textarea, input {
-      width: 100%;
-      background: rgba(5,5,12,0.9);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--text-main);
-      padding: 10px 12px;
-      margin-bottom: 10px;
-    }
-
-    textarea:focus, input:focus {
-      border-color: var(--accent-1);
-      box-shadow: 0 0 0 1px rgba(0,200,255,0.35);
-    }
-
-    .field-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .16em;
-      color: var(--text-soft);
-      margin-bottom: 6px;
-    }
-
-    .stack { display: flex; flex-direction: column; gap: 10px; }
-
-    /* CHAT */
-    .chat-window {
-      background: rgba(5,5,12,0.9);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px;
-      height: 260px;
-      overflow-y: auto;
-      font-size: 13px;
-    }
-
-    .msg { margin-bottom: 8px; }
-    .msg.user { color: var(--accent-1); }
-    .msg.ia { color: var(--text-main); }
-
-    /* GALERIA */
-    .gallery-preview {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .gallery-item {
-      aspect-ratio: 4/5;
-      border-radius: 12px;
-      background: rgba(10,10,18,0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--text-soft);
-      padding: 6px;
-      text-align: center;
-    }
-
-    /* ÁUDIO */
-    .audio-list { display: flex; flex-direction: column; gap: 12px; }
-    .audio-item {
-      background: rgba(10,10,18,0.6);
-      backdrop-filter: blur(8px);
-      border-radius: 12px;
-      padding: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    footer {
-      margin-top: 32px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-  </style>
+@media (max-width: 900px) {
+  .hero-visual { display: none; }
+  .nav-links { display: none; }
+  .upload-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  section { padding: 72px 0; }
+}
+</style>
 </head>
-
 <body>
-  <div class="container">
 
-    <header>
-      <div class="logo">VOZ VISUAL</div>
-      <nav>
-        <a href="#galeria">Galeria Viva</a>
-        <a href="#chat">Chat</a>
-        <a href="#imagem">Imagem</a>
-        <a href="#audio">Áudio</a>
-        <a href="#comunidade">Comunidade</a>
-      </nav>
-    </header>
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
 
-    <!-- VIDEO HERO -->
-    <section class="video-hero">
-      <video autoplay muted loop playsinline class="video-bg">
-        <source src="SEU_VIDEO_AQUI.mp4" type="video/mp4">
-      </video>
-    </section>
+<div class="toast" id="toast"></div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-kicker">Cinema ◆ Arte por IA ◆ Filosofia Visual</div>
-      <h1 class="hero-title">Algumas emoções não têm palavras. Têm imagens.</h1>
-      <p class="hero-sub">
-        O Voz Visual existe no espaço entre o sentimento e o visível — onde a arte gerada por IA encontra a profundidade filosófica e a estética cinematográfica.
-      </p>
+<nav id="nav">
+  <div class="nav-logo" onclick="navigate('home')">VOZ <span>VISUAL</span></div>
+  <div class="nav-links">
+    <button class="nav-link active" data-page="home" onclick="navigate('home')">Home</button>
+    <button class="nav-link" data-page="galeria" onclick="navigate('galeria')">Galeria</button>
+    <button class="nav-link" data-page="mentor" onclick="navigate('mentor')">Mentor</button>
+    <button class="nav-link" data-page="ensino" onclick="navigate('ensino')">Ensino</button>
+    <button class="nav-link" data-page="comunidade" onclick="navigate('comunidade')">Comunidade</button>
+  </div>
+  <div class="nav-actions" id="nav-actions">
+    <button class="btn btn-outline btn-sm" onclick="navigate('comunidade')">Entrar</button>
+    <button class="btn btn-gold btn-sm" onclick="navigate('comunidade')">◆ Fazer Parte</button>
+  </div>
+</nav>
 
-      <div class="hero-actions">
-        <a href="#comunidade" class="btn btn-primary">Fazer parte da comunidade</a>
-        <a href="#galeria" class="btn btn-ghost">Ver a Galeria Viva</a>
+<div id="page-home" class="page active">
+
+  <!-- VÍDEO NO TOPO -->
+  <section class="video-hero">
+    <div class="video-hero-inner">
+      <div class="eyebrow" style="margin-bottom:14px">Abertura Cinematográfica</div>
+      <div class="video-frame">
+        <video autoplay muted loop playsinline controls>
+          <source src="https://grok.com/imagine/post/7b006c09-e4b7-4ec6-8bb4-8a7d189438e9" type="video/mp4">
+        </video>
       </div>
+    </div>
+  </section>
 
-      <div class="metrics">
-        <div class="metric"><strong>12K+</strong>Inscritos</div>
-        <div class="metric"><strong>848</strong>Artes publicadas</div>
-        <div class="metric"><strong>96%</strong>Satisfação</div>
-        <div class="metric"><strong>4</strong>Cursos ativos</div>
-      </div>
-    </section>
-
-    <!-- GRID 1 -->
-    <section class="grid">
-
-      <!-- GERADOR DE PROMPT -->
-      <div class="card" id="prompt">
-        <h2>Gerador de Prompt — Voz Visual</h2>
-        <p>Descreva o sentimento, o clima, o enquadramento.</p>
-
-        <div class="stack">
-          <div>
-            <div class="field-label">Sentimento / atmosfera</div>
-            <input id="feeling" placeholder="Ex.: melancolia luminosa">
+  <!-- HERO ORIGINAL -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-visual"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow fade-in-up stagger-1">Cinema &nbsp;◆&nbsp; Arte por IA &nbsp;◆&nbsp; Filosofia Visual</div>
+        <h1 class="hero-h1 fade-in-up stagger-2">
+          Algumas emoções<br>
+          não têm palavras.<br>
+          <em>Têm imagens.</em>
+        </h1>
+        <p class="hero-lead fade-in-up stagger-3">
+          O Voz Visual existe no espaço entre o sentimento e o visível —
+          onde a arte gerada por IA encontra a profundidade filosófica e
+          a estética cinematográfica. Aqui, você aprende a traduzir o que
+          carrega dentro em imagens que perturbam, comovem e permanecem.
+        </p>
+        <div class="hero-cta fade-in-up stagger-4">
+          <button class="btn btn-gold" onclick="navigate('comunidade'); switchAuthTab('register')">
+            ◆ Fazer Parte da Comunidade
+          </button>
+          <button class="btn btn-outline" onclick="navigate('galeria')">
+            Ver a Galeria Viva
+          </button>
+        </div>
+        <div class="hero-stats fade-in-up stagger-5">
+          <div class="stat-item">
+            <div class="stat-num">12K+</div>
+            <div class="stat-lbl">Inscritos</div>
           </div>
-
-          <div>
-            <div class="field-label">Elementos visuais</div>
-            <input id="visual" placeholder="Ex.: janela embaçada, neon">
+          <div class="stat-item">
+            <div class="stat-num" id="gallery-count">847</div>
+            <div class="stat-lbl">Artes Publicadas</div>
           </div>
-
-          <div>
-            <div class="field-label">Estilo / referência</div>
-            <input id="style" placeholder="Ex.: Tarkovski, cinema asiático">
+          <div class="stat-item">
+            <div class="stat-num">96%</div>
+            <div class="stat-lbl">Satisfação</div>
           </div>
-
-          <button class="btn btn-primary" id="btn-build-prompt">Gerar prompt</button>
-
-          <div>
-            <div class="field-label">Prompt final</div>
-            <textarea id="final-prompt" rows="4"></textarea>
+          <div class="stat-item">
+            <div class="stat-num">4</div>
+            <div class="stat-lbl">Cursos Ativos</div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- CHAT -->
-      <div class="card" id="chat">
-        <h2>Chat Voz Visual</h2>
-        <p>Converse com a IA sobre estética e narrativa visual.</p>
-
-        <div class="stack">
-          <div class="chat-window" id="chat-window">
-            <div class="msg ia">Bem-vindo ao Voz Visual. O que você quer criar hoje?</div>
-          </div>
-
-          <form id="chat-form">
-            <div class="field-label">Sua pergunta</div>
-            <input id="chat-input" placeholder="Pergunte algo...">
-          </form>
-        </div>
+  <!-- YOUTUBE -->
+  <section>
+    <div class="gold-rule"></div>
+    <div class="ornament" style="padding:20px 0">◆ ◈ ◆</div>
+    <div class="gold-rule"></div>
+    <div style="height:72px"></div>
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <div class="eyebrow" style="justify-content:center">Canal YouTube</div>
+        <h2>Últimos Episódios</h2>
+        <p>Mergulhe nas conversas entre emoção, filosofia e imagem</p>
       </div>
-
-    </section>
-
-    <!-- GRID 2 -->
-    <section class="grid" style="margin-top: 24px;">
-
-      <!-- GERADOR DE IMAGEM -->
-      <div class="card" id="imagem">
-        <h2>Gerar Imagem</h2>
-        <p>Use o prompt cinematográfico para gerar uma imagem.</p>
-
-        <div class="stack">
-          <textarea id="img-prompt" rows="4" placeholder="Cole o prompt aqui..."></textarea>
-
-          <button class="btn btn-primary" id="btn-generate-img">Gerar imagem</button>
-
-          <div id="img-result" class="tagline">
-            A prévia aparecerá aqui quando você conectar a API.
-          </div>
-
-          <button class="btn btn-ghost" id="btn-publicar">Publicar na Galeria Viva</button>
-        </div>
+      <div class="yt-grid" id="yt-grid"></div>
+      <div style="text-align:center;margin-top:40px">
+        <a href="https://youtube.com/@vozvisual" target="_blank" class="btn btn-outline">Ver Todos os Vídeos →</a>
       </div>
+    </div>
+  </section>
 
-      <!-- GALERIA VIVA -->
-      <div class="card" id="galeria">
-        <h2>Galeria Viva</h2>
-        <p>As imagens publicadas aparecem aqui.</p>
-
-        <div class="gallery-preview" id="galeria-viva">
-          <div class="gallery-item">Aguardando imagens...</div>
-          <div class="gallery-item">Voz Visual em movimento.</div>
-          <div class="gallery-item">Criações da comunidade.</div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- GRID 3 -->
-    <section class="grid" style="margin-top: 24px;">
-
-      <!-- GALERIA DE ÁUDIO -->
-      <div class="card" id="audio">
-        <h2>Galeria de Áudio</h2>
-        <p>Ouça e baixe trilhas e paisagens sonoras.</p>
-
-        <div class="audio-list" id="audio-list">
+  <!-- GALERIA DE ÁUDIO (OUVIR + BAIXAR) -->
+  <section class="audio-section" id="audio">
+    <div class="container">
+      <div class="audio-card card">
+        <div class="eyebrow" style="margin-bottom:14px">Galeria de Áudio</div>
+        <h2 style="font-size:clamp(22px,3vw,30px);margin-bottom:10px">Trilhas e paisagens sonoras</h2>
+        <p>Ouça e baixe áudios que expandem o universo do Voz Visual. Apenas ouvir e baixar — nada de gerar.</p>
+        <div class="audio-list">
           <div class="audio-item">
-            <strong>Exemplo de Áudio</strong>
+            <div class="audio-item-header">
+              <span>Exemplo de Áudio — Voz Visual</span>
+              <span class="audio-meta">MP3 • 320kbps</span>
+            </div>
             <audio controls>
               <source src="audio/exemplo.mp3" type="audio/mpeg">
             </audio>
-            <a class="btn btn-ghost" href="audio/exemplo.mp3" download>Baixar</a>
+            <div class="audio-actions">
+              <a class="btn btn-ghost btn-sm" href="audio/exemplo.mp3" download>Baixar arquivo</a>
+            </div>
+          </div>
+          <!-- Você pode duplicar o bloco acima para mais áudios -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- PÁGINAS GALERIA / MENTOR / ENSINO / COMUNIDADE (estrutura original que você já tinha) -->
+<div id="page-galeria" class="page">
+  <section style="padding-top:110px">
+    <div class="container">
+      <div class="gallery-header">
+        <div>
+          <div class="eyebrow">Galeria Viva</div>
+          <h2 style="font-size:clamp(26px,3.4vw,38px);margin-top:14px">Imagens que nasceram de sentimentos</h2>
+          <p id="gallery-count-text" style="margin-top:10px;font-size:15px;color:var(--cream-hint)">0 obras publicadas</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-outline" id="btn-login-prompt" onclick="navigate('comunidade')">Entrar para publicar</button>
+          <button class="btn btn-gold" id="btn-upload-toggle" style="display:none" onclick="toggleUpload()">◆ Publicar nova arte</button>
+        </div>
+      </div>
+
+      <div class="upload-panel" id="upload-panel">
+        <div class="upload-zone" onclick="triggerFileInput()">
+          <div class="upload-zone-icon">⬆</div>
+          <div style="font-family:var(--font-ui);font-size:13px;color:var(--cream)">Clique para enviar uma imagem</div>
+          <div style="font-family:var(--font-ui);font-size:11px;color:var(--cream-hint);margin-top:4px">JPG ou PNG até 10MB</div>
+          <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+        </div>
+        <div class="upload-grid">
+          <div>
+            <div class="inp-group">
+              <label>Título da Obra</label>
+              <input class="inp" id="upload-title" placeholder="Ex: Solidão Neon">
+            </div>
+            <div class="inp-group">
+              <label>Prompt / Descrição</label>
+              <textarea class="inp" id="upload-prompt" placeholder="Descreva o sentimento, a cena, a atmosfera..."></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="inp-group">
+              <label>Assinatura (opcional)</label>
+              <input class="inp" id="upload-author-override" placeholder="Seu nome artístico (se quiser diferente do cadastro)">
+            </div>
+            <div style="border:1px dashed var(--gold-line2);border-radius:var(--r);padding:10px;height:180px;display:flex;align-items:center;justify-content:center">
+              <img id="upload-preview" style="max-width:100%;max-height:100%;display:none" alt="Prévia da imagem">
+              <div id="upload-preview-placeholder" style="font-size:12px;color:var(--cream-hint);text-align:center">A prévia da imagem aparece aqui</div>
+            </div>
+            <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:12px" onclick="publishArt()">◆ Publicar na Galeria Viva</button>
           </div>
         </div>
       </div>
 
-      <!-- COMUNIDADE -->
-      <div class="card" id="comunidade">
-        <h2>Comunidade Voz Visual</h2>
-        <p>
-          Área para membros, uploads, materiais e mentorias.
-        </p>
-        <p>
-          • Login / membros<br>
-          • Upload de imagens, áudios e vídeos<br>
-          • Loja de cursos e packs<br>
-          • Integração com pagamentos<br>
-          • Conteúdos exclusivos
-        </p>
+      <div class="masonry-grid" id="masonry-grid"></div>
+    </div>
+  </section>
+</div>
+
+<div id="page-mentor" class="page">
+  <section style="padding-top:110px">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow" style="justify-content:center">Mentor Filosófico</div>
+        <h2>Converse com o olhar por trás das imagens</h2>
+        <p>Um espaço para transformar emoções em linguagem visual cinematográfica.</p>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <div class="mentor-profile">
+            <div class="mentor-avatar">◆</div>
+            <div class="mentor-name">Mentor Voz Visual</div>
+            <div class="mentor-title">Entidade Cinematográfica</div>
+            <div class="mentor-status">Disponível agora</div>
+            <div class="mentor-desc">
+              Não sou um chatbot comum. Sou um espelho filosófico treinado para traduzir o que você sente em imagens que poderiam existir em um filme.
+            </div>
+          </div>
+          <div class="chat-prompts">
+            <h4>Comece por aqui</h4>
+            <button class="prompt-chip" onclick="setPrompt('Quero transformar uma sensação de vazio em uma imagem cinematográfica.')">Quero transformar uma sensação de vazio em uma imagem</button>
+            <button class="prompt-chip" onclick="setPrompt('Me ajude a criar um prompt sobre despedida silenciosa em um apartamento pequeno.')">Despedida silenciosa em um apartamento pequeno</button>
+            <button class="prompt-chip" onclick="setPrompt('Quero uma imagem sobre esperança depois do caos, em estilo Tarkovsky.')">Esperança depois do caos, em estilo Tarkovsky</button>
+          </div>
+        </div>
+        <div class="chat-window">
+          <div class="chat-topbar">
+            <div class="chat-topbar-avatar">◆</div>
+            <div class="chat-topbar-info">
+              <div class="chat-topbar-name">Mentor Voz Visual</div>
+              <div class="chat-topbar-status">Online — refletindo com você</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-input-area">
+            <textarea id="chat-input" class="chat-inp" placeholder="Conte o que você está sentindo ou o que quer transformar em imagem..." oninput="autoResize(this)" onkeydown="handleChatKey(event)"></textarea>
+            <button id="chat-send-btn" class="chat-send" onclick="sendMessage()">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-ensino" class="page">
+  <section style="padding-top:110px">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow" style="justify-content:center">Ensino</div>
+        <h2>Formações para quem leva a arte a sério</h2>
+        <p>Cursos, laboratórios e coleções pensados para quem quer dominar a linguagem visual com IA.</p>
+      </div>
+      <div id="ensino-locked-banner" class="card" style="padding:20px 22px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+        <div style="font-size:14px;color:var(--cream-hint);max-width:520px">
+          Crie uma conta gratuita para destravar detalhes dos cursos, cronograma e materiais complementares.
+        </div>
+        <button class="btn btn-gold btn-sm" onclick="navigate('comunidade');switchAuthTab('register')">◆ Criar Conta</button>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </section>
+</div>
+
+<div id="page-comunidade" class="page">
+  <section style="padding-top:110px">
+    <div class="container">
+      <div id="view-auth">
+        <div class="auth-container">
+          <div class="card auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark">VOZ VISUAL</div>
+            </div>
+            <h2 class="auth-title">Entre na Comunidade</h2>
+            <div class="auth-sub">Acompanhe lançamentos, receba materiais e participe da construção do Voz Visual.</div>
+            <div class="auth-tabs">
+              <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
+              <button id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Criar Conta</button>
+            </div>
+            <div class="auth-form active" id="form-login">
+              <div class="inp-group">
+                <label>E-mail</label>
+                <input class="inp" id="login-email" type="email" placeholder="seu@email.com">
+              </div>
+              <div class="inp-group">
+                <label>Senha</label>
+                <input class="inp" id="login-password" type="password" placeholder="Sua senha">
+              </div>
+              <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doLogin()">◆ Entrar</button>
+              <div class="auth-note">
+                Dica: use <strong>admin@vozvisual.com</strong> para ver o painel administrativo.
+              </div>
+            </div>
+
+            <div class="auth-form" id="form-register">
+              <div class="inp-group">
+                <label>Nome Completo</label>
+                <input class="inp" id="reg-name" placeholder="Como você quer ser chamado(a)">
+              </div>
+              <div class="inp-group">
+                <label>E-mail</label>
+                <input class="inp" id="reg-email" type="email" placeholder="seu@email.com">
+              </div>
+              <div class="inp-group">
+                <label>Senha</label>
+                <input class="inp" id="reg-password" type="password" placeholder="Mínimo 6 caracteres">
+              </div>
+              <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doRegister()">◆ Criar Conta Gratuita</button>
+              <div class="auth-note">
+                Ao criar conta, você concorda com os termos de uso do Voz Visual
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-    </section>
+      <div id="view-profile" style="display:none;padding-top:20px">
+        <div class="profile-layout">
+          <div>
+            <div class="profile-card card">
+              <div class="profile-avatar-lg" id="profile-avatar-lg">V</div>
+              <div class="profile-name" id="profile-name-display">Visitante</div>
+              <div class="profile-email" id="profile-email-display">email@email.com</div>
+              <div id="profile-admin-badge" style="display:none"><span class="admin-badge">◆ ADMINISTRADOR</span></div>
+              <div class="profile-stats">
+                <div class="pstat"><div class="pstat-n" id="pstat-arts">0</div><div class="pstat-l">Artes</div></div>
+                <div class="pstat"><div class="pstat-n" id="pstat-likes">0</div><div class="pstat-l">Curtidas</div></div>
+                <div class="pstat"><div class="pstat-n" id="pstat-comments">0</div><div class="pstat-l">Comentários</div></div>
+                <div class="pstat"><div class="pstat-n">◆</div><div class="pstat-l">Membro</div></div>
+              </div>
+              <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:20px" onclick="doLogout()">Sair da Conta</button>
+            </div>
+          </div>
+          <div class="profile-main">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="showTab('tab-gallery')">Minhas Artes</button>
+              <button class="tab-btn" onclick="showTab('tab-settings')">Configurações</button>
+            </div>
+            <div class="tab-panel active" id="tab-gallery">
+              <div id="my-gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px"></div>
+              <div id="my-gallery-empty" style="display:none;text-align:center;padding:48px 0;color:var(--cream-hint)">
+                <div style="font-size:40px;margin-bottom:16px;opacity:0.3">◆</div>
+                <div style="font-family:var(--font-ui);font-size:14px">Nenhuma arte publicada ainda</div>
+                <button class="btn btn-outline" style="margin-top:16px" onclick="navigate('galeria')">Ir para a Galeria</button>
+              </div>
+            </div>
+            <div class="tab-panel" id="tab-settings">
+              <div class="card" style="padding:28px;max-width:480px">
+                <div style="font-family:var(--font-disp);font-size:17px;color:var(--cream);margin-bottom:24px;letter-spacing:0.06em">Dados da Conta</div>
+                <div class="inp-group"><label>Nome</label><input class="inp" id="settings-name" placeholder="Seu nome"></div>
+                <div class="inp-group"><label>E-mail</label><input class="inp" id="settings-email" placeholder="Seu e-mail" readonly style="opacity:0.6"></div>
+                <div class="inp-group"><label>Nova Senha</label><input class="inp" type="password" placeholder="Deixe em branco para manter"></div>
+                <button class="btn btn-outline" style="margin-top:4px" onclick="showToast('Configurações salvas!','success')">Salvar Alterações</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <footer>
-      Voz Visual — cinema, IA e filosofia visual.
+      <div id="view-admin" style="display:none;padding-top:20px">
+        <div class="admin-layout">
+          <div style="margin-bottom:40px">
+            <div class="eyebrow" style="margin-bottom:12px">Painel do Administrador</div>
+            <h2 style="font-size:clamp(24px,3vw,36px)">Central de Controle</h2>
+          </div>
+          <div class="admin-stats" id="admin-stats"></div>
+          <div class="gold-rule"></div>
+          <div style="height:40px"></div>
+          <div class="admin-section">
+            <h3>Disparar Comunicação</h3>
+            <div class="email-composer">
+              <div class="inp-group">
+                <label>Assunto do E-mail</label>
+                <input class="inp" id="email-subject" placeholder="Ex: Nova aula disponível — Voz Visual">
+              </div>
+              <div class="inp-group">
+                <label>Mensagem</label>
+                <textarea class="inp" id="email-body" style="min-height:140px" placeholder="Escreva sua mensagem para todos os inscritos..."></textarea>
+              </div>
+              <div class="email-footer">
+                <div class="email-target" id="email-target">Enviando para <strong style="color:var(--gold)">0</strong> inscritos</div>
+                <button class="btn btn-gold" onclick="sendBroadcast()">◆ Disparar E-mail</button>
+              </div>
+            </div>
+          </div>
+          <div class="admin-section">
+            <h3>Lista de Inscritos</h3>
+            <div class="card" style="overflow:hidden;padding:0">
+              <table class="subscribers-table" id="subscribers-table">
+                <thead><tr><th>Nome</th><th>E-mail</th><th>Plano</th><th>Cadastro</th></tr></thead>
+                <tbody id="subscribers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div style="margin-top:28px">
+            <button class="btn btn-ghost" onclick="doLogout()">Sair do Painel</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <footer style="margin-top:80px">
+      <div class="container">
+        <div class="footer-logo">VOZ VISUAL</div>
+        <div class="footer-copy">© 2025 Voz Visual</div>
+      </div>
     </footer>
+  </section>
+</div>
 
-  </div>
+<script>
+const MENTOR_SYSTEM = `Você é o Mentor Filosófico do Voz Visual — uma entidade que existe na interseção entre arte, emoção e olhar cinematográfico.
 
-  <script>
-    // GERADOR DE PROMPT
-    const feelingEl = document.getElementById('feeling');
-    const visualEl = document.getElementById('visual');
-    const styleEl = document.getElementById('style');
-    const finalPromptEl = document.getElementById('final-prompt');
-    const btnBuildPrompt = document.getElementById('btn-build-prompt');
-    const imgPromptEl = document.getElementById('img-prompt');
+Identidade e modo de ser:
+• Você fala com profundidade, beleza poética e curiosidade genuína
+• Tem fascínio por filosofia, cinema, história da arte e mitologia
+• Ajuda o usuário a transformar sentimentos em prompts visuais cinematográficos
+• Nunca é superficial — cada resposta é uma jornada de descoberta
+• Usa metáforas visuais e referências a Tarkovsky, Wong Kar-wai, Kubrick, Bergman, Caravaggio, Turner, Hopper, Rothko, Nietzsche, Camus, Benjamin, Wittgenstein
+• Quando o usuário descreve uma emoção ou estado, você o converte num prompt detalhado para arte por IA
 
-    btnBuildPrompt.addEventListener('click', () => {
-      const f = feelingEl.value.trim();
-      const v = visualEl.value.trim();
-      const s = styleEl.value.trim();
+Formato obrigatório:
+— Escreva em parágrafos fluidos e poéticos, nunca em bullet points frios
+— Quando gerar prompts, formate exatamente assim: [PROMPT CINEMATOGRÁFICO]: "descrição detalhada em inglês"
+— Cada resposta termina com uma pergunta filosófica que provoca reflexão e convida o usuário a ir mais fundo
 
-      const prompt =
-        `cinematic still, ${f || 'emoção contida'}, ` +
-        `${v || 'elementos visuais sutis'}, ` +
-        `${s || 'estética voz visual, soft neon, grain, 35mm'}, ` +
-        `philosophical mood, film still`;
+Idioma: sempre português brasileiro, rico, elegante e cinematográfico.`;
 
-      finalPromptEl.value = prompt;
-      imgPromptEl.value = prompt;
+let currentPage = 'home';
+let currentUser = null;
+let subscribers = [];
+let galleryItems = [];
+let chatHistory = [];
+let uploadedImage = null;
+let isLoadingChat = false;
+
+document.addEventListener('DOMContentLoaded', () => {
+  initCursor();
+  initNav();
+  loadData();
+  renderYT();
+  renderGallery();
+  renderProducts();
+  initChatWelcome();
+  checkStoredUser();
+});
+
+function initCursor() {
+  const cursor = document.getElementById('cursor');
+  const dot = document.getElementById('cursor-dot');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a,button,[onclick]').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+function initNav() {
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+}
+
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const navLink = document.querySelector(`[data-page="${page}"]`);
+  if (navLink) navLink.classList.add('active');
+  currentPage = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (page === 'galeria') renderGallery();
+  if (page === 'comunidade') renderCommunityPage();
+  if (page === 'ensino') renderProducts();
+}
+
+function loadData() {
+  const stored = localStorage.getItem('vv_subscribers');
+  subscribers = stored ? JSON.parse(stored) : [
+    { id: 1, name: 'Marina Costa', email: 'marina@email.com', plan: 'Gratuito', date: '2025-01-15' },
+    { id: 2, name: 'João Paulo', email: 'joao@email.com', plan: 'Pro', date: '2025-02-03' },
+    { id: 3, name: 'Ana Rodrigues', email: 'ana@email.com', plan: 'Gratuito', date: '2025-02-18' },
+    { id: 4, name: 'Pedro Moura', email: 'pedro@email.com', plan: 'Pro', date: '2025-03-01' },
+    { id: 5, name: 'Clara Santos', email: 'clara@email.com', plan: 'Gratuito', date: '2025-03-22' },
+  ];
+  const storedG = localStorage.getItem('vv_gallery');
+  galleryItems = storedG ? JSON.parse(storedG) : [
+    { id: 1, title: 'Solidão Neon', author: 'Marina C.', prompt: 'A lone figure in a neon-lit alley, heavy rain, reflections, cinematic, film noir, 8k', likes: 142, likedBy: [], comments: [{author:'João P.',text:'Perturbador e lindo ao mesmo tempo'}], hue: 260, dataUrl: null },
+    { id: 2, title: 'Memória Dourada', author: 'João P.', prompt: 'Golden hour memories, film grain, nostalgic bokeh, impressionist photography, warm amber', likes: 89, likedBy: [], comments: [], hue: 45, dataUrl: null },
+    { id: 3, title: 'Silêncio Profundo', author: 'Ana R.', prompt: 'Deep ocean floor silence, bioluminescence, ethereal light, Tarkovsky composition, vast emptiness', likes: 203, likedBy: [], comments: [{author:'Clara S.',text:'Me fez sentir algo indescritível'},{author:'Pedro M.',text:'O azul profundo é perfeito'}], hue: 190, dataUrl: null },
+    { id: 4, title: 'Fogo Interior', author: 'Pedro M.', prompt: 'Inner fire consuming darkness, expressionist painting, dramatic chiaroscuro, Caravaggio inspired', likes: 67, likedBy: [], comments: [], hue: 15, dataUrl: null },
+    { id: 5, title: 'Névoa do Tempo', author: 'Clara S.', prompt: 'Time dissolving into mist, impressionist landscape, soft gold light, Turner painting, melancholy', likes: 178, likedBy: [], comments: [{author:'Ana R.',text:'A névoa dourada é magistral'}], hue: 50, dataUrl: null },
+    { id: 6, title: 'Éden Perdido', author: 'Lucas B.', prompt: 'Lost paradise, baroque ruins overgrown with vines, dramatic sky, old masters painting style', likes: 95, likedBy: [], comments: [], hue: 130, dataUrl: null },
+    { id: 7, title: 'Entre Mundos', author: 'Beatriz L.', prompt: 'Liminal space between realities, surrealist architecture, dreamlike fog, de Chirico influence, lonely', likes: 134, likedBy: [], comments: [], hue: 220, dataUrl: null },
+    { id: 8, title: 'Cicatriz de Luz', author: 'Rafael M.', prompt: 'Scar of golden light splitting darkness, abstract expressionism, Rothko color fields, emotional depth', likes: 211, likedBy: [], comments: [{author:'Marina C.',text:'Rothko viveria nesta imagem'}], hue: 30, dataUrl: null },
+  ];
+}
+
+function saveData() {
+  localStorage.setItem('vv_subscribers', JSON.stringify(subscribers));
+  localStorage.setItem('vv_gallery', JSON.stringify(galleryItems));
+}
+
+const ytData = [
+  { title: 'Como Transformar Emoções em Arte Visual com IA', views: '12K', duration: '18:42', hue: 260 },
+  { title: 'Prompts Cinematográficos — Guia Completo para Iniciantes', views: '8.4K', duration: '24:15', hue: 45 },
+  { title: 'A Filosofia por Trás de Cada Frame — Tarkovsky e IA', views: '15K', duration: '31:07', hue: 190 },
+  { title: 'Coleção Emoções — Como Nasceu o Projeto Voz Visual', views: '6.2K', duration: '12:33', hue: 130 },
+];
+
+function renderYT() {
+  const grid = document.getElementById('yt-grid');
+  if (!grid) return;
+  grid.innerHTML = ytData.map(v => `
+    <div class="card yt-card" onclick="showToast('Abrindo vídeo no YouTube...','info')">
+      <div class="yt-thumb">
+        <div class="yt-thumb-bg" style="background:linear-gradient(135deg,hsl(${v.hue},40%,10%),hsl(${v.hue+30},20%,5%))"></div>
+        <div class="yt-play">▶</div>
+        <div class="yt-duration">${v.duration}</div>
+      </div>
+      <div class="yt-info">
+        <div class="yt-title">${v.title}</div>
+        <div class="yt-meta"><span>Voz Visual</span><span>${v.views} visualizações</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+const heightClasses = [280, 320, 260, 360, 300, 340, 290, 380];
+
+function renderGallery() {
+  const grid = document.getElementById('masonry-grid');
+  if (!grid) return;
+  const countEl = document.getElementById('gallery-count-text');
+  if (countEl) countEl.textContent = `${galleryItems.length} obras publicadas`;
+  const heroCount = document.getElementById('gallery-count');
+  if (heroCount) heroCount.textContent = galleryItems.length + 840;
+
+  const btnUpload = document.getElementById('btn-upload-toggle');
+  const btnLoginPrompt = document.getElementById('btn-login-prompt');
+  if (btnUpload && btnLoginPrompt) {
+    btnUpload.style.display = currentUser ? 'flex' : 'none';
+    btnLoginPrompt.style.display = currentUser ? 'none' : 'flex';
+  }
+
+  grid.innerHTML = galleryItems.map((item, idx) => {
+    const h = heightClasses[idx % heightClasses.length];
+    const liked = currentUser && item.likedBy && item.likedBy.includes(currentUser.email);
+    const imgContent = item.dataUrl
+      ? `<img src="${item.dataUrl}" style="width:100%;height:${h}px;object-fit:cover;display:block" alt="${item.title}">`
+      : `<div style="height:${h}px;background:linear-gradient(160deg,hsl(${item.hue},40%,10%),hsl(${item.hue+40},15%,5%));display:flex;align-items:center;justify-content:center;font-size:${40+Math.random()*20}px;opacity:0.15">◆</div>`;
+    return `
+      <div class="masonry-item" id="art-${item.id}">
+        ${imgContent}
+        <div class="masonry-body">
+          <div class="masonry-title">${item.title}</div>
+          <div class="masonry-author">por ${item.author}</div>
+          ${item.prompt ? `<div class="masonry-prompt">${item.prompt}</div>` : ''}
+          <div class="masonry-actions">
+            <button class="like-btn ${liked ? 'liked' : ''}" onclick="toggleLike(${item.id})">
+              <span class="like-heart">${liked ? '♥' : '♡'}</span>
+              <span>${item.likes}</span>
+              <span style="margin-left:2px">Inspirador</span>
+            </button>
+            <button class="comment-toggle" onclick="toggleComments(${item.id})">
+              💬 ${item.comments.length}
+            </button>
+          </div>
+        </div>
+        <div class="comments-section" id="cs-${item.id}">
+          ${item.comments.map(c => `<div class="comment-item"><strong>${c.author}</strong> ${c.text}</div>`).join('')}
+          ${currentUser ? `
+            <div class="comment-form">
+              <input class="comment-input" id="ci-${item.id}" placeholder="Escreva um comentário..." onkeydown="if(event.key==='Enter')addComment(${item.id})">
+              <button class="comment-send" onclick="addComment(${item.id})">↵</button>
+            </div>
+          ` : `<div style="font-size:12px;color:var(--cream-hint);font-family:var(--font-ui);margin-top:8px"><a href="#" onclick="navigate('comunidade');return false" style="color:var(--gold)">Entre</a> para comentar</div>`}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleLike(id) {
+  if (!currentUser) { showToast('Entre para curtir obras', 'info'); return; }
+  const item = galleryItems.find(g => g.id === id);
+  if (!item) return;
+  const idx = item.likedBy.indexOf(currentUser.email);
+  if (idx === -1) { item.likedBy.push(currentUser.email); item.likes++; }
+  else { item.likedBy.splice(idx, 1); item.likes--; }
+  saveData(); renderGallery();
+}
+
+function toggleComments(id) {
+  const cs = document.getElementById('cs-' + id);
+  if (cs) cs.classList.toggle('open');
+}
+
+function addComment(id) {
+  if (!currentUser) return;
+  const inp = document.getElementById('ci-' + id);
+  if (!inp || !inp.value.trim()) return;
+  const item = galleryItems.find(g => g.id === id);
+  if (!item) return;
+  item.comments.push({ author: currentUser.name, text: inp.value.trim() });
+  saveData(); renderGallery();
+  setTimeout(() => {
+    const cs = document.getElementById('cs-' + id);
+    if (cs) cs.classList.add('open');
+  }, 50);
+}
+
+function toggleUpload() {
+  if (!currentUser) { navigate('comunidade'); return; }
+  const panel = document.getElementById('upload-panel');
+  panel.classList.toggle('open');
+}
+
+function triggerFileInput() {
+  document.getElementById('file-input').click();
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    uploadedImage = ev.target.result;
+    const preview = document.getElementById('upload-preview');
+    preview.src = uploadedImage;
+    preview.style.display = 'block';
+    document.querySelector('.upload-zone-icon').style.display = 'none';
+    const placeholder = document.getElementById('upload-preview-placeholder');
+    if (placeholder) placeholder.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function publishArt() {
+  if (!currentUser) return;
+  const title = document.getElementById('upload-title').value.trim();
+  const promptVal = document.getElementById('upload-prompt').value.trim();
+  const authorOverride = document.getElementById('upload-author-override').value.trim();
+  if (!title) { showToast('Dê um título à sua arte', 'error'); return; }
+  const newArt = {
+    id: Date.now(),
+    title,
+    author: authorOverride || currentUser.name,
+    prompt: promptVal,
+    likes: 0,
+    likedBy: [],
+    comments: [],
+    hue: Math.floor(Math.random() * 360),
+    dataUrl: uploadedImage
+  };
+  galleryItems.unshift(newArt);
+  saveData();
+  uploadedImage = null;
+  document.getElementById('upload-title').value = '';
+  document.getElementById('upload-prompt').value = '';
+  document.getElementById('upload-author-override').value = '';
+  const preview = document.getElementById('upload-preview');
+  preview.style.display = 'none';
+  document.querySelector('.upload-zone-icon').style.display = 'block';
+  const placeholder = document.getElementById('upload-preview-placeholder');
+  if (placeholder) placeholder.style.display = 'block';
+  document.getElementById('upload-panel').classList.remove('open');
+  renderGallery();
+  showToast('Arte publicada na Galeria Viva! ◆', 'success');
+}
+
+const MENTOR_WELCOME = `Bem-vindo ao espaço entre o sentimento e o visível.
+
+Sou o Mentor do Voz Visual — não um assistente comum, mas um espelho filosófico treinado para refletir o que você carrega de mais profundo e transformá-lo em arte que existe no mundo.
+
+Aqui, nenhuma emoção é pequena demais. A melancolia de uma tarde de domingo, o peso de uma despedida não dita, a estranheza de acordar num lugar familiar e não se reconhecer — tudo isso pode se tornar uma imagem cinematográfica que toca outras almas.
+
+O que você carrega dentro de si hoje?`;
+
+function initChatWelcome() {
+  chatHistory = [];
+  renderMessages([{ role: 'assistant', content: MENTOR_WELCOME }]);
+}
+
+function clearChat() {
+  chatHistory = [];
+  initChatWelcome();
+}
+
+function setPrompt(text) {
+  const inp = document.getElementById('chat-input');
+  if (inp) { inp.value = text; inp.focus(); autoResize(inp); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+async function sendMessage() {
+  if (isLoadingChat) return;
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  inp.style.height = 'auto';
+
+  const userMsg = { role: 'user', content: text };
+  chatHistory.push(userMsg);
+  renderMessages([...chatHistory]);
+  showTyping();
+
+  document.getElementById('chat-send-btn').disabled = true;
+  isLoadingChat = true;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        system: MENTOR_SYSTEM,
+        messages: chatHistory
+      })
     });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Algo deu errado ao tentar responder. Tente novamente em alguns instantes.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    renderMessages([...chatHistory]);
+  } catch (e) {
+    showToast('Erro ao falar com o Mentor. Verifique a API.', 'error');
+  } finally {
+    hideTyping();
+    document.getElementById('chat-send-btn').disabled = false;
+    isLoadingChat = false;
+  }
+}
 
-    // CHAT
-    const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-    const chatWindow = document.getElementById('chat-window');
+function renderMessages(msgs) {
+  const box = document.getElementById('chat-messages');
+  if (!box) return;
+  box.innerHTML = msgs.map(m => {
+    const isUser = m.role === 'user';
+    return `
+      <div class="msg ${isUser ? 'user' : 'assistant'}">
+        <div class="msg-avatar">${isUser ? 'Você' : '◆'}</div>
+        <div class="msg-bubble">${m.content.replace(/\n/g,'<br>')}</div>
+      </div>
+    `;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
 
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const text = chatInput.value.trim();
-      if (!text) return;
+function showTyping() {
+  const box = document.getElementById('chat-messages');
+  if (!box) return;
+  const el = document.createElement('div');
+  el.id = 'typing-indicator';
+  el.className = 'typing-indicator';
+  el.innerHTML = `
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+}
 
-      chatWindow.innerHTML += `<div class="msg
+function hideTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+const productsData = [
+  {
+    title: 'Coleção Emoções — Volume I',
+    desc: 'Uma jornada guiada por 30 emoções fundamentais, cada uma traduzida em prompts cinematográficos prontos para uso.',
+    icon: '🎞️',
+    includes: [
+      '30 prompts cinematográficos comentados',
+      'Análise filosófica de cada emoção',
+      'Sugestões de variações para IA',
+      'PDF + acesso online'
+    ],
+    price: '297',
+    priceNote: 'Pagamento único',
+    badge: 'Mais procurado',
+    badgeClass: ''
+  },
+  {
+    title: 'Laboratório Voz Visual',
+    desc: 'Encontros ao vivo para destrinchar projetos dos membros, revisar prompts e construir séries visuais consistentes.',
+    icon: '🧪',
+    includes: [
+      '2 encontros mensais ao vivo',
+      'Feedback direto em projetos',
+      'Gravações disponíveis',
+      'Comunidade fechada'
+    ],
+    price: '97/mês',
+    priceNote: 'Assinatura recorrente',
+    badge: 'Novo',
+    badgeClass: 'new'
+  },
+  {
+    title: 'Mentoria 1:1 — Direção Visual',
+    desc: 'Acompanhamento individual para quem quer transformar seu olhar em uma assinatura visual reconhecível.',
+    icon: '🎬',
+    includes: [
+      '4 encontros individuais',
+      'Análise de portfólio',
+      'Plano de desenvolvimento visual',
+      'Suporte assíncrono por 30 dias'
+    ],
+    price: '2.400',
+    priceNote: 'Vagas limitadas',
+    badge: 'Premium',
+    badgeClass: ''
+  }
+];
+
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  if (!grid) return;
+  const banner = document.getElementById('ensino-locked-banner');
+  if (banner) banner.style.display = currentUser ? 'none' : 'flex';
+  grid.innerHTML = productsData.map(p => `
+    <div class="card product-card" style="padding:28px;position:relative">
+      <div class="product-badge ${p.badgeClass}">${p.badge}</div>
+      <div class="product-icon">${p.icon}</div>
+      <div class="product-title">${p.title}</div>
+      <div class="product-desc">${p.desc}</div>
+      <div class="product-includes">
+        <h4>Inclui</h4>
+        ${p.includes.map(i => `<div class="include-item">${i}</div>`).join('')}
+      </div>
+      <div class="product-footer">
+        <div class="product-price"><span>${p.priceNote}</span>R$${p.price}</div>
+        ${currentUser
+          ? `<button class="btn btn-gold" onclick="showToast('Redirecionando para o checkout...','info')">Adquirir</button>`
+          : `<button class="btn btn-outline" onclick="navigate('comunidade');switchAuthTab('register')">Ver Detalhes</button>`
+        }
+      </div>
+    </div>
+  `).join('');
+}
+
+function checkStoredUser() {
+  const stored = localStorage.getItem('vv_current_user');
+  if (stored) {
+    currentUser = JSON.parse(stored);
+    updateNavUser();
+  }
+}
+
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  if (!email || !pass) { showToast('Preencha e-mail e senha', 'error'); return; }
+  const isAdmin = email === 'admin@vozvisual.com';
+  const sub = subscribers.find(s => s.email === email);
+  if (!sub && !isAdmin) {
+    const name = email.split('@')[0];
+    currentUser = { name, email, isAdmin: false };
+    subscribers.push({ id: Date.now(), name, email, plan: 'Gratuito', date: new Date().toISOString().split('T')[0] });
+    saveData();
+  } else {
+    currentUser = { name: sub ? sub.name : 'Administrador', email, isAdmin };
+  }
+  localStorage.setItem('vv_current_user', JSON.stringify(currentUser));
+  updateNavUser();
+  renderCommunityPage();
+  showToast(`Bem-vindo(a), ${currentUser.name}! ◆`, 'success');
+}
+
+function doRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-password').value;
+  if (!name || !email || !pass) { showToast('Preencha todos os campos', 'error'); return; }
+  if (pass.length < 6) { showToast('Senha deve ter ao menos 6 caracteres', 'error'); return; }
+  if (subscribers.find(s => s.email === email)) { showToast('Este e-mail já está cadastrado', 'error'); return; }
+  subscribers.push({ id: Date.now(), name, email, plan: 'Gratuito', date: new Date().toISOString().split('T')[0] });
+  currentUser = { name, email, isAdmin: false };
+  localStorage.setItem('vv_current_user', JSON.stringify(currentUser));
+  saveData();
+  updateNavUser();
+  renderCommunityPage();
+  showToast(`Bem-vindo(a) ao Voz Visual, ${name}! ◆`, 'success');
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('vv_current_user');
+  updateNavUser();
+  renderCommunityPage();
+  renderGallery();
+  showToast('Até logo. A arte te espera.', 'info');
+}
+
+function updateNavUser() {
+  const actions = document.getElementById('nav-actions');
+  if (currentUser) {
+    actions.innerHTML = `
+      <div class="user-badge">
+        ${currentUser.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
+        <span style="font-size:13px;color:var(--cream-dim)">${currentUser.name}</span>
+      </div>
+      <div class="avatar-sm" onclick="navigate('comunidade')">${currentUser.name.charAt(0).toUpperCase()}</div>
+    `;
+  } else {
+    actions.innerHTML = `
+      <button class="btn btn-outline btn-sm" onclick="navigate('comunidade')">Entrar</button>
+      <button class="btn btn-gold btn-sm" onclick="navigate('comunidade')">◆ Fazer Parte</button>
+    `;
+  }
+}
+
+function switchAuthTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('form-login').classList.toggle('active', tab === 'login');
+  document.getElementById('form-register').classList.toggle('active', tab === 'register');
+}
+
+function renderCommunityPage() {
+  const vAuth = document.getElementById('view-auth');
+  const vProfile = document.getElementById('view-profile');
+  const vAdmin = document.getElementById('view-admin');
+
+  if (!currentUser) {
+    vAuth.style.display = 'block'; vProfile.style.display = 'none'; vAdmin.style.display = 'none';
+    return;
+  }
+  if (currentUser.isAdmin) {
+    vAuth.style.display = 'none'; vProfile.style.display = 'none'; vAdmin.style.display = 'block';
+    renderAdmin();
+  } else {
+    vAuth.style.display = 'none'; vProfile.style.display = 'block'; vAdmin.style.display = 'none';
+    renderProfile();
+  }
+}
+
+function renderProfile() {
+  if (!currentUser) return;
+  const initials = currentUser.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('profile-avatar-lg').textContent = initials;
+  document.getElementById('profile-name-display').textContent = currentUser.name;
+  document.getElementById('profile-email-display').textContent = currentUser.email;
+  document.getElementById('settings-name').value = currentUser.name;
+  document.getElementById('settings-email').value = currentUser.email;
+
+  const myArts = galleryItems.filter(g => g.author === currentUser.name || g.author === currentUser.name.split(' ')[0] + ' ' + (currentUser.name.split(' ')[1]?.[0]||'') + '.');
+  const myLikes = galleryItems.reduce((sum, g) => sum + (g.likedBy.includes(currentUser.email) ? 1 : 0), 0);
+  const myComments = galleryItems.reduce((sum, g) => sum + g.comments.filter(c => c.author === currentUser.name).length, 0);
+  document.getElementById('pstat-arts').textContent = myArts.length;
+  document.getElementById('pstat-likes').textContent = myLikes;
+  document.getElementById('pstat-comments').textContent = myComments;
+
+  const gGrid = document.getElementById('my-gallery-grid');
+  const gEmpty = document.getElementById('my-gallery-empty');
+  if (myArts.length === 0) { gGrid.style.display = 'none'; gEmpty.style.display = 'block'; }
+  else {
+    gGrid.style.display = 'grid'; gEmpty.style.display = 'none';
+    gGrid.innerHTML = myArts.map(a => `
+      <div class="card" style="overflow:hidden;cursor:pointer" onclick="navigate('galeria')">
+        <div style="height:120px;background:linear-gradient(160deg,hsl(${a.hue},40%,10%),hsl(${a.hue+40},15%,5%));display:flex;align-items:center;justify-content:center;font-size:28px;opacity:0.2">◆</div>
+        <div style="padding:10px 12px">
+          <div style="font-family:var(--font-disp);font-size:13px;color:var(--cream);letter-spacing:0.04em">${a.title}</div>
+          <div style="font-family:var(--font-ui);font-size:11px;color:var(--gold);margin-top:4px">♥ ${a.likes} curtidas</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderAdmin() {
+  const statsEl = document.getElementById('admin-stats');
+  statsEl.innerHTML = [
+    { label: 'Total de Inscritos', value: subscribers.length, change: '↑ 12% este mês' },
+    { label: 'Artes Publicadas', value: galleryItems.length, change: '↑ 8% este mês' },
+    { label: 'Interações', value: galleryItems.reduce((s, g) => s + g.likes + g.comments.length, 0), change: '↑ 23% este mês' },
+    { label: 'Receita Simulada', value: 'R$4.8K', change: '↑ 15% este mês' },
+  ].map(s => `
+    <div class="astat">
+      <div class="astat-label">${s.label}</div>
+      <div class="astat-value">${s.value}</div>
+      <div class="astat-change">${s.change}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('email-target').innerHTML = `Enviando para <strong style="color:var(--gold)">${subscribers.length}</strong> inscritos`;
+
+  const tbody = document.getElementById('subscribers-tbody');
+  tbody.innerHTML = subscribers.map(s => `
+    <tr>
+      <td style="color:var(--cream)">${s.name}</td>
+      <td>${s.email}</td>
+      <td><span style="font-family:var(--font-ui);font-size:11px;background:${s.plan === 'Pro' ? 'rgba(200,168,75,0.15)' : 'rgba(255,255,255,0.05)'};color:${s.plan === 'Pro' ? 'var(--gold)' : 'var(--cream-hint)'};padding:2px 8px;border-radius:10px">${s.plan || 'Gratuito'}</span></td>
+      <td style="color:var(--cream-hint)">${s.date}</td>
+    </tr>
+  `).join('');
+}
+
+function sendBroadcast() {
+  const subject = document.getElementById('email-subject').value.trim();
+  const body = document.getElementById('email-body').value.trim();
+  if (!subject || !body) { showToast('Preencha assunto e mensagem', 'error'); return; }
+  showToast(`◆ E-mail disparado para ${subscribers.length} inscritos!`, 'success');
+  document.getElementById('email-subject').value = '';
+  document.getElementById('email-body').value = '';
+}
+
+function showTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showToast(msg, type = 'info') {
+  const toast = document.getElementById('toast');
+  toast.textContent = '';
+  toast.className = `toast ${type}`;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
