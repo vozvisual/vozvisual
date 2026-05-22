@@ -39,6 +39,23 @@ body {
   overflow-x: hidden;
   cursor: none;
 }
+/* FUNDO HIPNÓTICO NEON */
+body {
+    background: radial-gradient(circle at center,
+        rgba(0, 200, 255, 0.12),
+        rgba(255, 77, 255, 0.08),
+        rgba(255, 122, 41, 0.05),
+        #000000 70%
+    );
+    background-size: 200% 200%;
+    animation: pulseBG 18s ease-in-out infinite;
+}
+
+@keyframes pulseBG {
+    0% { background-position: 50% 50%; }
+    50% { background-position: 48% 52%; }
+    100% { background-position: 50% 50%; }
+}
 
 /* Grain overlay */
 body::before {
