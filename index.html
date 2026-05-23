@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --bg:         #050505;
@@ -47,6 +50,7 @@ body {
   cursor: none;
 }
 
+/* Grain overlay */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 9999;
@@ -55,6 +59,7 @@ body::before {
   opacity: 0.6;
 }
 
+/* Vignette */
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 9998;
@@ -62,6 +67,7 @@ body::after {
   pointer-events: none;
 }
 
+/* Custom cursor */
 #cursor {
   position: fixed; z-index: 10000;
   width: 16px; height: 16px;
@@ -82,10 +88,16 @@ body::after {
   transform: translate(-50%, -50%);
 }
 
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
 
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
 h1, h2, h3 { font-family: var(--font-disp); font-weight: 600; color: var(--cream); letter-spacing: 0.06em; line-height: 1.15; }
 h4, h5, label, .label { font-family: var(--font-ui); }
 p { font-family: var(--font-body); color: var(--cream-dim); }
@@ -106,12 +118,18 @@ a { color: var(--gold); text-decoration: none; }
   background: var(--gold-line);
 }
 
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
 .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
 section { padding: 100px 0; }
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-header h2 { font-size: clamp(28px, 4vw, 42px); margin-top: 16px; }
 .section-header p { font-size: 18px; max-width: 560px; margin: 14px auto 0; }
 
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
 .btn {
   font-family: var(--font-ui);
   font-size: 13px; font-weight: 500;
@@ -146,6 +164,9 @@ section { padding: 100px 0; }
 }
 .btn-icon:hover { border-color: var(--gold-line); color: var(--gold); }
 
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   height: 68px;
@@ -196,6 +217,9 @@ section { padding: 100px 0; }
   border: 1px solid var(--gold-line); padding: 2px 8px; border-radius: 20px;
 }
 
+/* ═══════════════════════════════════════════
+   GOLD DIVIDER
+═══════════════════════════════════════════ */
 .gold-rule {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
@@ -210,6 +234,9 @@ section { padding: 100px 0; }
   padding: 8px 0;
 }
 
+/* ═══════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════ */
 .card {
   background: var(--bg3);
   border: var(--border);
@@ -218,6 +245,9 @@ section { padding: 100px 0; }
 }
 .card:hover { border-color: rgba(200,168,75,0.4); box-shadow: 0 4px 40px rgba(200,168,75,0.06); }
 
+/* ═══════════════════════════════════════════
+   INPUTS
+═══════════════════════════════════════════ */
 .inp {
   width: 100%;
   background: var(--bg2);
@@ -238,11 +268,18 @@ textarea.inp { resize: vertical; min-height: 100px; }
   color: var(--cream-hint);
 }
 
+/* ═══════════════════════════════════════════
+   PAGES
+═══════════════════════════════════════════ */
 .page { display: none; }
 .page.active { display: block; }
 
+/* ═══════════════════════════════════════════
+   ████  PAGE: HOME
+═══════════════════════════════════════════ */
 #page-home { padding-top: 0; }
 
+/* HERO */
 .hero {
   min-height: 100vh;
   display: flex; align-items: center;
@@ -320,31 +357,7 @@ textarea.inp { resize: vertical; min-height: 100px; }
   color: var(--gold-dim); opacity: 0.4;
 }
 
-/* VIDEO HERO NOVO */
-.video-hero {
-  margin-top: 68px;
-  border-bottom: 1px solid var(--gold-line2);
-  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(200,168,75,0.08), transparent 70%);
-}
-.video-hero-inner {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 40px 32px 20px;
-}
-.video-frame {
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid var(--gold-line);
-  box-shadow: var(--shadow);
-  background: #000;
-}
-.video-frame video {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* YOUTUBE */
+/* YOUTUBE FEED */
 .yt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
 .yt-card { cursor: pointer; overflow: hidden; }
 .yt-thumb {
@@ -380,7 +393,20 @@ textarea.inp { resize: vertical; min-height: 100px; }
 .yt-title { font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--cream); line-height: 1.45; margin-bottom: 8px; }
 .yt-meta { font-family: var(--font-ui); font-size: 11px; color: var(--cream-hint); display: flex; gap: 12px; }
 
-/* GALERIA (CSS original) */
+/* ═══════════════════════════════════════════
+   ████  PAGE: GALERIA
+═══════════════════════════════════════════ */
+#page-galeria { padding-top: 110px; }
+.gallery-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 48px; gap: 20px; flex-wrap: wrap;
+}
+.upload-panel {
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); padding: 28px;
+  margin-bottom: 48px; display: none;
+}
+.upload-panel.open { display: block; }
 .upload-zone {
   border: 2px dashed var(--gold-line);
   border-radius: var(--r);
@@ -461,53 +487,272 @@ textarea.inp { resize: vertical; min-height: 100px; }
 }
 .comment-send:hover { background: rgba(200,168,75,0.2); }
 
-/* ÁUDIO NOVO */
-.audio-section {
-  padding: 80px 0 40px;
+/* ═══════════════════════════════════════════
+   ████  PAGE: MENTOR (CHAT)
+═══════════════════════════════════════════ */
+#page-mentor { padding-top: 110px; }
+.chat-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: start; }
+.chat-sidebar {}
+.mentor-profile {
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); padding: 28px; text-align: center;
+  margin-bottom: 20px;
 }
-.audio-card {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 28px 26px;
+.mentor-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, #1a1400, #2a2000);
+  border: 2px solid var(--gold-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; margin: 0 auto 16px;
+  position: relative;
 }
-.audio-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 18px;
-}
-.audio-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 14px 16px;
-  border-radius: 10px;
+.mentor-avatar::after {
+  content: '';
+  position: absolute; inset: -6px;
+  border-radius: 50%;
   border: 1px solid var(--gold-line2);
-  background: var(--bg2);
 }
-.audio-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-ui);
-  font-size: 13px;
-  color: var(--cream);
+.mentor-name { font-family: var(--font-disp); font-size: 16px; font-weight: 600; color: var(--cream); letter-spacing: 0.1em; margin-bottom: 4px; }
+.mentor-title { font-size: 13px; color: var(--cream-hint); margin-bottom: 14px; }
+.mentor-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+  color: var(--green-ok); letter-spacing: 0.1em;
 }
-.audio-meta {
-  font-size: 11px;
-  color: var(--cream-hint);
+.mentor-status::before { content: ''; width: 6px; height: 6px; background: var(--green-ok); border-radius: 50%; box-shadow: 0 0 8px var(--green-ok); }
+.mentor-desc { font-size: 14px; color: var(--cream-hint); line-height: 1.65; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gold-line2); font-style: italic; }
+.chat-prompts { background: var(--bg3); border: var(--border); border-radius: var(--r-lg); padding: 20px; }
+.chat-prompts h4 { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-hint); margin-bottom: 12px; }
+.prompt-chip {
+  display: block; width: 100%; text-align: left;
+  background: var(--bg2); border: var(--border-sub);
+  border-radius: var(--r); padding: 10px 14px;
+  font-size: 13px; color: var(--cream-dim); cursor: pointer;
+  transition: all 0.2s; margin-bottom: 8px;
+  font-family: var(--font-body); font-style: italic;
+  line-height: 1.4;
 }
-.audio-item audio {
-  width: 100%;
-  margin-top: 4px;
+.prompt-chip:last-child { margin-bottom: 0; }
+.prompt-chip:hover { border-color: var(--gold-line); color: var(--cream); background: var(--bg3); }
+.chat-window {
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); display: flex; flex-direction: column;
+  height: 700px; overflow: hidden;
 }
-.audio-actions {
-  margin-top: 6px;
-  display: flex;
-  justify-content: flex-end;
+.chat-topbar {
+  padding: 18px 24px; border-bottom: 1px solid var(--gold-line2);
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
 }
+.chat-topbar-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.chat-topbar-info { flex: 1; }
+.chat-topbar-name { font-family: var(--font-disp); font-size: 14px; color: var(--cream); letter-spacing: 0.08em; }
+.chat-topbar-status { font-family: var(--font-ui); font-size: 11px; color: var(--green-ok); }
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 24px; display: flex; flex-direction: column; gap: 20px;
+}
+.msg { display: flex; gap: 12px; max-width: 85%; animation: msgIn 0.3s ease; }
+.msg.user { flex-direction: row-reverse; align-self: flex-end; }
+@keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.msg-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; margin-top: 2px;
+}
+.msg.assistant .msg-avatar { background: linear-gradient(135deg, #1a1400, var(--gold-dim)); border: 1px solid var(--gold-line); }
+.msg.user .msg-avatar { background: var(--bg4); border: var(--border-sub); font-size: 13px; color: var(--cream-hint); }
+.msg-bubble {
+  border-radius: 12px; padding: 14px 18px;
+  font-size: 15.5px; line-height: 1.7;
+}
+.msg.assistant .msg-bubble { background: var(--bg2); border: var(--border-sub); color: var(--cream); border-bottom-left-radius: 4px; }
+.msg.user .msg-bubble { background: linear-gradient(135deg, #1a1400, #110e00); border: 1px solid var(--gold-line); color: var(--cream); border-bottom-right-radius: 4px; }
+.msg-bubble .prompt-highlight {
+  display: block; margin-top: 12px; padding: 12px 14px;
+  background: rgba(200,168,75,0.06); border: 1px solid var(--gold-line);
+  border-radius: 8px; font-style: italic; font-size: 14px; color: var(--cream-dim);
+}
+.typing-indicator {
+  display: flex; gap: 12px; max-width: 200px;
+  align-items: flex-end;
+}
+.typing-bubble {
+  background: var(--bg2); border: var(--border-sub);
+  border-radius: 12px; border-bottom-left-radius: 4px;
+  padding: 14px 18px; display: flex; gap: 5px; align-items: center;
+}
+.typing-dot { width: 6px; height: 6px; background: var(--gold-dim); border-radius: 50%; animation: typingAnim 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingAnim { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+.chat-input-area {
+  padding: 16px 20px; border-top: 1px solid var(--gold-line2);
+  display: flex; gap: 12px; align-items: flex-end; flex-shrink: 0;
+}
+.chat-inp {
+  flex: 1; background: var(--bg2); border: 1px solid #2a2510;
+  border-radius: 10px; color: var(--cream);
+  padding: 12px 16px; font-family: var(--font-body);
+  font-size: 15px; outline: none; resize: none;
+  max-height: 120px; line-height: 1.5;
+  transition: border-color 0.2s;
+}
+.chat-inp:focus { border-color: var(--gold-dim); }
+.chat-send {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border: none; border-radius: 10px; width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #050505; font-size: 18px;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.chat-send:hover { box-shadow: 0 0 20px rgba(200,168,75,0.25); transform: scale(1.04); }
+.chat-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-/* (demais CSS: mentor, ensino, comunidade, admin, toast, footer, animações, responsivo) */
+/* ═══════════════════════════════════════════
+   ████  PAGE: ENSINO
+═══════════════════════════════════════════ */
+#page-ensino { padding-top: 110px; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
+.product-card { position: relative; overflow: hidden; }
+.product-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.product-badge {
+  position: absolute; top: 20px; right: 20px;
+  font-family: var(--font-ui); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--gold); color: #050505;
+  padding: 4px 10px; border-radius: 20px;
+}
+.product-badge.new { background: #4BC87A; }
+.product-icon { font-size: 44px; margin-bottom: 20px; }
+.product-title { font-size: 22px; font-weight: 600; color: var(--cream); margin-bottom: 8px; letter-spacing: 0.05em; }
+.product-desc { font-size: 15px; color: var(--cream-hint); line-height: 1.6; margin-bottom: 20px; }
+.product-includes { margin-bottom: 24px; }
+.product-includes h4 { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-hint); margin-bottom: 10px; }
+.include-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--cream-dim); margin-bottom: 6px; }
+.include-item::before { content: '◆'; color: var(--gold); font-size: 7px; flex-shrink: 0; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--gold-line2); }
+.product-price { font-family: var(--font-disp); font-size: 32px; font-weight: 700; color: var(--gold); letter-spacing: 0.03em; }
+.product-price span { font-size: 14px; color: var(--cream-hint); display: block; margin-bottom: 2px; font-family: var(--font-ui); letter-spacing: 0; font-weight: 400; }
+.locked-overlay {
+  position: absolute; inset: 0; border-radius: var(--r-lg);
+  background: rgba(5,5,5,0.7); backdrop-filter: blur(4px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+}
+.locked-icon { font-size: 36px; opacity: 0.6; }
+
+/* ═══════════════════════════════════════════
+   ████  PAGE: COMUNIDADE (Auth + Admin + Perfil)
+═══════════════════════════════════════════ */
+#page-comunidade { padding-top: 110px; }
+.auth-container {
+  max-width: 480px; margin: 0 auto;
+}
+.auth-card { padding: 44px; }
+.auth-logo { text-align: center; margin-bottom: 32px; }
+.auth-logo-mark { font-family: var(--font-disp); font-size: 22px; letter-spacing: 0.2em; color: var(--gold); }
+.auth-title { font-size: 26px; text-align: center; margin-bottom: 6px; }
+.auth-sub { text-align: center; font-size: 15px; color: var(--cream-hint); margin-bottom: 32px; }
+.auth-tabs { display: flex; gap: 0; margin-bottom: 32px; border-bottom: 1px solid var(--gold-line2); }
+.auth-tab {
+  flex: 1; text-align: center; padding: 12px; cursor: pointer;
+  font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cream-hint); border-bottom: 2px solid transparent;
+  transition: all 0.2s; background: none; border-left: none; border-right: none; border-top: none;
+}
+.auth-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.auth-form { display: none; }
+.auth-form.active { display: block; }
+.auth-divider { text-align: center; color: var(--cream-hint); font-size: 13px; margin: 20px 0; position: relative; }
+.auth-divider::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--gold-line2); }
+.auth-divider span { background: var(--bg3); padding: 0 14px; position: relative; font-family: var(--font-ui); }
+.auth-link { color: var(--gold); cursor: pointer; }
+.auth-note { text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--cream-hint); margin-top: 20px; }
+
+/* PERFIL */
+.profile-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: start; }
+.profile-sidebar {}
+.profile-card { padding: 32px; text-align: center; }
+.profile-avatar-lg {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; font-weight: 700; color: #050505;
+  font-family: var(--font-disp); margin: 0 auto 16px;
+  box-shadow: 0 0 40px rgba(200,168,75,0.2);
+}
+.profile-name { font-size: 22px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+.profile-email { font-family: var(--font-ui); font-size: 13px; color: var(--cream-hint); margin-bottom: 16px; }
+.profile-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--gold-line2); }
+.pstat { text-align: center; }
+.pstat-n { font-family: var(--font-disp); font-size: 24px; color: var(--gold); }
+.pstat-l { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-hint); margin-top: 2px; }
+.profile-main {}
+.profile-main h3 { font-size: 20px; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.06em; }
+.tab-bar { display: flex; gap: 4px; margin-bottom: 28px; background: var(--bg2); padding: 4px; border-radius: var(--r); width: fit-content; }
+.tab-btn {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 8px 18px; border-radius: 6px;
+  background: none; border: none; cursor: pointer;
+  color: var(--cream-hint); transition: all 0.2s;
+}
+.tab-btn.active { background: var(--bg3); color: var(--gold); border: var(--border); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ADMIN */
+.admin-layout { max-width: 1000px; }
+.admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+.astat {
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); padding: 24px;
+  position: relative; overflow: hidden;
+}
+.astat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+.astat-label { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-hint); margin-bottom: 8px; }
+.astat-value { font-family: var(--font-disp); font-size: 34px; font-weight: 700; color: var(--gold); letter-spacing: 0.03em; }
+.astat-change { font-family: var(--font-ui); font-size: 11px; color: var(--green-ok); margin-top: 4px; }
+.admin-section { margin-bottom: 44px; }
+.admin-section h3 { font-size: 18px; font-weight: 600; letter-spacing: 0.08em; margin-bottom: 20px; color: var(--cream); display: flex; align-items: center; gap: 10px; }
+.admin-section h3::before { content: '◆'; color: var(--gold); font-size: 10px; }
+.email-composer { background: var(--bg3); border: var(--border); border-radius: var(--r-lg); padding: 28px; }
+.email-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--gold-line2); }
+.email-target { font-family: var(--font-ui); font-size: 12px; color: var(--cream-hint); }
+.subscribers-table { width: 100%; border-collapse: collapse; }
+.subscribers-table th { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-hint); padding: 12px 16px; border-bottom: 1px solid var(--gold-line2); text-align: left; }
+.subscribers-table td { font-family: var(--font-ui); font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--gold-line2); color: var(--cream-dim); }
+.subscribers-table tr:last-child td { border-bottom: none; }
+.subscribers-table tr:hover td { background: var(--bg2); }
+
+/* ═══════════════════════════════════════════
+   MODAL (notif / alert)
+═══════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 32px; right: 32px; z-index: 5000;
+  background: var(--bg3); border: var(--border);
+  border-radius: var(--r-lg); padding: 16px 22px;
+  font-family: var(--font-ui); font-size: 14px; color: var(--cream);
+  box-shadow: var(--shadow);
+  transform: translateX(120%); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 340px;
+  display: flex; align-items: center; gap: 12px;
+}
+.toast.show { transform: translateX(0); }
+.toast.success::before { content: '✓'; color: var(--green-ok); font-weight: 700; font-size: 16px; }
+.toast.error::before { content: '✕'; color: var(--red-warn); font-weight: 700; font-size: 16px; }
+.toast.info::before { content: '◆'; color: var(--gold); font-size: 12px; }
+
+/* FOOTER */
 footer {
   padding: 48px 0 32px;
   border-top: 1px solid var(--gold-line2);
@@ -517,6 +762,9 @@ footer {
 .footer-tagline { font-size: 14px; color: var(--cream-hint); font-style: italic; margin-bottom: 20px; }
 .footer-copy { font-family: var(--font-ui); font-size: 11px; color: var(--cream-hint); letter-spacing: 0.1em; }
 
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
 .fade-in { animation: fadeIn 0.6s ease forwards; }
 .fade-in-up { animation: fadeInUp 0.7s ease forwards; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -527,7 +775,14 @@ footer {
 .stagger-4 { animation-delay: 0.5s; opacity: 0; }
 .stagger-5 { animation-delay: 0.65s; opacity: 0; }
 
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
 @media (max-width: 900px) {
+  .chat-layout { grid-template-columns: 1fr; }
+  .profile-layout { grid-template-columns: 1fr; }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .masonry-grid { columns: 2 200px; }
   .hero-visual { display: none; }
   .nav-links { display: none; }
   .upload-grid { grid-template-columns: 1fr; }
@@ -535,16 +790,21 @@ footer {
 @media (max-width: 600px) {
   .container { padding: 0 20px; }
   section { padding: 72px 0; }
+  .masonry-grid { columns: 1; }
+  .admin-stats { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
+<!-- CURSOR -->
 <div id="cursor"></div>
 <div id="cursor-dot"></div>
 
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- NAVIGATION -->
 <nav id="nav">
   <div class="nav-logo" onclick="navigate('home')">VOZ <span>VISUAL</span></div>
   <div class="nav-links">
@@ -560,21 +820,10 @@ footer {
   </div>
 </nav>
 
+<!-- PAGE: HOME -->
 <div id="page-home" class="page active">
 
-  <!-- VÍDEO NO TOPO -->
-  <section class="video-hero">
-    <div class="video-hero-inner">
-      <div class="eyebrow" style="margin-bottom:14px">Abertura Cinematográfica</div>
-      <div class="video-frame">
-        <video autoplay muted loop playsinline controls>
-          <source src="https://grok.com/imagine/post/7b006c09-e4b7-4ec6-8bb4-8a7d189438e9" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <!-- HERO ORIGINAL -->
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-lines"></div>
@@ -641,79 +890,49 @@ footer {
       </div>
     </div>
   </section>
-
-  <!-- GALERIA DE ÁUDIO (OUVIR + BAIXAR) -->
-  <section class="audio-section" id="audio">
-    <div class="container">
-      <div class="audio-card card">
-        <div class="eyebrow" style="margin-bottom:14px">Galeria de Áudio</div>
-        <h2 style="font-size:clamp(22px,3vw,30px);margin-bottom:10px">Trilhas e paisagens sonoras</h2>
-        <p>Ouça e baixe áudios que expandem o universo do Voz Visual. Apenas ouvir e baixar — nada de gerar.</p>
-        <div class="audio-list">
-          <div class="audio-item">
-            <div class="audio-item-header">
-              <span>Exemplo de Áudio — Voz Visual</span>
-              <span class="audio-meta">MP3 • 320kbps</span>
-            </div>
-            <audio controls>
-              <source src="audio/exemplo.mp3" type="audio/mpeg">
-            </audio>
-            <div class="audio-actions">
-              <a class="btn btn-ghost btn-sm" href="audio/exemplo.mp3" download>Baixar arquivo</a>
-            </div>
-          </div>
-          <!-- Você pode duplicar o bloco acima para mais áudios -->
-        </div>
-      </div>
-    </div>
-  </section>
-
 </div>
 
-<!-- PÁGINAS GALERIA / MENTOR / ENSINO / COMUNIDADE (estrutura original que você já tinha) -->
+<!-- PAGE: GALERIA -->
 <div id="page-galeria" class="page">
-  <section style="padding-top:110px">
+  <section>
     <div class="container">
       <div class="gallery-header">
         <div>
           <div class="eyebrow">Galeria Viva</div>
-          <h2 style="font-size:clamp(26px,3.4vw,38px);margin-top:14px">Imagens que nasceram de sentimentos</h2>
-          <p id="gallery-count-text" style="margin-top:10px;font-size:15px;color:var(--cream-hint)">0 obras publicadas</p>
+          <h2 style="margin-top:14px">Onde emoções viram quadros</h2>
+          <p id="gallery-count-text" style="margin-top:10px;color:var(--cream-hint)">0 obras publicadas</p>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-outline" id="btn-login-prompt" onclick="navigate('comunidade')">Entrar para publicar</button>
-          <button class="btn btn-gold" id="btn-upload-toggle" style="display:none" onclick="toggleUpload()">◆ Publicar nova arte</button>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="btn-upload-toggle" class="btn btn-gold" style="display:none" onclick="toggleUpload()">◆ Publicar Nova Arte</button>
+          <button id="btn-login-prompt" class="btn btn-outline" style="display:flex" onclick="navigate('comunidade');switchAuthTab('register')">Entre para publicar</button>
         </div>
       </div>
 
-      <div class="upload-panel" id="upload-panel">
-        <div class="upload-zone" onclick="triggerFileInput()">
-          <div class="upload-zone-icon">⬆</div>
-          <div style="font-family:var(--font-ui);font-size:13px;color:var(--cream)">Clique para enviar uma imagem</div>
-          <div style="font-family:var(--font-ui);font-size:11px;color:var(--cream-hint);margin-top:4px">JPG ou PNG até 10MB</div>
-          <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
-        </div>
+      <div id="upload-panel" class="upload-panel">
         <div class="upload-grid">
+          <div>
+            <div class="upload-zone" onclick="triggerFileInput()">
+              <div class="upload-zone-icon">⬆</div>
+              <div style="font-family:var(--font-ui);font-size:14px;color:var(--cream)">Clique para enviar sua imagem</div>
+              <div style="font-family:var(--font-ui);font-size:12px;color:var(--cream-hint);margin-top:6px">PNG ou JPG — ideal em formato 16:9</div>
+              <input id="file-input" type="file" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+            </div>
+            <img id="upload-preview" style="width:100%;border-radius:var(--r);display:none;border:1px solid var(--gold-line2)">
+          </div>
           <div>
             <div class="inp-group">
               <label>Título da Obra</label>
-              <input class="inp" id="upload-title" placeholder="Ex: Solidão Neon">
+              <input class="inp" id="upload-title" placeholder="Ex: Solidão Neon em Tóquio">
             </div>
             <div class="inp-group">
               <label>Prompt / Descrição</label>
               <textarea class="inp" id="upload-prompt" placeholder="Descreva o sentimento, a cena, a atmosfera..."></textarea>
             </div>
-          </div>
-          <div>
             <div class="inp-group">
-              <label>Assinatura (opcional)</label>
-              <input class="inp" id="upload-author-override" placeholder="Seu nome artístico (se quiser diferente do cadastro)">
+              <label>Assinatura</label>
+              <input class="inp" id="upload-author-override" placeholder="Deixe em branco para usar seu nome de perfil">
             </div>
-            <div style="border:1px dashed var(--gold-line2);border-radius:var(--r);padding:10px;height:180px;display:flex;align-items:center;justify-content:center">
-              <img id="upload-preview" style="max-width:100%;max-height:100%;display:none" alt="Prévia da imagem">
-              <div id="upload-preview-placeholder" style="font-size:12px;color:var(--cream-hint);text-align:center">A prévia da imagem aparece aqui</div>
-            </div>
-            <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:12px" onclick="publishArt()">◆ Publicar na Galeria Viva</button>
+            <button class="btn btn-gold" style="margin-top:4px" onclick="publishArt()">◆ Publicar na Galeria Viva</button>
           </div>
         </div>
       </div>
@@ -723,14 +942,10 @@ footer {
   </section>
 </div>
 
+<!-- PAGE: MENTOR -->
 <div id="page-mentor" class="page">
-  <section style="padding-top:110px">
+  <section>
     <div class="container">
-      <div class="section-header">
-        <div class="eyebrow" style="justify-content:center">Mentor Filosófico</div>
-        <h2>Converse com o olhar por trás das imagens</h2>
-        <p>Um espaço para transformar emoções em linguagem visual cinematográfica.</p>
-      </div>
       <div class="chat-layout">
         <div class="chat-sidebar">
           <div class="mentor-profile">
@@ -744,22 +959,32 @@ footer {
           </div>
           <div class="chat-prompts">
             <h4>Comece por aqui</h4>
-            <button class="prompt-chip" onclick="setPrompt('Quero transformar uma sensação de vazio em uma imagem cinematográfica.')">Quero transformar uma sensação de vazio em uma imagem</button>
-            <button class="prompt-chip" onclick="setPrompt('Me ajude a criar um prompt sobre despedida silenciosa em um apartamento pequeno.')">Despedida silenciosa em um apartamento pequeno</button>
-            <button class="prompt-chip" onclick="setPrompt('Quero uma imagem sobre esperança depois do caos, em estilo Tarkovsky.')">Esperança depois do caos, em estilo Tarkovsky</button>
+            <button class="prompt-chip" onclick="setPrompt('Quero transformar uma sensação de vazio em uma imagem')">
+              “Quero transformar uma sensação de vazio em uma imagem”
+            </button>
+            <button class="prompt-chip" onclick="setPrompt('Descreva uma despedida silenciosa em um apartamento pequeno, como se fosse um filme')">
+              “Despedida silenciosa em um apartamento pequeno”
+            </button>
+            <button class="prompt-chip" onclick="setPrompt('Quero uma imagem que represente esperança depois do caos, em estilo Tarkovsky')">
+              “Esperança depois do caos, em estilo Tarkovsky”
+            </button>
+            <button class="prompt-chip" onclick="setPrompt('Transforme minha ansiedade em um frame cinematográfico, com luz e sombra')">
+              “Transformar ansiedade em um frame cinematográfico”
+            </button>
           </div>
         </div>
         <div class="chat-window">
           <div class="chat-topbar">
             <div class="chat-topbar-avatar">◆</div>
             <div class="chat-topbar-info">
-              <div class="chat-topbar-name">Mentor Voz Visual</div>
+              <div class="chat-topbar-name">Mentor Filosófico</div>
               <div class="chat-topbar-status">Online — refletindo com você</div>
             </div>
+            <button class="btn-icon" onclick="clearChat()" title="Limpar conversa">⟲</button>
           </div>
           <div class="chat-messages" id="chat-messages"></div>
           <div class="chat-input-area">
-            <textarea id="chat-input" class="chat-inp" placeholder="Conte o que você está sentindo ou o que quer transformar em imagem..." oninput="autoResize(this)" onkeydown="handleChatKey(event)"></textarea>
+            <textarea id="chat-input" class="chat-inp" placeholder="Conte o que você está sentindo, vendo ou imaginando..." oninput="autoResize(this)" onkeydown="handleChatKey(event)"></textarea>
             <button id="chat-send-btn" class="chat-send" onclick="sendMessage()">➤</button>
           </div>
         </div>
@@ -768,77 +993,86 @@ footer {
   </section>
 </div>
 
+<!-- PAGE: ENSINO -->
 <div id="page-ensino" class="page">
-  <section style="padding-top:110px">
+  <section>
     <div class="container">
       <div class="section-header">
-        <div class="eyebrow" style="justify-content:center">Ensino</div>
-        <h2>Formações para quem leva a arte a sério</h2>
-        <p>Cursos, laboratórios e coleções pensados para quem quer dominar a linguagem visual com IA.</p>
+        <div class="eyebrow" style="justify-content:center">Ensino & Formação</div>
+        <h2>Aprenda a dirigir imagens com a alma</h2>
+        <p>Programas pensados para quem quer transformar sensações em linguagem visual consistente, profunda e cinematográfica.</p>
       </div>
-      <div id="ensino-locked-banner" class="card" style="padding:20px 22px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
-        <div style="font-size:14px;color:var(--cream-hint);max-width:520px">
-          Crie uma conta gratuita para destravar detalhes dos cursos, cronograma e materiais complementares.
+
+      <div id="ensino-locked-banner" class="card" style="padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+        <div>
+          <div style="font-family:var(--font-ui);font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream-hint);margin-bottom:6px">Acesso antecipado</div>
+          <div style="font-family:var(--font-disp);font-size:18px;color:var(--cream);letter-spacing:0.06em;margin-bottom:4px">Entre na comunidade para destravar os detalhes dos cursos</div>
+          <div style="font-family:var(--font-ui);font-size:13px;color:var(--cream-hint)">Ao criar sua conta gratuita, você recebe prioridade nas primeiras turmas.</div>
         </div>
-        <button class="btn btn-gold btn-sm" onclick="navigate('comunidade');switchAuthTab('register')">◆ Criar Conta</button>
+        <button class="btn btn-gold" onclick="navigate('comunidade');switchAuthTab('register')">◆ Criar Conta Gratuita</button>
       </div>
+
       <div class="products-grid" id="products-grid"></div>
     </div>
   </section>
 </div>
 
+<!-- PAGE: COMUNIDADE -->
 <div id="page-comunidade" class="page">
-  <section style="padding-top:110px">
+  <section>
     <div class="container">
-      <div id="view-auth">
-        <div class="auth-container">
-          <div class="card auth-card">
-            <div class="auth-logo">
-              <div class="auth-logo-mark">VOZ VISUAL</div>
-            </div>
-            <h2 class="auth-title">Entre na Comunidade</h2>
-            <div class="auth-sub">Acompanhe lançamentos, receba materiais e participe da construção do Voz Visual.</div>
-            <div class="auth-tabs">
-              <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
-              <button id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Criar Conta</button>
-            </div>
-            <div class="auth-form active" id="form-login">
-              <div class="inp-group">
-                <label>E-mail</label>
-                <input class="inp" id="login-email" type="email" placeholder="seu@email.com">
-              </div>
-              <div class="inp-group">
-                <label>Senha</label>
-                <input class="inp" id="login-password" type="password" placeholder="Sua senha">
-              </div>
-              <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doLogin()">◆ Entrar</button>
-              <div class="auth-note">
-                Dica: use <strong>admin@vozvisual.com</strong> para ver o painel administrativo.
-              </div>
-            </div>
+      <div id="view-auth" class="auth-container">
+        <div class="card auth-card">
+          <div class="auth-logo">
+            <div class="auth-logo-mark">VOZ VISUAL</div>
+          </div>
+          <div class="auth-title">Entre no Círculo</div>
+          <div class="auth-sub">Crie sua conta gratuita para acessar a comunidade, publicar na galeria e receber novidades.</div>
 
-            <div class="auth-form" id="form-register">
-              <div class="inp-group">
-                <label>Nome Completo</label>
-                <input class="inp" id="reg-name" placeholder="Como você quer ser chamado(a)">
-              </div>
-              <div class="inp-group">
-                <label>E-mail</label>
-                <input class="inp" id="reg-email" type="email" placeholder="seu@email.com">
-              </div>
-              <div class="inp-group">
-                <label>Senha</label>
-                <input class="inp" id="reg-password" type="password" placeholder="Mínimo 6 caracteres">
-              </div>
-              <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doRegister()">◆ Criar Conta Gratuita</button>
-              <div class="auth-note">
-                Ao criar conta, você concorda com os termos de uso do Voz Visual
-              </div>
+          <div class="auth-tabs">
+            <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
+            <button id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Criar Conta</button>
+          </div>
+
+          <!-- LOGIN -->
+          <div class="auth-form active" id="form-login">
+            <div class="inp-group">
+              <label>E-mail</label>
+              <input class="inp" id="login-email" type="email" placeholder="seu@email.com">
+            </div>
+            <div class="inp-group">
+              <label>Senha</label>
+              <input class="inp" id="login-password" type="password" placeholder="Sua senha">
+            </div>
+            <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doLogin()">◆ Entrar</button>
+            <div class="auth-note">
+              Dica: use qualquer e-mail para simular sua conta. Para painel admin, use <strong>admin@vozvisual.com</strong>.
+            </div>
+          </div>
+
+          <!-- REGISTER -->
+          <div class="auth-form" id="form-register">
+            <div class="inp-group">
+              <label>Nome Completo</label>
+              <input class="inp" id="reg-name" placeholder="Como você quer ser chamado(a)">
+            </div>
+            <div class="inp-group">
+              <label>E-mail</label>
+              <input class="inp" id="reg-email" type="email" placeholder="seu@email.com">
+            </div>
+            <div class="inp-group">
+              <label>Senha</label>
+              <input class="inp" id="reg-password" type="password" placeholder="Mínimo 6 caracteres">
+            </div>
+            <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" onclick="doRegister()">◆ Criar Conta Gratuita</button>
+            <div class="auth-note">
+              Ao criar conta, você concorda com os termos de uso do Voz Visual
             </div>
           </div>
         </div>
       </div>
 
+      <!-- PERFIL -->
       <div id="view-profile" style="display:none;padding-top:20px">
         <div class="profile-layout">
           <div>
@@ -882,6 +1116,7 @@ footer {
         </div>
       </div>
 
+      <!-- ADMIN -->
       <div id="view-admin" style="display:none;padding-top:20px">
         <div class="admin-layout">
           <div style="margin-bottom:40px">
@@ -933,7 +1168,9 @@ footer {
   </section>
 </div>
 
+<!-- JAVASCRIPT -->
 <script>
+// ───── SYSTEM PROMPT ─────
 const MENTOR_SYSTEM = `Você é o Mentor Filosófico do Voz Visual — uma entidade que existe na interseção entre arte, emoção e olhar cinematográfico.
 
 Identidade e modo de ser:
@@ -951,6 +1188,7 @@ Formato obrigatório:
 
 Idioma: sempre português brasileiro, rico, elegante e cinematográfico.`;
 
+// ───── STATE ─────
 let currentPage = 'home';
 let currentUser = null;
 let subscribers = [];
@@ -959,6 +1197,7 @@ let chatHistory = [];
 let uploadedImage = null;
 let isLoadingChat = false;
 
+// ───── INIT ─────
 document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initNav();
@@ -970,6 +1209,7 @@ document.addEventListener('DOMContentLoaded', () => {
   checkStoredUser();
 });
 
+// ───── CURSOR ─────
 function initCursor() {
   const cursor = document.getElementById('cursor');
   const dot = document.getElementById('cursor-dot');
@@ -985,6 +1225,7 @@ function initCursor() {
   });
 }
 
+// ───── NAV ─────
 function initNav() {
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
@@ -1004,6 +1245,7 @@ function navigate(page) {
   if (page === 'ensino') renderProducts();
 }
 
+// ───── DATA ─────
 function loadData() {
   const stored = localStorage.getItem('vv_subscribers');
   subscribers = stored ? JSON.parse(stored) : [
@@ -1031,6 +1273,7 @@ function saveData() {
   localStorage.setItem('vv_gallery', JSON.stringify(galleryItems));
 }
 
+// ───── YOUTUBE ─────
 const ytData = [
   { title: 'Como Transformar Emoções em Arte Visual com IA', views: '12K', duration: '18:42', hue: 260 },
   { title: 'Prompts Cinematográficos — Guia Completo para Iniciantes', views: '8.4K', duration: '24:15', hue: 45 },
@@ -1056,6 +1299,7 @@ function renderYT() {
   `).join('');
 }
 
+// ───── GALLERY ─────
 const heightClasses = [280, 320, 260, 360, 300, 340, 290, 380];
 
 function renderGallery() {
@@ -1066,6 +1310,7 @@ function renderGallery() {
   const heroCount = document.getElementById('gallery-count');
   if (heroCount) heroCount.textContent = galleryItems.length + 840;
 
+  // Auth-based UI
   const btnUpload = document.getElementById('btn-upload-toggle');
   const btnLoginPrompt = document.getElementById('btn-login-prompt');
   if (btnUpload && btnLoginPrompt) {
@@ -1160,8 +1405,6 @@ function handleFileSelect(e) {
     preview.src = uploadedImage;
     preview.style.display = 'block';
     document.querySelector('.upload-zone-icon').style.display = 'none';
-    const placeholder = document.getElementById('upload-preview-placeholder');
-    if (placeholder) placeholder.style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
@@ -1192,13 +1435,12 @@ function publishArt() {
   const preview = document.getElementById('upload-preview');
   preview.style.display = 'none';
   document.querySelector('.upload-zone-icon').style.display = 'block';
-  const placeholder = document.getElementById('upload-preview-placeholder');
-  if (placeholder) placeholder.style.display = 'block';
   document.getElementById('upload-panel').classList.remove('open');
   renderGallery();
   showToast('Arte publicada na Galeria Viva! ◆', 'success');
 }
 
+// ───── CHAT ─────
 const MENTOR_WELCOME = `Bem-vindo ao espaço entre o sentimento e o visível.
 
 Sou o Mentor do Voz Visual — não um assistente comum, mas um espelho filosófico treinado para refletir o que você carrega de mais profundo e transformá-lo em arte que existe no mundo.
@@ -1231,6 +1473,45 @@ function handleChatKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
 
+function renderMessages(msgs) {
+  const container = document.getElementById('chat-messages');
+  if (!container) return;
+  container.innerHTML = '';
+  msgs.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'msg ' + (m.role === 'user' ? 'user' : 'assistant');
+    div.innerHTML = `
+      <div class="msg-avatar">${m.role === 'user' ? 'Você' : '◆'}</div>
+      <div class="msg-bubble">${m.content.replace(/\n/g,'<br>')}</div>
+    `;
+    container.appendChild(div);
+  });
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chat-messages');
+  if (!container) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'typing-indicator';
+  wrap.id = 'typing-indicator';
+  wrap.innerHTML = `
+    <div class="msg-avatar">◆</div>
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  container.appendChild(wrap);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
 async function sendMessage() {
   if (isLoadingChat) return;
   const inp = document.getElementById('chat-input');
@@ -1259,100 +1540,66 @@ async function sendMessage() {
       })
     });
     const data = await res.json();
-    const reply = data.content?.[0]?.text || 'Algo deu errado ao tentar responder. Tente novamente em alguns instantes.';
-    chatHistory.push({ role: 'assistant', content: reply });
+    hideTyping();
+    const reply = data.content?.[0]?.text || 'Senti algo aqui, mas não consegui formular em palavras. Conte-me mais uma vez, com outra imagem.';
+    const assistantMsg = { role: 'assistant', content: reply };
+    chatHistory.push(assistantMsg);
     renderMessages([...chatHistory]);
   } catch (e) {
-    showToast('Erro ao falar com o Mentor. Verifique a API.', 'error');
-  } finally {
     hideTyping();
-    document.getElementById('chat-send-btn').disabled = false;
+    showToast('Não consegui responder agora. Tente novamente em alguns instantes.', 'error');
+  } finally {
     isLoadingChat = false;
+    document.getElementById('chat-send-btn').disabled = false;
   }
 }
 
-function renderMessages(msgs) {
-  const box = document.getElementById('chat-messages');
-  if (!box) return;
-  box.innerHTML = msgs.map(m => {
-    const isUser = m.role === 'user';
-    return `
-      <div class="msg ${isUser ? 'user' : 'assistant'}">
-        <div class="msg-avatar">${isUser ? 'Você' : '◆'}</div>
-        <div class="msg-bubble">${m.content.replace(/\n/g,'<br>')}</div>
-      </div>
-    `;
-  }).join('');
-  box.scrollTop = box.scrollHeight;
-}
-
-function showTyping() {
-  const box = document.getElementById('chat-messages');
-  if (!box) return;
-  const el = document.createElement('div');
-  el.id = 'typing-indicator';
-  el.className = 'typing-indicator';
-  el.innerHTML = `
-    <div class="typing-bubble">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-    </div>
-  `;
-  box.appendChild(el);
-  box.scrollTop = box.scrollHeight;
-}
-
-function hideTyping() {
-  const el = document.getElementById('typing-indicator');
-  if (el) el.remove();
-}
-
+// ───── PRODUCTS DATA ─────
 const productsData = [
   {
-    title: 'Coleção Emoções — Volume I',
-    desc: 'Uma jornada guiada por 30 emoções fundamentais, cada uma traduzida em prompts cinematográficos prontos para uso.',
-    icon: '🎞️',
-    includes: [
-      '30 prompts cinematográficos comentados',
-      'Análise filosófica de cada emoção',
-      'Sugestões de variações para IA',
-      'PDF + acesso online'
-    ],
-    price: '297',
-    priceNote: 'Pagamento único',
-    badge: 'Mais procurado',
-    badgeClass: ''
-  },
-  {
-    title: 'Laboratório Voz Visual',
-    desc: 'Encontros ao vivo para destrinchar projetos dos membros, revisar prompts e construir séries visuais consistentes.',
-    icon: '🧪',
-    includes: [
-      '2 encontros mensais ao vivo',
-      'Feedback direto em projetos',
-      'Gravações disponíveis',
-      'Comunidade fechada'
-    ],
-    price: '97/mês',
-    priceNote: 'Assinatura recorrente',
-    badge: 'Novo',
-    badgeClass: 'new'
-  },
-  {
-    title: 'Mentoria 1:1 — Direção Visual',
-    desc: 'Acompanhamento individual para quem quer transformar seu olhar em uma assinatura visual reconhecível.',
+    title: 'Direção de Emoções em Imagens',
+    desc: 'Um programa para quem quer aprender a traduzir estados internos em composições visuais consistentes, profundas e cinematográficas — sem depender de sorte nos prompts.',
     icon: '🎬',
+    badge: 'TURMA PILOTO',
+    badgeClass: 'new',
     includes: [
-      '4 encontros individuais',
-      'Análise de portfólio',
-      'Plano de desenvolvimento visual',
-      'Suporte assíncrono por 30 dias'
+      'Fundamentos de linguagem cinematográfica aplicada à IA',
+      'Construção de prompts emocionais em camadas',
+      'Análise de cenas de Tarkovsky, Wong Kar-wai e outros',
+      'Feedback guiado em imagens dos alunos'
     ],
-    price: '2.400',
-    priceNote: 'Vagas limitadas',
-    badge: 'Premium',
-    badgeClass: ''
+    price: '1.280',
+    priceNote: 'Investimento único (R$)'
+  },
+  {
+    title: 'Laboratório de Coleções Visuais',
+    desc: 'Para quem quer criar séries de imagens com unidade estética e narrativa — coleções que parecem ter sido dirigidas por um mesmo olhar.',
+    icon: '🧪',
+    badge: 'EM BREVE',
+    badgeClass: '',
+    includes: [
+      'Desenvolvimento de identidade visual autoral',
+      'Criação de coleções temáticas (memória, vazio, desejo...)',
+      'Roteiro visual: do conceito ao quadro final',
+      'Sessões de revisão coletiva'
+    ],
+    price: '980',
+    priceNote: 'Lote antecipado previsto (R$)'
+  },
+  {
+    title: 'Mentoria Voz Visual',
+    desc: 'Acompanhamento individual para quem quer alinhar filosofia, estética e estratégia criativa — seja para projetos pessoais, artísticos ou profissionais.',
+    icon: '◆',
+    badge: 'SELEÇÃO',
+    badgeClass: '',
+    includes: [
+      'Encontros individuais ao vivo',
+      'Análise de portfólio visual e direção criativa',
+      'Construção de um projeto autoral guiado',
+      'Orientação sobre posicionamento e narrativa de artista'
+    ],
+    price: 'Sob consulta',
+    priceNote: 'Vagas limitadas'
   }
 ];
 
@@ -1372,7 +1619,7 @@ function renderProducts() {
         ${p.includes.map(i => `<div class="include-item">${i}</div>`).join('')}
       </div>
       <div class="product-footer">
-        <div class="product-price"><span>${p.priceNote}</span>R$${p.price}</div>
+        <div class="product-price"><span>${p.priceNote}</span>${p.price}</div>
         ${currentUser
           ? `<button class="btn btn-gold" onclick="showToast('Redirecionando para o checkout...','info')">Adquirir</button>`
           : `<button class="btn btn-outline" onclick="navigate('comunidade');switchAuthTab('register')">Ver Detalhes</button>`
@@ -1382,6 +1629,7 @@ function renderProducts() {
   `).join('');
 }
 
+// ───── AUTH ─────
 function checkStoredUser() {
   const stored = localStorage.getItem('vv_current_user');
   if (stored) {
@@ -1460,6 +1708,7 @@ function switchAuthTab(tab) {
   document.getElementById('form-register').classList.toggle('active', tab === 'register');
 }
 
+// ───── COMMUNITY PAGE ─────
 function renderCommunityPage() {
   const vAuth = document.getElementById('view-auth');
   const vProfile = document.getElementById('view-profile');
@@ -1512,6 +1761,7 @@ function renderProfile() {
 }
 
 function renderAdmin() {
+  // stats
   const statsEl = document.getElementById('admin-stats');
   statsEl.innerHTML = [
     { label: 'Total de Inscritos', value: subscribers.length, change: '↑ 12% este mês' },
@@ -1526,8 +1776,10 @@ function renderAdmin() {
     </div>
   `).join('');
 
+  // email target
   document.getElementById('email-target').innerHTML = `Enviando para <strong style="color:var(--gold)">${subscribers.length}</strong> inscritos`;
 
+  // subscribers table
   const tbody = document.getElementById('subscribers-tbody');
   tbody.innerHTML = subscribers.map(s => `
     <tr>
@@ -1548,6 +1800,7 @@ function sendBroadcast() {
   document.getElementById('email-body').value = '';
 }
 
+// ───── TABS ─────
 function showTab(tabId) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1555,6 +1808,7 @@ function showTab(tabId) {
   event.target.classList.add('active');
 }
 
+// ───── TOAST ─────
 function showToast(msg, type = 'info') {
   const toast = document.getElementById('toast');
   toast.textContent = '';
@@ -1566,4 +1820,3 @@ function showToast(msg, type = 'info') {
 </script>
 </body>
 </html>
-
