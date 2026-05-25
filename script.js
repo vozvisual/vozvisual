@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDpXbQbaFdxyDzSD6c77TKa7t0tD1W0Otk",
+  apiKey: "AIzaSyAq5iPaCDPbb9Gl_pJDamyMUpjdRr9hIkE",
   authDomain: "vozvisual-b4983.firebaseapp.com",
   projectId: "vozvisual-b4983",
   storageBucket: "vozvisual-b4983.firebasestorage.app",
