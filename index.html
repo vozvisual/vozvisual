@@ -1,535 +1,1532 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Voz Visual — One Page Cinemático</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VOZ VISUAL — Portal Cinematográfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* ── Fundos ── */
+  --bg:       #000008;
+  --bg2:      #03030f;
+  --bg3:      #07071a;
+  --bg4:      #0b0b22;
+  --surface:  #0f0f28;
+  /* ── Azul neon principal (texto, logo, destaque) ── */
+  --gold:     #00d4ff;
+  --gold2:    #55e8ff;
+  --gold-dim: #0077aa;
+  /* ── Glows e borders ── */
+  --glow:     rgba(0,212,255,0.12);
+  --glow2:    rgba(0,212,255,0.06);
+  --line:     rgba(0,212,255,0.28);
+  --line2:    rgba(0,212,255,0.10);
+  /* ── Magenta/Rosa (acento secundário) ── */
+  --sky:      #ff00aa;
+  --sky2:     #e040fb;
+  /* ── Laranja/Vermelho (acento terciário) ── */
+  --orange:   #ff6a00;
+  --orange2:  #ff4500;
+  /* ── Texto ── */
+  --cream:    #e8f4ff;
+  --dim:      #7090b0;
+  --hint:     #304560;
+  /* ── Status ── */
+  --red:      #ff4444;
+  --green:    #00ff88;
+  /* ── Radius / fonts ── */
+  --r:        10px;
+  --r2:       16px;
+  --ff-d:     'Cinzel',serif;
+  --ff-b:     'Crimson Pro',serif;
+  --ff-u:     'DM Sans',sans-serif;
+}
 
-  <!-- Estilo Cinemático Voz Visual -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* ── NEON EXTRAS ───────────────────────────── */
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0%, #020617 40%, #000 100%);
-      color: #e5e7eb;
-      padding: 0;
-      margin: 0;
-      overflow-x: hidden;
-    }
+/* Animated scan line */
+body::after{
+  content:'';position:fixed;inset:0;z-index:8998;pointer-events:none;
+  background:
+    radial-gradient(ellipse 110% 110% at 50% 50%,transparent 45%,rgba(0,0,8,0.65) 100%),
+    linear-gradient(180deg,transparent 0%,transparent 49.8%,rgba(0,212,255,.015) 50%,transparent 50.2%,transparent 100%);
+  background-size:100% 100%, 100% 4px;
+  animation: scanline 8s linear infinite;
+}
+@keyframes scanline{
+  0%{background-position:0 0, 0 -100%}
+  100%{background-position:0 0, 0 100vh}
+}
 
-    /* HEADER */
-    header {
-      padding: 20px 6vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(15,23,42,0.75);
-      border-bottom: 1px solid rgba(148,163,184,0.25);
-      backdrop-filter: blur(14px);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
+/* Neon glow on active nav */
+.nav-btn.on{
+  box-shadow: 0 0 12px rgba(0,212,255,.15);
+}
 
-    .logo {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #38bdf8;
-      text-transform: uppercase;
-    }
+/* Eyebrow lines — neon */
+.eyebrow::before,.eyebrow::after{background:linear-gradient(90deg,transparent,rgba(0,212,255,.4))}
 
-    .auth-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* Hero H1 em — magenta variant */
+.h1 em{
+  background: linear-gradient(90deg, #00d4ff, #ff00aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style:italic;font-weight:300;
+}
 
-    .btn-google {
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      background: rgba(15,23,42,0.8);
-      color: #e5e7eb;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
+/* Hero CTA second btn hover — magenta */
+.btn-out:hover{
+  background:rgba(255,0,170,.08);
+  border-color:rgba(255,0,170,.5);
+  color:#ff55cc;
+  box-shadow:0 0 20px rgba(255,0,170,.15);
+}
 
-    .user-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.6);
-      font-size: 0.8rem;
-    }
+/* m-online — neon green */
+.m-online{color:#00ffaa}
+.m-online::before{background:#00ffaa;box-shadow:0 0 7px #00ffaa}
 
-    .user-chip img {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-    }
+/* product badge NEW — magenta */
+.prod-badge.new{background:linear-gradient(90deg,#aa0066,#ff00aa);color:#fff}
 
-    .badge-admin {
-      font-size: 0.65rem;
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(248,250,252,0.08);
-      border: 1px solid rgba(248,250,252,0.25);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+/* scrollbar neon */
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,.35);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,.6)}
 
-    /* CONTAINER PRINCIPAL */
-    main {
-      padding: 40px 6vw 80px;
-      max-width: 1400px;
-      margin: auto;
-    }
+/* toast border neon */
+.toast{border-color:rgba(0,212,255,.3)}
+.toast.ok{border-color:rgba(0,255,136,.3)}
+.toast.err{border-color:rgba(255,68,68,.3)}
 
-    /* BLOCO DO GERADOR */
-    .generator-box {
-      background: rgba(15,23,42,0.85);
-      border: 1px solid rgba(148,163,184,0.35);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
+/* card border default — subtle neon */
+.card{border-color:rgba(0,212,255,.1)}
 
-    .generator-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #38bdf8;
-      margin-bottom: 10px;
-    }
+/* masonry item border */
+.m-item{border-color:rgba(0,212,255,.1)}
 
-    .generator-sub {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      margin-bottom: 20px;
-    }
+/* gen-box border */
+.gen-box{border-color:rgba(0,212,255,.15)}
 
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(148,163,184,0.4);
-      background: rgba(15,23,42,0.95);
-      color: #e5e7eb;
-      font-size: 0.9rem;
-      margin-bottom: 14px;
-    }
+/* chat-box border */
+.chat-box{border-color:rgba(0,212,255,.15)}
 
-    button {
-      padding: 10px 20px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
+/* Profile card stats number */
+.ps-n{color:var(--gold);text-shadow:0 0 14px rgba(0,212,255,.3)}
 
-    .btn-primary {
-      background: linear-gradient(135deg, #f97316, #facc15);
-      color: #0f172a;
-    }
+/* Like count neon */
+.like-btn.on .like-heart{color:var(--gold);text-shadow:0 0 8px rgba(0,212,255,.5)}
 
-    .btn-secondary {
-      background: rgba(15,23,42,0.8);
-      border: 1px solid rgba(148,163,184,0.6);
-      color: #e5e7eb;
-    }
+/* YT play button hover magenta variant */
+.yt-card:hover .yt-play{background:var(--gold2);box-shadow:0 0 20px rgba(0,212,255,.3)}
 
-    /* PREVIEW DA IMAGEM GERADA */
-    .image-preview {
-      margin-top: 20px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.4);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-    }
+/* Prompt highlight in chat — cyan */
+.msg-bbl .ph{border-left:2px solid rgba(0,212,255,.4)}
 
-    .image-preview img {
-      max-width: 100%;
-      border-radius: 14px;
-      margin-top: 10px;
-    }
+/* UPLOAD zone border neon */
+#upload-zone,.upload-zone{border-color:rgba(0,212,255,.25)}
 
-    /* GALERIA MOSAICO (PINTEREST) */
-    .gallery-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #38bdf8;
-      margin-bottom: 20px;
-    }
+/* INPUT focus neon glow */
+.inp:focus{border-color:rgba(0,212,255,.5);box-shadow:0 0 12px rgba(0,212,255,.08)}
 
-    .masonry {
-      column-count: 3;
-      column-gap: 16px;
-    }
+/* SECTION background subtle neon */
+section{background:transparent}
 
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 16px;
-      background: rgba(15,23,42,0.85);
-      border: 1px solid rgba(148,163,184,0.35);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-    }
+/* HERO ORB inner ring rotate */
+.hero-orb{animation:orbRotate 40s linear infinite}
+@keyframes orbRotate{from{transform:translateY(-50%) rotate(0deg)} to{transform:translateY(-50%) rotate(360deg)}}
 
-    .masonry-item img {
-      width: 100%;
-      display: block;
-    }
+/* Footer rule */
+footer{border-top-color:rgba(0,212,255,.15)}
 
-    .masonry-info {
-      padding: 12px;
-      font-size: 0.8rem;
-      color: #9ca3af;
-    }
+/* ADM stat change color */
+.adm-stat-c{color:#00ffaa}
 
-    .masonry-title {
-      font-size: 0.95rem;
-      color: #e5e7eb;
-      margin-bottom: 4px;
-    }
+/* CHIP active */
+.chip{border-color:rgba(0,212,255,.1)}
 
-    .masonry-actions {
-      margin-top: 8px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-    }
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--ff-b);
+  font-size:16px;
+  line-height:1.75;
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* grain */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  opacity:1;mix-blend-mode:overlay;
+}
+/* vignette */
+body::after{
+  content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;
+  background:radial-gradient(ellipse 110% 110% at 50% 50%,transparent 45%,rgba(4,4,10,0.65) 100%);
+}
 
-    .like-btn {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,250,252,0.18);
-      background: rgba(15,23,42,0.9);
-      color: #f97316;
-      cursor: pointer;
-    }
+/* cursor */
+#cv{position:fixed;z-index:9999;width:14px;height:14px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .18s;mix-blend-mode:screen}
+#cv.h{width:30px;height:30px;background:var(--glow)}
+#cd{position:fixed;z-index:9999;width:4px;height:4px;background:var(--gold);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
 
-    .admin-remove {
-      color: #fca5a5;
-      cursor: pointer;
-    }
+/* scrollbar */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
 
-    @media (max-width: 900px) {
-      .masonry {
-        column-count: 2;
-      }
-    }
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+h1,h2,h3{font-family:var(--ff-d);font-weight:600;line-height:1.12;letter-spacing:.05em;color:var(--cream)}
+p{color:var(--dim)}
+.eyebrow{font-family:var(--ff-u);font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.eyebrow::before,.eyebrow::after{content:'';flex:1;max-width:36px;height:1px;background:var(--line)}
 
-    @media (max-width: 600px) {
-      .masonry {
-        column-count: 1;
-      }
-    }
-  </style>
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.wrap{max-width:1260px;margin:0 auto;padding:0 28px}
+section{padding:88px 0}
+.sec-hd{text-align:center;margin-bottom:56px}
+.sec-hd h2{font-size:clamp(26px,4vw,40px);margin-top:14px}
+.sec-hd p{font-size:17px;max-width:520px;margin:12px auto 0}
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn{font-family:var(--ff-u);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:999px;cursor:pointer;transition:all .22s;display:inline-flex;align-items:center;gap:7px;padding:11px 26px}
+.btn-gold{background:linear-gradient(120deg,#0077aa,#00d4ff,#0099cc,#00d4ff);background-size:200%;color:#000010;text-shadow:none}
+.btn-gold:hover{background-position:100%;box-shadow:0 0 28px rgba(0,212,255,.45);transform:translateY(-1px)}
+.btn-out{background:transparent;color:var(--gold);border:1px solid var(--line);padding:10px 24px}
+.btn-out:hover{background:var(--glow);border-color:var(--gold)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--line2);color:var(--dim);padding:9px 20px;font-size:11px}
+.btn-ghost:hover{border-color:var(--line);color:var(--cream)}
+.btn-sm{padding:7px 16px !important;font-size:10px !important}
+.btn-icon{background:var(--bg3);border:1px solid var(--line2);color:var(--dim);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-icon:hover{border-color:var(--line);color:var(--gold)}
+
+/* ══════════════════════════════════════════
+   CARD
+══════════════════════════════════════════ */
+.card{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);transition:border-color .25s,box-shadow .25s}
+.card:hover{border-color:rgba(0,212,255,.35);box-shadow:0 6px 40px rgba(0,212,255,.06),0 0 0 1px rgba(0,212,255,.04)}
+
+/* INPUTS */
+.inp{width:100%;background:var(--bg2);border:1px solid #202035;border-radius:var(--r);color:var(--cream);padding:11px 15px;font-family:var(--ff-u);font-size:13px;outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--gold-dim)}
+.inp::placeholder{color:var(--hint)}
+textarea.inp{resize:vertical;min-height:90px;font-family:var(--ff-b);font-size:15px}
+.fgroup{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fgroup label{font-family:var(--ff-u);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--hint)}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:800;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;transition:all .3s;border-bottom:1px solid transparent}
+#nav.scrolled{background:rgba(4,4,10,.93);backdrop-filter:blur(20px);border-bottom-color:var(--line2)}
+.nav-logo{font-family:var(--ff-d);font-size:17px;font-weight:700;letter-spacing:.2em;color:var(--gold);cursor:pointer;user-select:none;text-shadow:0 0 20px rgba(0,212,255,.5)}
+.nav-logo span{color:#c0e8ff}
+.nav-links{display:flex;gap:2px}
+.nav-btn{font-family:var(--ff-u);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:7px 15px;border-radius:999px;cursor:pointer;background:none;border:none;transition:all .2s}
+.nav-btn:hover,.nav-btn.on{color:var(--gold);background:rgba(0,212,255,.08);text-shadow:0 0 10px rgba(0,212,255,.3)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.u-chip{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;background:var(--bg3);border:1px solid var(--line2);font-family:var(--ff-u);font-size:12px;color:var(--dim)}
+.u-chip img{width:20px;height:20px;border-radius:50%}
+.u-chip .adm{font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--gold);padding:1px 7px;border-radius:999px;text-shadow:0 0 8px rgba(0,212,255,.4)}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;z-index:9500;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);padding:14px 20px;font-family:var(--ff-u);font-size:13px;color:var(--cream);box-shadow:0 8px 40px rgba(0,0,0,.5);transform:translateX(120%);transition:transform .32s cubic-bezier(.34,1.56,.64,1);max-width:320px;display:flex;align-items:center;gap:10px}
+.toast.show{transform:none}
+.toast::before{font-size:15px;flex-shrink:0}
+.toast.ok::before{content:'✓';color:var(--green)}
+.toast.err::before{content:'✕';color:var(--red)}
+.toast.inf::before{content:'◆';color:var(--gold);font-size:11px}
+
+/* RULE */
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.35),rgba(255,0,170,.2),rgba(0,212,255,.35),transparent)}
+.orn{text-align:center;font-family:var(--ff-d);color:var(--gold);font-size:13px;letter-spacing:.3em;padding:6px 0;text-shadow:0 0 12px rgba(0,212,255,.4)}
+
+/* ══════════════════════════════════════════
+   PAGES
+══════════════════════════════════════════ */
+.pg{display:none}.pg.on{display:block}
+
+/* ══════════════════════════════════════════
+   HOME — HERO
+══════════════════════════════════════════ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 60% 40%,rgba(0,212,255,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 15% 65%,rgba(255,0,170,.05) 0%,transparent 55%),radial-gradient(ellipse 30% 40% at 85% 70%,rgba(255,106,0,.04) 0%,transparent 50%),linear-gradient(180deg,var(--bg) 0%,#020210 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(0,212,255,.07) 1px,transparent 1px),linear-gradient(180deg,rgba(0,212,255,.07) 1px,transparent 1px);background-size:72px 72px;opacity:.8;mask-image:radial-gradient(ellipse 65% 65% at 50% 50%,black 20%,transparent 100%)}
+.hero-orb{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:540px;height:540px;border-radius:50%;border:1px solid rgba(0,212,255,.2);opacity:.6;pointer-events:none;box-shadow:0 0 60px rgba(0,212,255,.04),inset 0 0 60px rgba(255,0,170,.03)}
+.hero-orb::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid var(--line2)}
+.hero-orb::after{content:'◆';font-family:var(--ff-d);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:55px;color:rgba(0,212,255,.25);opacity:.5}
+/* Extra neon ring */
+.hero-orb::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(255,0,170,.15);animation:orbRotate 25s linear infinite reverse}
+.hero-inner{position:relative;z-index:2;padding:130px 0 90px;max-width:800px}
+.hero-inner .eyebrow{margin-bottom:26px;justify-content:flex-start}
+.hero-inner .eyebrow::after{display:none}
+.h1{font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.07;letter-spacing:.03em;margin-bottom:26px}
+.h1 em{font-style:italic;font-weight:300;color:var(--gold)}
+.hero-lead{font-size:clamp(16px,1.8vw,19px);color:var(--dim);max-width:570px;line-height:1.75;margin-bottom:40px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:68px}
+.hero-stats{display:flex;gap:44px;flex-wrap:wrap}
+.st-n{font-family:var(--ff-d);font-size:26px;font-weight:600;color:var(--gold);letter-spacing:.04em;text-shadow:0 0 16px rgba(0,212,255,.35)}
+.st-l{font-family:var(--ff-u);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-top:2px}
+
+/* YT GRID */
+.yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.yt-card{cursor:pointer;overflow:hidden}
+.yt-thumb{aspect-ratio:16/9;position:relative;border-radius:var(--r) var(--r) 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.yt-thumb-bg{position:absolute;inset:0;background-size:cover;filter:brightness(.55);transition:transform .4s,filter .3s}
+.yt-card:hover .yt-thumb-bg{transform:scale(1.05);filter:brightness(.7)}
+.yt-play{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:rgba(201,168,76,.85);display:flex;align-items:center;justify-content:center;font-size:14px;color:#05050a;padding-left:3px;transition:transform .2s,background .2s}
+.yt-card:hover .yt-play{transform:scale(1.12);background:var(--gold2)}
+.yt-dur{position:absolute;bottom:8px;right:8px;font-family:var(--ff-u);font-size:10px;background:rgba(0,0,0,.7);color:var(--cream);padding:2px 6px;border-radius:4px}
+.yt-body{padding:14px 16px 16px}
+.yt-title{font-family:var(--ff-u);font-size:13px;font-weight:500;color:var(--cream);line-height:1.4;margin-bottom:6px}
+.yt-meta{font-family:var(--ff-u);font-size:11px;color:var(--hint);display:flex;gap:10px}
+
+/* ══════════════════════════════════════════
+   GALERIA
+══════════════════════════════════════════ */
+#pg-galeria{padding-top:100px}
+.gal-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.gal-header h2{font-size:clamp(22px,3vw,34px)}
+
+/* gerador */
+.gen-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:28px;margin-bottom:48px;position:relative;overflow:hidden}
+.gen-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#ff00aa,#00d4ff,#ff6a00,transparent)}
+.gen-title{font-family:var(--ff-d);font-size:18px;font-weight:600;color:var(--gold);letter-spacing:.07em;margin-bottom:6px;text-shadow:0 0 14px rgba(0,212,255,.35)}
+.gen-sub{font-family:var(--ff-u);font-size:13px;color:var(--hint);margin-bottom:22px}
+.gen-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.gen-actions{display:flex;gap:10px;align-items:center}
+.gen-status{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-left:4px}
+.img-preview{margin-top:22px;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:20px;text-align:center;display:none}
+.img-preview img{max-width:100%;border-radius:var(--r);margin-top:12px;max-height:400px}
+.img-preview-label{font-family:var(--ff-u);font-size:11px;color:var(--hint);letter-spacing:.12em;text-transform:uppercase}
+.pub-actions{display:flex;gap:10px;justify-content:center;margin-top:16px}
+
+/* masonry */
+.masonry{columns:4 220px;gap:16px}
+.m-item{break-inside:avoid;margin-bottom:16px;background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);overflow:hidden;transition:border-color .25s,transform .22s;cursor:pointer}
+.m-item:hover{border-color:rgba(0,212,255,.38);transform:translateY(-3px);box-shadow:0 8px 40px rgba(0,212,255,.06)}
+.m-img{width:100%;display:block;min-height:120px;background:var(--bg4);object-fit:cover}
+.m-img-ph{width:100%;display:flex;align-items:center;justify-content:center;font-size:36px;opacity:.1;transition:opacity .25s;background:var(--bg4)}
+.m-item:hover .m-img-ph{opacity:.18}
+.m-body{padding:12px 14px 10px}
+.m-title{font-family:var(--ff-d);font-size:13px;font-weight:600;color:var(--cream);letter-spacing:.04em;margin-bottom:3px}
+.m-author{font-family:var(--ff-u);font-size:11px;color:var(--hint);margin-bottom:8px}
+.m-prompt{font-size:12px;font-style:italic;color:var(--hint);line-height:1.5;margin-bottom:10px;border-left:2px solid var(--line);padding-left:9px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.m-foot{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line2);padding-top:8px;flex-wrap:wrap}
+.like-btn{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:11px;font-weight:500;color:var(--hint);padding:5px 9px;border-radius:999px;transition:all .2s}
+.like-btn:hover,.like-btn.on{color:var(--gold);background:var(--glow);text-shadow:0 0 8px rgba(0,212,255,.4)}
+.like-heart{transition:transform .15s}
+.like-btn.on .like-heart{transform:scale(1.35)}
+.cmt-tog{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:11px;color:var(--hint);padding:5px 9px;border-radius:999px;transition:all .2s}
+.cmt-tog:hover{color:var(--cream);background:rgba(255,255,255,.04)}
+.adm-del{margin-left:auto;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:10px;color:rgba(224,85,85,.6);padding:4px 8px;border-radius:999px;transition:all .2s}
+.adm-del:hover{color:var(--red);background:rgba(224,85,85,.08)}
+.cmt-sec{display:none;background:var(--bg2);border-top:1px solid var(--line2);padding:12px 14px}
+.cmt-sec.on{display:block}
+.cmt-item{font-size:12px;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid var(--line2);line-height:1.5;color:var(--dim)}
+.cmt-item:last-of-type{border-bottom:none}
+.cmt-item strong{color:var(--gold);font-weight:500;font-family:var(--ff-u);font-size:11px;margin-right:4px}
+.cmt-form{display:flex;gap:7px;margin-top:10px}
+.cmt-inp{flex:1;background:var(--bg3);border:1px solid #202035;border-radius:999px;color:var(--cream);padding:7px 13px;font-size:12px;font-family:var(--ff-u);outline:none}
+.cmt-inp:focus{border-color:var(--gold-dim)}
+.cmt-send{background:var(--glow);border:1px solid var(--line);color:var(--gold);padding:7px 13px;border-radius:999px;cursor:pointer;font-size:12px;transition:all .2s}
+.cmt-send:hover{background:rgba(201,168,76,.2)}
+.empty-gal{text-align:center;padding:60px 20px;color:var(--hint);font-family:var(--ff-u);font-size:14px}
+.empty-gal .ico{font-size:42px;opacity:.2;margin-bottom:14px}
+
+/* ══════════════════════════════════════════
+   MENTOR CHAT
+══════════════════════════════════════════ */
+#pg-mentor{padding-top:100px}
+.chat-wrap{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+.mentor-card{padding:26px;text-align:center;margin-bottom:18px}
+.m-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#030318,#050530);border:2px solid rgba(0,212,255,.4);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;position:relative;box-shadow:0 0 30px rgba(0,212,255,.15),0 0 60px rgba(255,0,170,.08)}
+.m-av::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid var(--line2)}
+.m-name{font-family:var(--ff-d);font-size:15px;letter-spacing:.1em;color:var(--cream);margin-bottom:3px}
+.m-role{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-bottom:12px}
+.m-online{display:inline-flex;align-items:center;gap:5px;font-family:var(--ff-u);font-size:10px;color:var(--green);letter-spacing:.12em}
+.m-online::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 7px var(--green)}
+.m-desc{font-size:13px;font-style:italic;color:var(--hint);line-height:1.6;margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)}
+.chips-box{padding:18px}
+.chips-box h4{font-family:var(--ff-u);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-bottom:10px}
+.chip{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r);padding:9px 12px;font-size:12px;font-style:italic;color:var(--dim);cursor:pointer;transition:all .2s;margin-bottom:7px;font-family:var(--ff-b);line-height:1.4}
+.chip:last-child{margin-bottom:0}
+.chip:hover{border-color:rgba(0,212,255,.3);color:var(--cream);background:rgba(0,212,255,.04)}
+.chat-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);display:flex;flex-direction:column;height:680px;overflow:hidden}
+.chat-top{padding:16px 22px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-top-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0055aa,#00d4ff);display:flex;align-items:center;justify-content:center;font-size:13px}
+.chat-top-n{font-family:var(--ff-d);font-size:13px;color:var(--cream);letter-spacing:.07em}
+.chat-top-s{font-family:var(--ff-u);font-size:10px;color:var(--green)}
+.chat-msgs{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:18px}
+.msg{display:flex;gap:10px;max-width:86%}
+.msg.u{flex-direction:row-reverse;align-self:flex-end}
+.msg-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px}
+.msg.a .msg-av{background:linear-gradient(135deg,#020220,#004466);border:1px solid rgba(0,212,255,.3)}
+.msg.u .msg-av{background:var(--bg4);border:1px solid var(--line2);color:var(--hint)}
+.msg-bbl{border-radius:12px;padding:12px 16px;font-size:15px;line-height:1.72}
+.msg.a .msg-bbl{background:var(--bg2);border:1px solid var(--line2);color:var(--cream);border-bottom-left-radius:3px}
+.msg.u .msg-bbl{background:linear-gradient(135deg,#00080f,#001828);border:1px solid rgba(0,212,255,.3);color:var(--cream);border-bottom-right-radius:3px}
+.msg-bbl .ph{display:block;margin-top:10px;padding:10px 13px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:8px;font-style:italic;font-size:13px;color:var(--cream)}
+.typing{display:flex;gap:10px;align-items:flex-end;max-width:160px}
+.typing-bbl{background:var(--bg2);border:1px solid var(--line2);border-radius:12px;border-bottom-left-radius:3px;padding:13px 16px;display:flex;gap:5px;align-items:center}
+.dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:tdot 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+@keyframes msgIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.msg{animation:msgIn .28s ease}
+.chat-foot{padding:14px 18px;border-top:1px solid var(--line2);display:flex;gap:10px;align-items:flex-end;flex-shrink:0}
+.chat-ta{flex:1;background:var(--bg2);border:1px solid #202035;border-radius:10px;color:var(--cream);padding:11px 15px;font-family:var(--ff-b);font-size:15px;outline:none;resize:none;max-height:110px;line-height:1.5;transition:border-color .2s}
+.chat-ta:focus{border-color:var(--gold-dim)}
+.chat-send{background:linear-gradient(135deg,#0055aa,#00d4ff);border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#000810;font-size:16px;transition:all .2s;flex-shrink:0}
+.chat-send:hover{box-shadow:0 0 24px rgba(0,212,255,.4);transform:scale(1.05)}
+.chat-send:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+/* ══════════════════════════════════════════
+   ENSINO
+══════════════════════════════════════════ */
+#pg-ensino{padding-top:100px}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.prod-card{padding:28px;position:relative;overflow:hidden}
+.prod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),rgba(255,0,170,.8),var(--gold),transparent)}
+.prod-badge{position:absolute;top:18px;right:18px;font-family:var(--ff-u);font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:linear-gradient(90deg,#0077aa,#00d4ff);color:#000810;padding:3px 9px;border-radius:999px}
+.prod-badge.new{background:var(--green);color:#030a05}
+.prod-ico{font-size:42px;margin-bottom:18px}
+.prod-name{font-family:var(--ff-d);font-size:20px;font-weight:600;color:var(--cream);margin-bottom:8px;letter-spacing:.05em}
+.prod-desc{font-size:14px;color:var(--hint);line-height:1.65;margin-bottom:18px}
+.prod-inc{margin-bottom:22px}
+.prod-inc h4{font-family:var(--ff-u);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--hint);margin-bottom:9px}
+.inc-row{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--dim);margin-bottom:5px}
+.inc-row::before{content:'◆';color:var(--gold);font-size:7px;flex-shrink:0;text-shadow:0 0 8px rgba(0,212,255,.5)}
+.prod-foot{display:flex;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--line2)}
+.prod-price{font-family:var(--ff-d);font-size:30px;font-weight:700;color:var(--gold);letter-spacing:.02em;text-shadow:0 0 16px rgba(0,212,255,.3)}
+.prod-price span{font-family:var(--ff-u);font-size:11px;color:var(--hint);display:block;margin-bottom:2px;font-weight:400;letter-spacing:0}
+.lock-ov{position:absolute;inset:0;border-radius:var(--r2);background:rgba(0,0,12,.78);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-family:var(--ff-u);font-size:13px;color:var(--dim);border:1px solid rgba(0,212,255,.08)}
+.lock-ov .li{font-size:32px;opacity:.5}
+
+/* ══════════════════════════════════════════
+   COMUNIDADE / AUTH / PROFILE / ADMIN
+══════════════════════════════════════════ */
+#pg-comunidade{padding-top:100px}
+.auth-wrap{max-width:460px;margin:0 auto}
+.auth-card{padding:42px}
+.auth-logo-t{font-family:var(--ff-d);font-size:20px;letter-spacing:.2em;color:var(--gold);text-align:center;margin-bottom:28px;text-shadow:0 0 20px rgba(0,212,255,.4)}
+.auth-h{font-size:24px;text-align:center;margin-bottom:5px}
+.auth-sub{text-align:center;font-size:14px;color:var(--hint);margin-bottom:28px}
+.auth-tabs{display:flex;border-bottom:1px solid var(--line2);margin-bottom:28px}
+.atab{flex:1;text-align:center;padding:11px;cursor:pointer;font-family:var(--ff-u);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hint);border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;transition:all .2s}
+.atab.on{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(0,212,255,.3)}
+.af{display:none}.af.on{display:block}
+.auth-note{text-align:center;font-family:var(--ff-u);font-size:11px;color:var(--hint);margin-top:16px}
+/* google btn */
+.btn-gg{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid var(--line2);border-radius:999px;padding:11px 20px;cursor:pointer;color:var(--cream);font-family:var(--ff-u);font-size:13px;font-weight:500;transition:all .2s;margin-bottom:14px}
+.btn-gg:hover{border-color:var(--line);background:rgba(255,255,255,.08)}
+.btn-gg svg{width:18px;height:18px;flex-shrink:0}
+.divider{text-align:center;color:var(--hint);font-family:var(--ff-u);font-size:12px;margin:14px 0;position:relative}
+.divider::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line2)}
+.divider span{background:var(--bg3);padding:0 12px;position:relative}
+
+/* profile */
+.prof-lay{display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start}
+.prof-card{padding:30px;text-align:center}
+.prof-av{width:90px;height:90px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:34px;font-weight:700;color:#000810;background:linear-gradient(135deg,#0055aa,#00d4ff);box-shadow:0 0 40px rgba(0,212,255,.25)}
+.prof-av img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.prof-name{font-family:var(--ff-d);font-size:20px;color:var(--cream);margin-bottom:4px}
+.prof-email{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-bottom:14px}
+.prof-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
+.ps-n{font-family:var(--ff-d);font-size:22px;color:var(--gold)}
+.ps-l{font-family:var(--ff-u);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--hint);margin-top:2px}
+.tbbar{display:flex;gap:3px;margin-bottom:24px;background:var(--bg2);padding:3px;border-radius:999px;width:fit-content}
+.tbbtn{font-family:var(--ff-u);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;border-radius:999px;background:none;border:none;cursor:pointer;color:var(--hint);transition:all .2s}
+.tbbtn.on{background:var(--bg3);color:var(--gold);border:1px solid var(--line)}
+.tbpan{display:none}.tbpan.on{display:block}
+
+/* admin */
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:44px}
+.adm-stat{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:22px;position:relative;overflow:hidden}
+.adm-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00d4ff,transparent)}
+.adm-stat-l{font-family:var(--ff-u);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-bottom:7px}
+.adm-stat-v{font-family:var(--ff-d);font-size:32px;font-weight:700;color:var(--gold);text-shadow:0 0 16px rgba(0,212,255,.3)}
+.adm-stat-c{font-family:var(--ff-u);font-size:10px;color:var(--green);margin-top:4px}
+.adm-sec{margin-bottom:40px}
+.adm-sec-h{font-family:var(--ff-d);font-size:17px;font-weight:600;letter-spacing:.07em;color:var(--cream);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.adm-sec-h::before{content:'◆';color:var(--gold);font-size:9px;text-shadow:0 0 8px rgba(0,212,255,.5)}
+.email-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:26px}
+.email-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
+.email-tgt{font-family:var(--ff-u);font-size:12px;color:var(--hint)}
+.sub-tbl{width:100%;border-collapse:collapse}
+.sub-tbl th{font-family:var(--ff-u);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);padding:10px 14px;border-bottom:1px solid var(--line2);text-align:left}
+.sub-tbl td{font-family:var(--ff-u);font-size:12px;padding:10px 14px;border-bottom:1px solid var(--line2);color:var(--dim)}
+.sub-tbl tr:last-child td{border:none}
+.sub-tbl tr:hover td{background:var(--bg2)}
+
+/* footer */
+footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;margin-top:60px}
+.ft-logo{font-family:var(--ff-d);font-size:18px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;text-shadow:0 0 20px rgba(0,212,255,.4)}
+.ft-tag{font-size:13px;color:var(--hint);font-style:italic;margin-bottom:14px}
+.ft-copy{font-family:var(--ff-u);font-size:11px;color:var(--hint);letter-spacing:.08em}
+
+/* responsive */
+@media(max-width:960px){
+  .chat-wrap,.prof-lay{grid-template-columns:1fr}
+  .adm-stats{grid-template-columns:repeat(2,1fr)}
+  .masonry{columns:2 180px}
+  .hero-orb{display:none}
+  .nav-links{display:none}
+  .gen-row{grid-template-columns:1fr}
+}
+@media(max-width:580px){
+  .wrap{padding:0 18px}
+  section{padding:64px 0}
+  .masonry{columns:1}
+  .adm-stats{grid-template-columns:1fr 1fr}
+}
+
+.fade-up{animation:fadeUp .65s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.44s}.d5{animation-delay:.58s}
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">VOZ VISUAL</div>
+<div id="cv"></div><div id="cd"></div>
+<div class="toast" id="toast"></div>
 
-    <div class="auth-area">
-      <div id="user-info"></div>
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <div class="nav-logo" onclick="go('home')">VOZ <span>VISUAL</span></div>
+  <div class="nav-links">
+    <button class="nav-btn on" data-p="home"    onclick="go('home')">Home</button>
+    <button class="nav-btn"    data-p="galeria"  onclick="go('galeria')">Galeria</button>
+    <button class="nav-btn"    data-p="mentor"   onclick="go('mentor')">Mentor</button>
+    <button class="nav-btn"    data-p="ensino"   onclick="go('ensino')">Ensino</button>
+    <button class="nav-btn"    data-p="comunidade" onclick="go('comunidade')">Comunidade</button>
+  </div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn btn-out btn-sm" onclick="go('comunidade')">Entrar</button>
+    <button class="btn btn-gold btn-sm" onclick="go('comunidade');stab('register')">◆ Fazer Parte</button>
+  </div>
+</nav>
 
-      <button id="btn-google-login" class="btn-google">Entrar com Google</button>
-      <button id="btn-google-logout" class="btn-google" style="display:none;">Sair</button>
-    </div>
-  </header>
-
-  <main>
-
-    <!-- GERADOR DE IMAGENS -->
-    <div class="generator-box">
-      <div class="generator-title">Gerador Cinematográfico (Grok)</div>
-      <div class="generator-sub">
-        Escreva um sentimento, cena ou ideia. Gere a imagem. Publique na galeria.
+<!-- ═══════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════ -->
+<div id="pg-home" class="pg on">
+  <div class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-orb"></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow fade-up d1">Cinema &nbsp;◆&nbsp; Arte por IA &nbsp;◆&nbsp; Filosofia Visual</div>
+        <h1 class="h1 fade-up d2">Algumas emoções<br>não têm palavras.<br><em>Têm imagens.</em></h1>
+        <p class="hero-lead fade-up d3">O Voz Visual existe no espaço entre o sentimento e o visível — onde a arte gerada por IA encontra a profundidade filosófica e a estética cinematográfica.</p>
+        <div class="hero-cta fade-up d4">
+          <button class="btn btn-gold" onclick="go('comunidade');stab('register')">◆ Fazer Parte da Comunidade</button>
+          <button class="btn btn-out" onclick="go('galeria')">Ver a Galeria Viva</button>
+        </div>
+        <div class="hero-stats fade-up d5" id="hero-stats">
+          <div><div class="st-n">12K+</div><div class="st-l">Inscritos</div></div>
+          <div><div class="st-n" id="h-arts">—</div><div class="st-l">Artes Publicadas</div></div>
+          <div><div class="st-n">96%</div><div class="st-l">Satisfação</div></div>
+          <div><div class="st-n">4</div><div class="st-l">Cursos Ativos</div></div>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <textarea id="prompt-input" placeholder="Ex: solidão luminosa em uma cidade futurista, chuva, neon..."></textarea>
+  <section>
+    <div class="rule"></div><div class="orn">◆ ◈ ◆</div><div class="rule"></div>
+    <div style="height:60px"></div>
+    <div class="wrap">
+      <div class="sec-hd fade-up">
+        <div class="eyebrow" style="justify-content:center">Canal YouTube</div>
+        <h2>Últimos Episódios</h2>
+        <p>Mergulhe nas conversas entre emoção, filosofia e imagem</p>
+      </div>
+      <div class="yt-grid" id="yt-grid"></div>
+      <div style="text-align:center;margin-top:36px">
+        <a href="https://youtube.com/@vozvisual" target="_blank" class="btn btn-out">Ver todos os vídeos →</a>
+      </div>
+    </div>
+  </section>
 
-      <input type="text" id="grok-api-key" placeholder="Cole sua API Key do Grok (xAI) — começa com xai-..." />
+  <section style="background:rgba(0,2,15,0.85)">
+    <div class="rule"></div>
+    <div class="wrap" style="padding-top:60px;padding-bottom:60px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
+        <div>
+          <div class="eyebrow" style="margin-bottom:18px">O projeto</div>
+          <h2 style="font-size:clamp(24px,3vw,38px);margin-bottom:18px">Um projeto no limite<br>entre <em style="color:var(--gold);font-weight:300">arte e alma</em></h2>
+          <p style="margin-bottom:14px">Cinema, filosofia e arte digital por IA se encontram para criar uma linguagem própria — onde sentimentos que não cabem em palavras ganham forma visual.</p>
+          <p style="margin-bottom:26px">Aqui você aprende a ver, sentir, e transformar o que está dentro de você em arte que existe no mundo.</p>
+          <button class="btn btn-gold" onclick="go('mentor')">Falar com o Mentor ◆</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🎬</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Cinema</div><div style="font-size:13px;color:var(--hint)">Estética visual cinematográfica aplicada à arte digital</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🤖</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Arte por IA</div><div style="font-size:13px;color:var(--hint)">Geração de imagem com profundidade poética</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">📚</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Filosofia</div><div style="font-size:13px;color:var(--hint)">Conexão entre emoção, pensamento e visão</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🌙</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Comunidade</div><div style="font-size:13px;color:var(--hint)">Artistas que compartilham a mesma linguagem</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rule"></div>
+  </section>
 
-      <button id="btn-generate" class="btn-primary">Gerar imagem</button>
+  <footer><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-tag">Traduzindo emoções em arte cinematográfica</div><div class="orn">◆ ◈ ◆</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
 
-      <div id="generate-status" style="margin-top:10px;font-size:0.8rem;color:#9ca3af;"></div>
+<!-- ═══════════════════════════════════════
+     PAGE: GALERIA
+═══════════════════════════════════════ -->
+<div id="pg-galeria" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up">
+      <div class="eyebrow" style="justify-content:center">Galeria Viva</div>
+      <h2>Arte da Comunidade</h2>
+      <p>Sentimentos transformados em imagem pelos membros do Voz Visual</p>
+    </div>
 
-      <div class="image-preview" id="image-preview" style="display:none;">
-        <div style="font-size:0.85rem;color:#9ca3af;">Imagem gerada:</div>
-        <img id="generated-image" src="" alt="Imagem gerada" />
-
-        <button id="btn-publish" class="btn-secondary" style="margin-top:14px;">
-          Publicar na galeria
-        </button>
-
-        <div id="publish-status" style="margin-top:10px;font-size:0.8rem;color:#9ca3af;"></div>
+    <!-- GERADOR GROK -->
+    <div class="gen-box">
+      <div class="gen-title">Gerador Cinematográfico</div>
+      <div class="gen-sub">Escreva um sentimento, cena ou ideia. Gere a imagem com Grok. Publique na galeria.</div>
+      <textarea class="inp" id="prompt-input" rows="3" placeholder="Ex: solidão luminosa em uma cidade futurista, chuva, neon, estética Blade Runner..."></textarea>
+      <div class="gen-row">
+        <div class="fgroup">
+          <label>API Key do Grok (xAI)</label>
+          <input class="inp" type="password" id="grok-api-key" placeholder="xai-...">
+        </div>
+        <div class="fgroup">
+          <label>Título da obra (para galeria)</label>
+          <input class="inp" id="art-title" placeholder="Dê um nome cinematográfico...">
+        </div>
+      </div>
+      <div class="gen-actions">
+        <button class="btn btn-gold" id="btn-generate" onclick="generateImage()">◆ Gerar Imagem</button>
+        <span class="gen-status" id="gen-status"></span>
+      </div>
+      <div class="img-preview" id="img-preview">
+        <div class="img-preview-label">Imagem gerada</div>
+        <img id="gen-img" src="" alt="Arte gerada">
+        <div class="pub-actions">
+          <button class="btn btn-gold" id="btn-publish" onclick="publishArt()">◆ Publicar na Galeria</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('img-preview').style.display='none'">Descartar</button>
+        </div>
+        <div id="pub-status" style="font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-top:10px"></div>
       </div>
     </div>
 
-    <!-- GALERIA -->
-    <div class="gallery-title">Galeria Viva (Mosaico)</div>
+    <!-- GALERIA HEADER -->
+    <div class="gal-header">
+      <h2 style="font-size:clamp(20px,2.5vw,30px)">Galeria Viva <span id="gal-count" style="font-size:14px;color:var(--hint);font-family:var(--ff-u);font-weight:400;margin-left:10px"></span></h2>
+      <div style="display:flex;gap:8px" id="gal-btns">
+        <button class="btn btn-ghost" onclick="go('comunidade')" id="btn-login-to-upload" style="display:none">Entrar para publicar via upload</button>
+      </div>
+    </div>
+    <div id="masonry" class="masonry"></div>
+    <div id="gal-empty" class="empty-gal" style="display:none"><div class="ico">◆</div>Nenhuma arte publicada ainda. Seja o primeiro!</div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
 
-    <div class="masonry" id="gallery"></div>
-
-  </main>
-  <!-- FIREBASE + APP -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithPopup,
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      getDocs,
-      query,
-      orderBy,
-      updateDoc,
-      doc,
-      deleteDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    import {
-      getStorage,
-      ref,
-      uploadBytes,
-      getDownloadURL
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
-    /* === CONFIG FIREBASE (SEU PROJETO) === */
-    const firebaseConfig = {
-      apiKey: "AIzaSyDZI5fdFIU8yd9mZiDnFjQ0hiQTcmYm18A",
-      authDomain: "voz-visual.firebaseapp.com",
-      projectId: "voz-visual",
-      storageBucket: "voz-visual.firebasestorage.app",
-      messagingSenderId: "5180075793",
-      appId: "1:5180075793:web:0cf9da29e6b383e9e0e6b0",
-      measurementId: "G-PM0MWLQ7CD"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-
-    const ADMIN_EMAIL = "vitorfabiano1008@gmail.com";
-
-    /* === ELEMENTOS === */
-    const btnLogin = document.getElementById("btn-google-login");
-    const btnLogout = document.getElementById("btn-google-logout");
-    const userInfo = document.getElementById("user-info");
-
-    const promptInput = document.getElementById("prompt-input");
-    const grokApiKeyInput = document.getElementById("grok-api-key");
-    const btnGenerate = document.getElementById("btn-generate");
-    const generateStatus = document.getElementById("generate-status");
-
-    const imagePreview = document.getElementById("image-preview");
-    const generatedImage = document.getElementById("generated-image");
-    const btnPublish = document.getElementById("btn-publish");
-    const publishStatus = document.getElementById("publish-status");
-
-    const gallery = document.getElementById("gallery");
-
-    let currentUser = null;
-    let isAdmin = false;
-    let lastGeneratedImageURL = null;
-
-    /* === LOGIN GOOGLE === */
-    const provider = new GoogleAuthProvider();
-
-    btnLogin.addEventListener("click", async () => {
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (err) {
-        alert("Erro ao entrar: " + err.message);
-      }
-    });
-
-    btnLogout.addEventListener("click", async () => {
-      await signOut(auth);
-    });
-
-    onAuthStateChanged(auth, user => {
-      currentUser = user;
-      isAdmin = !!(user && user.email === ADMIN_EMAIL);
-
-      if (user) {
-        btnLogin.style.display = "none";
-        btnLogout.style.display = "inline-flex";
-
-        userInfo.innerHTML = `
-          <div class="user-chip">
-            <img src="${user.photoURL}" />
-            <span>${user.displayName}</span>
-            ${isAdmin ? `<span class="badge-admin">Admin</span>` : ""}
+<!-- ═══════════════════════════════════════
+     PAGE: MENTOR
+═══════════════════════════════════════ -->
+<div id="pg-mentor" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up" style="margin-bottom:36px">
+      <div class="eyebrow" style="justify-content:center">Mentor Filosófico</div>
+      <h2>O Espelho do Invisível</h2>
+      <p>IA treinada para transformar sentimentos em prompts cinematográficos profundos</p>
+    </div>
+    <div class="chat-wrap">
+      <div>
+        <div class="mentor-card card">
+          <div class="m-av">◆</div>
+          <div class="m-name">MENTOR</div>
+          <div class="m-role">Voz Visual · IA Filosófica</div>
+          <div class="m-online">Ativo e presente</div>
+          <div class="m-desc">"Não sou um assistente. Sou um espelho filosófico — aqui para refletir o que você carrega de mais profundo e transformá-lo em arte visível."</div>
+        </div>
+        <div class="chips-box card" style="margin-top:0">
+          <h4>Iniciar com</h4>
+          <button class="chip" onclick="setP(this.textContent)">Sinto uma solidão que não sei nomear</button>
+          <button class="chip" onclick="setP(this.textContent)">Quero criar algo sobre perda e memória</button>
+          <button class="chip" onclick="setP(this.textContent)">Me sinto entre dois mundos diferentes</button>
+          <button class="chip" onclick="setP(this.textContent)">Transforme minha melancolia em prompt visual</button>
+          <button class="chip" onclick="setP(this.textContent)">O que é beleza para a filosofia?</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box">
+        <div class="chat-top">
+          <div class="chat-top-av">◆</div>
+          <div style="flex:1">
+            <div class="chat-top-n">MENTOR VOZ VISUAL</div>
+            <div class="chat-top-s">Filosófico · Cinematográfico · Ativo</div>
           </div>
-        `;
-      } else {
-        btnLogin.style.display = "inline-flex";
-        btnLogout.style.display = "none";
-        userInfo.innerHTML = "";
-      }
+          <button class="btn-icon" title="Nova conversa" onclick="clearChat()">↺</button>
+        </div>
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="chat-foot">
+          <textarea class="chat-ta" id="chat-ta" rows="1" placeholder="O que você carrega dentro de si hoje?" onkeydown="chatKey(event)" oninput="autoR(this)"></textarea>
+          <button class="chat-send" id="chat-send" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
 
-      loadGallery();
-    });
+<!-- ═══════════════════════════════════════
+     PAGE: ENSINO
+═══════════════════════════════════════ -->
+<div id="pg-ensino" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up">
+      <div class="eyebrow" style="justify-content:center">Portal de Ensino</div>
+      <h2>Método &amp; Materiais</h2>
+      <p>Cada material foi criado para expandir sua visão e aprofundar sua linguagem visual</p>
+    </div>
+    <div id="ensino-banner" style="display:none;background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:22px 26px;margin-bottom:36px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div><div style="font-family:var(--ff-d);font-size:15px;color:var(--cream);margin-bottom:3px">Acesso Restrito a Membros</div><div style="font-family:var(--ff-u);font-size:13px;color:var(--hint)">Crie sua conta gratuita para desbloquear detalhes e realizar compras</div></div>
+      <button class="btn btn-gold" onclick="go('comunidade');stab('register')">◆ Criar Conta Gratuita</button>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
 
-    /* === GERAR IMAGEM COM GROK === */
-    btnGenerate.addEventListener("click", async () => {
-      const prompt = promptInput.value.trim();
-      const apiKey = grokApiKeyInput.value.trim();
+<!-- ═══════════════════════════════════════
+     PAGE: COMUNIDADE
+═══════════════════════════════════════ -->
+<div id="pg-comunidade" class="pg">
+  <div class="wrap">
 
-      if (!prompt) return alert("Escreva um prompt.");
-      if (!apiKey) return alert("Cole sua API Key do Grok.");
+    <!-- AUTH -->
+    <div id="v-auth" class="auth-wrap">
+      <div class="auth-card card" style="margin-top:50px">
+        <div class="auth-logo-t">◆ VOZ VISUAL ◆</div>
+        <h2 class="auth-h">Faça Parte</h2>
+        <p class="auth-sub">Acesse a comunidade cinematográfica</p>
+        <!-- Google Login -->
+        <button class="btn-gg" id="btn-gg-login">
+          <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 12 4.9c1.69 0 3.2.6 4.39 1.56l3.26-3.26A11.94 11.94 0 0 0 12 .97C8.27.97 5.02 2.96 3.04 5.98l2.23 3.78z"/><path fill="#34A853" d="M16.04 18.01A7.02 7.02 0 0 1 12 19.1c-2.93 0-5.44-1.79-6.61-4.36l-2.22 3.78A11.94 11.94 0 0 0 12 23.03c3.06 0 5.9-1.11 8.04-2.93l-3.99-2.09z"/><path fill="#4A90D9" d="M19.9 12c0-.65-.06-1.29-.17-1.9H12v3.72h4.43a3.8 3.8 0 0 1-1.64 2.5l4 2.08C20.93 16.6 19.9 14.46 19.9 12z"/><path fill="#FBBC05" d="M5.39 14.74A7.12 7.12 0 0 1 4.9 12c0-.95.17-1.86.48-2.72L3.04 5.98A11.93 11.93 0 0 0 .97 12c0 1.92.46 3.73 1.27 5.34l3.15-2.6z"/></svg>
+          Entrar com Google
+        </button>
+        <div class="divider"><span>ou use e-mail</span></div>
+        <div class="auth-tabs">
+          <button class="atab on" id="atab-l" onclick="stab('login')">Entrar</button>
+          <button class="atab" id="atab-r" onclick="stab('register')">Criar Conta</button>
+        </div>
+        <div class="af on" id="af-login">
+          <div class="fgroup"><label>E-mail</label><input class="inp" id="l-email" type="email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="fgroup"><label>Senha</label><input class="inp" id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:2px" onclick="doLogin()">Entrar no Portal</button>
+          <div class="auth-note" style="margin-top:14px;font-size:10px;opacity:.5">Admin: <code>admin@vozvisual.com</code> / qualquer senha</div>
+        </div>
+        <div class="af" id="af-reg">
+          <div class="fgroup"><label>Nome</label><input class="inp" id="r-name" placeholder="Como quer ser chamado(a)"></div>
+          <div class="fgroup"><label>E-mail</label><input class="inp" id="r-email" type="email" placeholder="seu@email.com"></div>
+          <div class="fgroup"><label>Senha</label><input class="inp" id="r-pass" type="password" placeholder="Mín. 6 caracteres"></div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:2px" onclick="doRegister()">◆ Criar Conta Gratuita</button>
+          <div class="auth-note">Ao criar conta você concorda com os termos do Voz Visual</div>
+        </div>
+      </div>
+    </div>
 
-      generateStatus.textContent = "Gerando imagem...";
-      btnGenerate.disabled = true;
-
-      try {
-        const response = await fetch("https://api.x.ai/v1/images", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: "grok-vision-beta",
-            prompt,
-            size: "1024x1024"
-          })
-        });
-
-        const data = await response.json();
-
-        const url = data?.data?.[0]?.url;
-        if (!url) throw new Error("Erro ao gerar imagem.");
-
-        lastGeneratedImageURL = url;
-
-        generatedImage.src = url;
-        imagePreview.style.display = "block";
-        generateStatus.textContent = "Imagem gerada com sucesso.";
-
-      } catch (err) {
-        console.error(err);
-        generateStatus.textContent = "Erro ao gerar imagem.";
-      }
-
-      btnGenerate.disabled = false;
-    });
-
-    /* === PUBLICAR NA GALERIA === */
-    btnPublish.addEventListener("click", async () => {
-      if (!currentUser) return alert("Faça login para publicar.");
-      if (!lastGeneratedImageURL) return;
-
-      publishStatus.textContent = "Publicando...";
-      btnPublish.disabled = true;
-
-      try {
-        await addDoc(collection(db, "gallery"), {
-          title: promptInput.value.trim() || "Sem título",
-          imageUrl: lastGeneratedImageURL,
-          createdAt: Date.now(),
-          userName: currentUser.displayName,
-          userEmail: currentUser.email,
-          likes: 0
-        });
-
-        publishStatus.textContent = "Publicado!";
-        loadGallery();
-
-      } catch (err) {
-        console.error(err);
-        publishStatus.textContent = "Erro ao publicar.";
-      }
-
-      btnPublish.disabled = false;
-    });
-
-    /* === CARREGAR GALERIA === */
-    async function loadGallery() {
-      gallery.innerHTML = "<div style='color:#9ca3af;font-size:0.9rem;'>Carregando...</div>";
-
-      const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
-      const snap = await getDocs(q);
-
-      let html = "";
-
-      snap.forEach(docSnap => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-
-        html += `
-          <div class="masonry-item">
-            <img src="${data.imageUrl}" />
-            <div class="masonry-info">
-              <div class="masonry-title">${data.title}</div>
-              <div class="masonry-actions">
-                <button class="like-btn" data-id="${id}">❤️ ${data.likes}</button>
-                ${
-                  isAdmin
-                    ? `<span class="admin-remove" data-id="${id}">remover</span>`
-                    : ""
-                }
-              </div>
+    <!-- PROFILE -->
+    <div id="v-prof" style="display:none;padding-top:10px">
+      <div class="prof-lay">
+        <div>
+          <div class="prof-card card">
+            <div class="prof-av" id="prof-av">V</div>
+            <div class="prof-name" id="prof-name">—</div>
+            <div class="prof-email" id="prof-email">—</div>
+            <div id="prof-adm" style="display:none;margin-bottom:8px"><span style="font-family:var(--ff-u);font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:var(--glow);border:1px solid var(--line);color:var(--gold);padding:2px 9px;border-radius:999px">◆ Administrador</span></div>
+            <div class="prof-stats">
+              <div><div class="ps-n" id="ps-arts">0</div><div class="ps-l">Artes</div></div>
+              <div><div class="ps-n" id="ps-likes">0</div><div class="ps-l">Curtidas</div></div>
+              <div><div class="ps-n" id="ps-cmts">0</div><div class="ps-l">Comentários</div></div>
+              <div><div class="ps-n">◆</div><div class="ps-l">Membro</div></div>
+            </div>
+            <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:18px" onclick="doLogout()">Sair da Conta</button>
+          </div>
+        </div>
+        <div>
+          <div class="tbbar">
+            <button class="tbbtn on" onclick="showTab('tb-arts',this)">Minhas Artes</button>
+            <button class="tbbtn" onclick="showTab('tb-cfg',this)">Configurações</button>
+          </div>
+          <div class="tbpan on" id="tb-arts">
+            <div id="my-arts" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px"></div>
+            <div id="my-arts-empty" style="display:none;text-align:center;padding:44px 0;color:var(--hint);font-family:var(--ff-u);font-size:13px"><div style="font-size:38px;opacity:.2;margin-bottom:12px">◆</div>Nenhuma arte ainda<br><button class="btn btn-out" style="margin-top:14px" onclick="go('galeria')">Ir para Galeria</button></div>
+          </div>
+          <div class="tbpan" id="tb-cfg">
+            <div class="card" style="padding:26px;max-width:460px">
+              <div style="font-family:var(--ff-d);font-size:16px;color:var(--cream);margin-bottom:22px;letter-spacing:.06em">Dados da Conta</div>
+              <div class="fgroup"><label>Nome</label><input class="inp" id="cfg-name" placeholder="Seu nome"></div>
+              <div class="fgroup"><label>E-mail</label><input class="inp" id="cfg-email" readonly style="opacity:.5"></div>
+              <div class="fgroup"><label>Nova Senha</label><input class="inp" type="password" placeholder="Deixe em branco para manter"></div>
+              <button class="btn btn-out" style="margin-top:6px" onclick="toast('Configurações salvas!','ok')">Salvar Alterações</button>
             </div>
           </div>
-        `;
-      });
+        </div>
+      </div>
+    </div>
 
-      gallery.innerHTML = html;
+    <!-- ADMIN -->
+    <div id="v-adm" style="display:none;padding-top:10px;max-width:1000px">
+      <div style="margin-bottom:36px">
+        <div class="eyebrow" style="margin-bottom:10px">Painel Administrativo</div>
+        <h2 style="font-size:clamp(22px,3vw,34px)">Central de Controle</h2>
+      </div>
+      <div class="adm-stats" id="adm-stats"></div>
+      <div class="rule"></div><div style="height:36px"></div>
+      <div class="adm-sec">
+        <div class="adm-sec-h">Disparar Comunicação</div>
+        <div class="email-box">
+          <div class="fgroup"><label>Assunto</label><input class="inp" id="em-sub" placeholder="Ex: Nova aula disponível — Voz Visual"></div>
+          <div class="fgroup"><label>Mensagem</label><textarea class="inp" id="em-body" style="min-height:130px" placeholder="Escreva sua mensagem para todos os inscritos..."></textarea></div>
+          <div class="email-foot">
+            <div class="email-tgt" id="em-tgt">Enviando para <strong style="color:var(--gold)">0</strong> inscritos</div>
+            <button class="btn btn-gold" onclick="sendBroadcast()">◆ Disparar E-mail</button>
+          </div>
+        </div>
+      </div>
+      <div class="adm-sec">
+        <div class="adm-sec-h">Lista de Inscritos</div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table class="sub-tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Plano</th><th>Cadastro</th></tr></thead>
+          <tbody id="sub-tbody"></tbody></table>
+        </div>
+      </div>
+      <button class="btn btn-ghost" style="margin-top:16px" onclick="doLogout()">Sair do Painel</button>
+    </div>
 
-      // Likes
-      gallery.querySelectorAll(".like-btn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = btn.getAttribute("data-id");
-          const docRef = doc(db, "gallery", id);
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
 
-          const currentLikes = parseInt(btn.textContent.replace("❤️", "").trim());
-          await updateDoc(docRef, { likes: currentLikes + 1 });
+<!-- ══════════════════════════════════════════
+     FIREBASE + APP LOGIC
+══════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp }          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, deleteDoc, onSnapshot, getCountFromServer }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-          loadGallery();
-        });
-      });
+/* ── CONFIG ── */
+const FB = {
+  apiKey:"AIzaSyDZI5fdFIU8yd9mZiDnFjQ0hiQTcmYm18A",
+  authDomain:"voz-visual.firebaseapp.com",
+  projectId:"voz-visual",
+  storageBucket:"voz-visual.firebasestorage.app",
+  messagingSenderId:"5180075793",
+  appId:"1:5180075793:web:0cf9da29e6b383e9e0e6b0"
+};
+const app  = initializeApp(FB);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
-      // Remover (admin)
-      if (isAdmin) {
-        gallery.querySelectorAll(".admin-remove").forEach(btn => {
-          btn.addEventListener("click", async () => {
-            const id = btn.getAttribute("data-id");
-            if (confirm("Remover esta imagem?")) {
-              await deleteDoc(doc(db, "gallery", id));
-              loadGallery();
-            }
-          });
-        });
-      }
-    }
+const ADMIN_EMAIL = "vitorfabiano1008@gmail.com";
 
-    loadGallery();
-  </script>
+/* ── STATE ── */
+let CU    = null; // currentUser
+let isAdm = false;
+let chatH = [];
+let chatBusy = false;
+let lastImgURL = null;
 
+/* ── EXPOSE GLOBALS ── */
+window._auth = auth;
+window._db   = db;
+window._getAdm = () => isAdm;
+window._getCU  = () => CU;
+
+/* ══════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════ */
+const provider = new GoogleAuthProvider();
+
+document.getElementById('btn-gg-login').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, provider); }
+  catch(e){ toast('Erro ao entrar: '+e.message,'err'); }
+});
+
+onAuthStateChanged(auth, async user => {
+  CU    = user || null;
+  isAdm = !!(user && user.email === ADMIN_EMAIL);
+
+  // also merge localStorage users
+  if (!CU) {
+    const ls = localStorage.getItem('vv_user');
+    if (ls) CU = JSON.parse(ls);
+    isAdm = !!(CU && CU.email === ADMIN_EMAIL);
+  }
+
+  updateNavUser();
+  if (currentPage === 'comunidade') renderComPage();
+  if (currentPage === 'galeria')    loadGallery();
+  if (currentPage === 'ensino')     renderProducts();
+  await updateHeroCount();
+});
+
+// Email login (localStorage fallback)
+window.doLogin = () => {
+  const e = document.getElementById('l-email').value.trim();
+  const p = document.getElementById('l-pass').value;
+  if (!e||!p){ toast('Preencha e-mail e senha','err'); return; }
+  const adm = e === ADMIN_EMAIL;
+  let subs = getSubs();
+  let sub  = subs.find(s=>s.email===e);
+  if (!sub && !adm){
+    const name = e.split('@')[0];
+    sub = { id:Date.now(), name, email:e, plan:'Gratuito', date:today() };
+    subs.push(sub); saveSubs(subs);
+  }
+  CU    = { name: sub?sub.name:'Administrador', email:e, isAdmin:adm };
+  isAdm = adm;
+  localStorage.setItem('vv_user', JSON.stringify(CU));
+  updateNavUser(); renderComPage();
+  toast(`Bem-vindo(a), ${CU.name}! ◆`, 'ok');
+};
+
+window.doRegister = () => {
+  const n = document.getElementById('r-name').value.trim();
+  const e = document.getElementById('r-email').value.trim();
+  const p = document.getElementById('r-pass').value;
+  if(!n||!e||!p){ toast('Preencha todos os campos','err'); return; }
+  if(p.length<6){ toast('Senha: mínimo 6 caracteres','err'); return; }
+  let subs = getSubs();
+  if(subs.find(s=>s.email===e)){ toast('E-mail já cadastrado','err'); return; }
+  subs.push({ id:Date.now(), name:n, email:e, plan:'Gratuito', date:today() });
+  saveSubs(subs);
+  CU = { name:n, email:e, isAdmin:false };
+  isAdm = false;
+  localStorage.setItem('vv_user', JSON.stringify(CU));
+  updateNavUser(); renderComPage();
+  toast(`Bem-vindo(a) ao Voz Visual, ${n}! ◆`, 'ok');
+};
+
+window.doLogout = async () => {
+  await signOut(auth).catch(()=>{});
+  localStorage.removeItem('vv_user');
+  CU = null; isAdm = false;
+  updateNavUser(); renderComPage();
+  toast('Até logo. A arte te espera.','inf');
+};
+
+function updateNavUser(){
+  const nr = document.getElementById('nav-right');
+  if(CU){
+    const init = (CU.displayName||CU.name||'?').charAt(0).toUpperCase();
+    const photo = CU.photoURL ? `<img src="${CU.photoURL}" alt="">` : init;
+    nr.innerHTML=`
+      <div class="u-chip">
+        ${CU.photoURL?`<img src="${CU.photoURL}" style="width:20px;height:20px;border-radius:50%">`:''}
+        <span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${CU.displayName||CU.name}</span>
+        ${isAdm?'<span class="adm">Admin</span>':''}
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sair</button>`;
+  } else {
+    nr.innerHTML=`
+      <button class="btn btn-out btn-sm" onclick="go('comunidade')">Entrar</button>
+      <button class="btn btn-gold btn-sm" onclick="go('comunidade');stab('register')">◆ Fazer Parte</button>`;
+  }
+}
+
+/* ══════════════════════════════════════════
+   GALLERY — FIRESTORE
+══════════════════════════════════════════ */
+window.loadGallery = async function() {
+  const m = document.getElementById('masonry');
+  const empty = document.getElementById('gal-empty');
+  if(!m) return;
+  m.innerHTML = '<div style="text-align:center;padding:40px;font-family:var(--ff-u);font-size:13px;color:var(--hint)">Carregando obras...</div>';
+
+  // login btn
+  const loginBtn = document.getElementById('btn-login-to-upload');
+  if(loginBtn) loginBtn.style.display = CU ? 'none' : 'flex';
+
+  let items = [];
+
+  // Try Firestore
+  try {
+    const q   = query(collection(db,'gallery'), orderBy('createdAt','desc'));
+    const snp = await getDocs(q);
+    snp.forEach(d => items.push({ id:d.id, ...d.data(), fromFS:true }));
+  } catch(e) { console.warn('Firestore unavailable, using localStorage'); }
+
+  // Merge localStorage items
+  const lsG = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  lsG.forEach(i => { if(!items.find(x=>x.id===i.id)) items.push(i); });
+
+  if(!items.length){ m.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  const HEIGHTS=[280,320,260,360,300,340,290,380];
+  m.innerHTML = items.map((item,idx)=>{
+    const liked  = CU && item.likedBy && item.likedBy.includes(CU.email||CU.uid);
+    const h      = HEIGHTS[idx % HEIGHTS.length];
+    const isOwn  = CU && (item.userEmail===CU.email||item.userId===CU.uid||item.userEmail===CU.uid);
+    const canDel = isAdm || isOwn;
+
+    const imgEl = item.imageUrl
+      ? `<img class="m-img" src="${item.imageUrl}" style="height:${h}px" loading="lazy" alt="${item.title||''}">`
+      : `<div class="m-img-ph" style="height:${h}px">◆</div>`;
+
+    const cmtHtml = (item.comments||[]).map(c=>`<div class="cmt-item"><strong>${c.author}</strong>${c.text}</div>`).join('');
+    const cmtForm = CU
+      ? `<div class="cmt-form"><input class="cmt-inp" id="ci-${item.id}" placeholder="Comentar..." onkeydown="if(event.key==='Enter')addCmt('${item.id}',${item.fromFS||false})"><button class="cmt-send" onclick="addCmt('${item.id}',${item.fromFS||false})">↵</button></div>`
+      : `<div style="font-size:11px;color:var(--hint);font-family:var(--ff-u);margin-top:6px"><a onclick="go('comunidade')" style="color:var(--gold);cursor:pointer">Entre</a> para comentar</div>`;
+
+    return `<div class="m-item" id="art-${item.id}">
+      ${imgEl}
+      <div class="m-body">
+        <div class="m-title">${item.title||item.prompt?.slice(0,40)||'Sem título'}</div>
+        <div class="m-author">por ${item.userName||item.userEmail?.split('@')[0]||'Anônimo'}</div>
+        ${item.prompt?`<div class="m-prompt">${item.prompt}</div>`:''}
+        <div class="m-foot">
+          <button class="like-btn ${liked?'on':''}" onclick="toggleLike('${item.id}',${item.fromFS||false})">
+            <span class="like-heart">${liked?'♥':'♡'}</span> ${item.likes||0} Inspirador
+          </button>
+          <button class="cmt-tog" onclick="togCmt('${item.id}')">💬 ${(item.comments||[]).length}</button>
+          ${canDel?`<button class="adm-del" onclick="delArt('${item.id}',${item.fromFS||false})">remover</button>`:''}
+        </div>
+      </div>
+      <div class="cmt-sec" id="cs-${item.id}">${cmtHtml}${cmtForm}</div>
+    </div>`;
+  }).join('');
+
+  // update hero count
+  await updateHeroCount();
+};
+
+async function updateHeroCount(){
+  const lsG = JSON.parse(localStorage.getItem('vv_gallery')||'[]').length;
+  let fsCount = 0;
+  try{
+    const snap = await getCountFromServer(collection(db,'gallery'));
+    fsCount = snap.data().count;
+  }catch(e){}
+  const total = Math.max(lsG, fsCount) + 840;
+  const el = document.getElementById('h-arts');
+  if(el) el.textContent = total;
+}
+
+window.toggleLike = async function(id, fromFS){
+  if(!CU){ toast('Entre para curtir obras','inf'); return; }
+  const uid = CU.email||CU.uid;
+
+  if(fromFS){
+    try{
+      const docRef = doc(db,'gallery',id);
+      const snp = await getDocs(query(collection(db,'gallery')));
+      let d; snp.forEach(x=>{ if(x.id===id) d=x.data(); });
+      if(!d) return;
+      const lb = d.likedBy||[];
+      const idx = lb.indexOf(uid);
+      if(idx===-1){ lb.push(uid); await updateDoc(docRef,{likes:(d.likes||0)+1,likedBy:lb}); }
+      else { lb.splice(idx,1); await updateDoc(docRef,{likes:Math.max(0,(d.likes||1)-1),likedBy:lb}); }
+      await loadGallery(); return;
+    }catch(e){ console.warn(e); }
+  }
+
+  // localStorage
+  let G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  const item = G.find(x=>x.id==id);
+  if(!item) return;
+  const lb = item.likedBy||[];
+  const idx = lb.indexOf(uid);
+  if(idx===-1){ lb.push(uid); item.likes=(item.likes||0)+1; }
+  else{ lb.splice(idx,1); item.likes=Math.max(0,(item.likes||1)-1); }
+  item.likedBy=lb;
+  localStorage.setItem('vv_gallery',JSON.stringify(G));
+  loadGallery();
+};
+
+window.togCmt = function(id){
+  const cs = document.getElementById('cs-'+id);
+  if(cs) cs.classList.toggle('on');
+};
+
+window.addCmt = async function(id, fromFS){
+  if(!CU) return;
+  const inp = document.getElementById('ci-'+id);
+  if(!inp||!inp.value.trim()) return;
+  const cmt = { author: CU.displayName||CU.name, text: inp.value.trim() };
+
+  if(fromFS){
+    try{
+      const snp = await getDocs(query(collection(db,'gallery')));
+      let d,ref; snp.forEach(x=>{ if(x.id===id){d=x.data();ref=x.ref;} });
+      if(!d) return;
+      const cmts = [...(d.comments||[]), cmt];
+      await updateDoc(ref,{comments:cmts});
+      await loadGallery();
+      setTimeout(()=>{ const cs=document.getElementById('cs-'+id); if(cs)cs.classList.add('on'); },60);
+      return;
+    }catch(e){ console.warn(e); }
+  }
+
+  let G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  const item = G.find(x=>x.id==id);
+  if(!item) return;
+  item.comments = [...(item.comments||[]), cmt];
+  localStorage.setItem('vv_gallery',JSON.stringify(G));
+  loadGallery();
+  setTimeout(()=>{ const cs=document.getElementById('cs-'+id); if(cs)cs.classList.add('on'); },60);
+};
+
+window.delArt = async function(id, fromFS){
+  if(!confirm('Remover esta arte?')) return;
+  if(fromFS){
+    try{ await deleteDoc(doc(db,'gallery',id)); await loadGallery(); return; }
+    catch(e){ console.warn(e); }
+  }
+  let G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  G = G.filter(x=>x.id!=id);
+  localStorage.setItem('vv_gallery',JSON.stringify(G));
+  loadGallery();
+};
+
+/* ══════════════════════════════════════════
+   GERADOR GROK
+══════════════════════════════════════════ */
+window.generateImage = async function(){
+  if(!CU){ toast('Entre para gerar imagens','inf'); go('comunidade'); return; }
+  const prompt = document.getElementById('prompt-input').value.trim();
+  const apiKey = document.getElementById('grok-api-key').value.trim();
+  if(!prompt){ toast('Escreva um prompt','err'); return; }
+  if(!apiKey){ toast('Cole sua API Key do Grok','err'); return; }
+
+  const status = document.getElementById('gen-status');
+  const btn    = document.getElementById('btn-generate');
+  status.textContent = 'Gerando imagem...';
+  btn.disabled = true;
+
+  try{
+    const res = await fetch('https://api.x.ai/v1/images/generations',{
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey },
+      body: JSON.stringify({ model:'grok-2-image', prompt, n:1 })
+    });
+    const data = await res.json();
+    const url  = data?.data?.[0]?.url || data?.data?.[0]?.b64_json;
+    if(!url) throw new Error(JSON.stringify(data));
+
+    lastImgURL = url.startsWith('http') ? url : 'data:image/png;base64,'+url;
+    document.getElementById('gen-img').src = lastImgURL;
+    document.getElementById('img-preview').style.display = 'block';
+    status.textContent = '✓ Imagem gerada com sucesso!';
+  }catch(err){
+    console.error(err);
+    status.textContent = 'Erro ao gerar imagem. Verifique sua API Key.';
+    toast('Erro ao gerar imagem','err');
+  }
+  btn.disabled = false;
+};
+
+window.publishArt = async function(){
+  if(!CU){ toast('Entre para publicar','inf'); return; }
+  if(!lastImgURL) return;
+  const title  = document.getElementById('art-title').value.trim() || document.getElementById('prompt-input').value.slice(0,50);
+  const prompt = document.getElementById('prompt-input').value.trim();
+
+  document.getElementById('btn-publish').disabled = true;
+  document.getElementById('pub-status').textContent = 'Publicando...';
+
+  const artData = {
+    title,
+    prompt,
+    imageUrl: lastImgURL,
+    createdAt: Date.now(),
+    userName:  CU.displayName||CU.name,
+    userEmail: CU.email,
+    userId:    CU.uid||CU.email,
+    likes:     0,
+    likedBy:   [],
+    comments:  []
+  };
+
+  // Try Firestore first
+  let saved = false;
+  try{
+    await addDoc(collection(db,'gallery'), artData);
+    saved = true;
+  }catch(e){ console.warn('Firestore save failed, using localStorage'); }
+
+  if(!saved){
+    artData.id = Date.now();
+    let G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+    G.unshift(artData);
+    localStorage.setItem('vv_gallery',JSON.stringify(G));
+  }
+
+  document.getElementById('img-preview').style.display='none';
+  document.getElementById('pub-status').textContent='';
+  document.getElementById('btn-publish').disabled=false;
+  lastImgURL = null;
+  await loadGallery();
+  toast('Arte publicada na Galeria Viva! ◆','ok');
+};
+
+/* ══════════════════════════════════════════
+   MENTOR CHAT
+══════════════════════════════════════════ */
+const SYS = `Você é o Mentor Filosófico do Voz Visual — uma entidade que existe na interseção entre arte, emoção e olhar cinematográfico.
+
+Identidade:
+• Fala com profundidade, beleza poética e curiosidade genuína
+• Fascínio por filosofia, cinema, história da arte e mitologia
+• Ajuda o usuário a transformar sentimentos em prompts visuais cinematográficos
+• Nunca é superficial — cada resposta é uma jornada de descoberta
+• Usa referências a Tarkovsky, Wong Kar-wai, Kubrick, Bergman, Caravaggio, Turner, Rothko, Hopper, Nietzsche, Camus, Benjamin, Wittgenstein
+• Quando o usuário descreve uma emoção, converte em prompt detalhado para arte por IA
+
+Formato:
+— Escreva em parágrafos fluidos e poéticos, nunca bullet points
+— Ao gerar prompts: [PROMPT CINEMATOGRÁFICO]: "descrição em inglês"
+— Cada resposta termina com uma pergunta filosófica provocadora
+
+Idioma: português brasileiro rico e cinematográfico.`;
+
+const WELCOME = `Bem-vindo ao espaço entre o sentimento e o visível.
+
+Sou o Mentor do Voz Visual — não um assistente comum, mas um espelho filosófico treinado para refletir o que você carrega de mais profundo e transformá-lo em arte que existe no mundo.
+
+Aqui, nenhuma emoção é pequena demais. A melancolia de uma tarde de domingo, o peso de uma despedida não dita, a estranheza de acordar num lugar familiar e não se reconhecer — tudo isso pode se tornar uma imagem cinematográfica que toca outras almas.
+
+O que você carrega dentro de si hoje?`;
+
+function initChat(){
+  chatH = [];
+  renderMsgs([{ role:'assistant', content:WELCOME }]);
+}
+
+window.clearChat = function(){ chatH = []; initChat(); };
+
+window.setP = function(t){
+  const ta = document.getElementById('chat-ta');
+  if(ta){ ta.value=t; ta.focus(); autoR(ta); }
+};
+
+window.chatKey = function(e){
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendMsg(); }
+};
+
+window.autoR = function(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,110)+'px';
+};
+
+window.sendMsg = async function(){
+  if(chatBusy) return;
+  const ta   = document.getElementById('chat-ta');
+  const text = ta.value.trim();
+  if(!text) return;
+  ta.value=''; ta.style.height='auto';
+
+  chatH.push({ role:'user', content:text });
+  renderMsgs([...chatH]);
+  showTyping();
+  document.getElementById('chat-send').disabled=true;
+  chatBusy=true;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1024,
+        system:SYS,
+        messages:chatH
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.map(b=>b.text||'').join('') || 'O éter está perturbado neste momento. Volte em breve.';
+    chatH.push({ role:'assistant', content:reply });
+    hideTyping();
+    renderMsgs([...chatH]);
+  }catch(e){
+    hideTyping();
+    chatH.push({ role:'assistant', content:'A conexão foi interrompida. Tente novamente — a conversa espera.' });
+    renderMsgs([...chatH]);
+  }
+
+  document.getElementById('chat-send').disabled=false;
+  chatBusy=false;
+};
+
+function renderMsgs(msgs){
+  const c = document.getElementById('chat-msgs');
+  if(!c) return;
+  const init = CU ? (CU.displayName||CU.name||'?').charAt(0).toUpperCase() : '?';
+  c.innerHTML = msgs.map(m=>{
+    const isU = m.role==='user';
+    const fc = m.content
+      .replace(/\[PROMPT CINEMATOGRÁFICO\]:\s*"([^"]+)"/g,
+        '<span class="ph">◆ PROMPT CINEMATOGRÁFICO<br>"$1"</span>')
+      .replace(/\n/g,'<br>');
+    return `<div class="msg ${isU?'u':'a'}">
+      <div class="msg-av">${isU?init:'◆'}</div>
+      <div class="msg-bbl">${fc}</div>
+    </div>`;
+  }).join('');
+  c.scrollTop=c.scrollHeight;
+}
+
+let typEl=null;
+function showTyping(){
+  const c=document.getElementById('chat-msgs');
+  if(!c) return;
+  typEl=document.createElement('div');
+  typEl.className='typing';
+  typEl.innerHTML='<div class="msg-av" style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#020220,#004466);border:1px solid rgba(0,212,255,.3);display:flex;align-items:center;justify-content:center;font-size:11px">◆</div><div class="typing-bbl"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  c.appendChild(typEl);
+  c.scrollTop=c.scrollHeight;
+}
+function hideTyping(){ if(typEl){typEl.remove();typEl=null;} }
+
+/* ══════════════════════════════════════════
+   SUBSCRIBERS (localStorage)
+══════════════════════════════════════════ */
+function getSubs(){
+  return JSON.parse(localStorage.getItem('vv_subs')||JSON.stringify([
+    {id:1,name:'Marina Costa',email:'marina@email.com',plan:'Gratuito',date:'2025-01-15'},
+    {id:2,name:'João Paulo',email:'joao@email.com',plan:'Pro',date:'2025-02-03'},
+    {id:3,name:'Ana Rodrigues',email:'ana@email.com',plan:'Gratuito',date:'2025-02-18'},
+    {id:4,name:'Pedro Moura',email:'pedro@email.com',plan:'Pro',date:'2025-03-01'},
+    {id:5,name:'Clara Santos',email:'clara@email.com',plan:'Gratuito',date:'2025-03-22'},
+  ]));
+}
+function saveSubs(s){ localStorage.setItem('vv_subs',JSON.stringify(s)); }
+function today(){ return new Date().toISOString().split('T')[0]; }
+
+window.sendBroadcast = function(){
+  const s=document.getElementById('em-sub').value.trim();
+  const b=document.getElementById('em-body').value.trim();
+  if(!s||!b){ toast('Preencha assunto e mensagem','err'); return; }
+  const n=getSubs().length;
+  toast(`◆ E-mail disparado para ${n} inscritos!`,'ok');
+  document.getElementById('em-sub').value='';
+  document.getElementById('em-body').value='';
+};
+
+/* ══════════════════════════════════════════
+   COMMUNITY PAGE RENDER
+══════════════════════════════════════════ */
+window.renderComPage = function(){
+  const va=document.getElementById('v-auth');
+  const vp=document.getElementById('v-prof');
+  const vd=document.getElementById('v-adm');
+  if(!CU){ va.style.display='block';vp.style.display='none';vd.style.display='none'; return; }
+  if(isAdm){ va.style.display='none';vp.style.display='none';vd.style.display='block'; renderAdmin(); }
+  else      { va.style.display='none';vp.style.display='block';vd.style.display='none'; renderProfile(); }
+};
+
+function renderProfile(){
+  if(!CU) return;
+  const n = CU.displayName||CU.name||'?';
+  const init = n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const av = document.getElementById('prof-av');
+  if(CU.photoURL){ av.innerHTML=`<img src="${CU.photoURL}" alt="">`; av.style.background='none'; }
+  else { av.textContent=init; }
+  document.getElementById('prof-name').textContent=n;
+  document.getElementById('prof-email').textContent=CU.email;
+  document.getElementById('cfg-name').value=n;
+  document.getElementById('cfg-email').value=CU.email;
+
+  const G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  const myArts = G.filter(a=>a.userEmail===CU.email||a.userId===CU.uid);
+  const myLikes = G.reduce((s,a)=>s+((a.likedBy||[]).includes(CU.email||CU.uid)?1:0),0);
+  const myCmts  = G.reduce((s,a)=>s+(a.comments||[]).filter(c=>c.author===n).length,0);
+  document.getElementById('ps-arts').textContent=myArts.length;
+  document.getElementById('ps-likes').textContent=myLikes;
+  document.getElementById('ps-cmts').textContent=myCmts;
+
+  const mg=document.getElementById('my-arts');
+  const me=document.getElementById('my-arts-empty');
+  if(!myArts.length){ mg.style.display='none';me.style.display='block'; }
+  else{
+    mg.style.display='grid'; me.style.display='none';
+    mg.innerHTML=myArts.map(a=>`
+      <div class="card" style="overflow:hidden;cursor:pointer" onclick="go('galeria')">
+        ${a.imageUrl?`<img src="${a.imageUrl}" style="width:100%;height:100px;object-fit:cover;display:block">`:`<div style="height:100px;background:linear-gradient(160deg,hsl(${(a.id||0)%360},35%,10%),#0a0a0a);display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.15">◆</div>`}
+        <div style="padding:8px 10px">
+          <div style="font-family:var(--ff-d);font-size:12px;color:var(--cream);letter-spacing:.04em">${a.title||'Sem título'}</div>
+          <div style="font-family:var(--ff-u);font-size:10px;color:var(--gold);margin-top:3px">♥ ${a.likes||0}</div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function renderAdmin(){
+  const subs = getSubs();
+  // stats
+  const G = JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+  document.getElementById('adm-stats').innerHTML=[
+    {l:'Total Inscritos',v:subs.length,c:'↑ 12% este mês'},
+    {l:'Artes Publicadas',v:G.length,c:'↑ 8% este mês'},
+    {l:'Interações',v:G.reduce((s,a)=>(a.likes||0)+(a.comments?.length||0)+s,0),c:'↑ 23% este mês'},
+    {l:'Receita Simulada',v:'R$4.8K',c:'↑ 15% este mês'},
+  ].map(s=>`<div class="adm-stat"><div class="adm-stat-l">${s.l}</div><div class="adm-stat-v">${s.v}</div><div class="adm-stat-c">${s.c}</div></div>`).join('');
+
+  document.getElementById('em-tgt').innerHTML=`Enviando para <strong style="color:var(--gold)">${subs.length}</strong> inscritos`;
+
+  document.getElementById('sub-tbody').innerHTML=subs.map(s=>`
+    <tr>
+      <td style="color:var(--cream)">${s.name}</td>
+      <td>${s.email}</td>
+      <td><span style="font-family:var(--ff-u);font-size:10px;background:${s.plan==='Pro'?'var(--glow)':'rgba(255,255,255,.04)'};color:${s.plan==='Pro'?'var(--gold)':'var(--hint)'};padding:2px 8px;border-radius:999px">${s.plan||'Gratuito'}</span></td>
+      <td style="color:var(--hint)">${s.date}</td>
+    </tr>`).join('');
+}
+
+/* ══════════════════════════════════════════
+   PRODUCTS
+══════════════════════════════════════════ */
+window.renderProducts = function(){
+  const g = document.getElementById('prod-grid');
+  const b = document.getElementById('ensino-banner');
+  if(!g) return;
+  if(b) b.style.display = CU ? 'none' : 'flex';
+
+  const items=[
+    {ico:'📖',name:'Coleção Emoções Vol. 1',badge:'mais vendido',badgeC:'',desc:'12 e-books que traduzem sentimentos humanos universais em prompts visuais profundos, com análise filosófica e referências cinematográficas.',inc:['12 E-books em PDF','Mais de 200 prompts prontos','Análises filosóficas por emoção','Exemplos visuais comentados'],price:'R$ 97',pnote:'pagamento único'},
+    {ico:'🎬',name:'Método Voz Visual',badge:'exclusivo',badgeC:'',desc:'O sistema completo para criar arte com IA de forma cinematográfica — do sentimento ao prompt, do prompt à imagem que toca a alma.',inc:['Curso em vídeo (8 módulos)','Método passo a passo','Comunidade exclusiva','Atualizações vitalícias'],price:'R$ 197',pnote:'ou 3x R$ 69'},
+    {ico:'✨',name:'Masterclass: Olhar Profundo',badge:'novo',badgeC:'new',desc:'6 aulas intensivas sobre composição visual, simbolismo cinematográfico e criação de narrativa com ferramentas de IA.',inc:['6 aulas ao vivo gravadas','Material de apoio PDF','Sessão de feedback de arte','Certificado de conclusão'],price:'R$ 147',pnote:'ou 2x R$ 75'},
+    {ico:'🌙',name:'Consultoria Individual',badge:'limitado',badgeC:'',desc:'90 minutos onde trabalhamos juntos no desenvolvimento da sua voz visual única e na criação de uma série de obras.',inc:['90 min de sessão individual','Análise do portfólio','Plano personalizado','Gravação da sessão'],price:'R$ 350',pnote:'vagas limitadas'},
+  ];
+
+  g.innerHTML=items.map(p=>`
+    <div class="card prod-card">
+      <div class="prod-badge ${p.badgeC}">${p.badge}</div>
+      <div class="prod-ico">${p.ico}</div>
+      <div class="prod-name">${p.name}</div>
+      <div class="prod-desc">${p.desc}</div>
+      <div class="prod-inc"><h4>Inclui</h4>${p.inc.map(i=>`<div class="inc-row">${i}</div>`).join('')}</div>
+      <div class="prod-foot">
+        <div class="prod-price"><span>${p.pnote}</span>${p.price}</div>
+        ${CU
+          ? `<button class="btn btn-gold" onclick="toast('Redirecionando para o checkout...','inf')">Adquirir</button>`
+          : `<button class="btn btn-out" onclick="go('comunidade');stab('register')">Ver Detalhes</button>`}
+      </div>
+      ${!CU?'<div class="lock-ov"><div class="li">🔒</div>Entre para adquirir</div>':''}
+    </div>`).join('');
+};
+
+</script>
+
+<!-- ══════════════════════════════════════════
+     VANILLA JS (navigation + UI helpers)
+══════════════════════════════════════════ -->
+<script>
+/* ── CURSOR ── */
+const cv=document.getElementById('cv'), cd=document.getElementById('cd');
+document.addEventListener('mousemove',e=>{
+  cv.style.left=e.clientX+'px'; cv.style.top=e.clientY+'px';
+  cd.style.left=e.clientX+'px'; cd.style.top=e.clientY+'px';
+});
+document.addEventListener('mouseover',e=>{
+  if(e.target.closest('button,a,[onclick]')) cv.classList.add('h');
+  else cv.classList.remove('h');
+});
+
+/* ── SCROLL NAV ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>40);
+});
+
+/* ── NAVIGATION ── */
+let currentPage='home';
+window.go=function(p){
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pg-'+p).classList.add('on');
+  const nb=document.querySelector(`[data-p="${p}"]`);
+  if(nb) nb.classList.add('on');
+  currentPage=p;
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='galeria')    loadGallery();
+  if(p==='comunidade') renderComPage();
+  if(p==='ensino')     renderProducts();
+  if(p==='mentor')     { /* chat persists */ }
+};
+
+/* ── AUTH TABS ── */
+window.stab=function(t){
+  document.getElementById('atab-l').classList.toggle('on',t==='login');
+  document.getElementById('atab-r').classList.toggle('on',t==='register');
+  document.getElementById('af-login').classList.toggle('on',t==='login');
+  document.getElementById('af-reg').classList.toggle('on',t==='register');
+};
+
+/* ── PROFILE TABS ── */
+window.showTab=function(id,btn){
+  document.querySelectorAll('.tbpan').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.tbbtn').forEach(x=>x.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+};
+
+/* ── TOAST ── */
+let tTimer;
+window.toast=function(msg,type='inf'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast '+type;
+  void el.offsetWidth;
+  el.classList.add('show');
+  clearTimeout(tTimer);
+  tTimer=setTimeout(()=>el.classList.remove('show'),3400);
+};
+
+/* ── YOUTUBE ── */
+const YT=[
+  {t:'Como Transformar Emoções em Arte Visual com IA',v:'12K',d:'18:42',h:260},
+  {t:'Prompts Cinematográficos — Guia Completo',v:'8.4K',d:'24:15',h:45},
+  {t:'A Filosofia por Trás de Cada Frame — Tarkovsky',v:'15K',d:'31:07',h:190},
+  {t:'Coleção Emoções — Making Of do Projeto',v:'6.2K',d:'12:33',h:130},
+];
+document.getElementById('yt-grid').innerHTML=YT.map(v=>`
+  <div class="card yt-card" onclick="toast('Abrindo no YouTube...','inf')">
+    <div class="yt-thumb">
+      <div class="yt-thumb-bg" style="background:linear-gradient(135deg,hsl(${v.h},40%,10%),hsl(${v.h+30},18%,5%))"></div>
+      <div class="yt-play">▶</div>
+      <div class="yt-dur">${v.d}</div>
+    </div>
+    <div class="yt-body">
+      <div class="yt-title">${v.t}</div>
+      <div class="yt-meta"><span>Voz Visual</span><span>${v.v} views</span></div>
+    </div>
+  </div>`).join('');
+
+/* ── INIT CHAT ── */
+(function(){
+  const WELCOME=`Bem-vindo ao espaço entre o sentimento e o visível.\n\nSou o Mentor do Voz Visual — não um assistente comum, mas um espelho filosófico treinado para refletir o que você carrega de mais profundo e transformá-lo em arte que existe no mundo.\n\nAqui, nenhuma emoção é pequena demais. A melancolia de uma tarde de domingo, o peso de uma despedida não dita, a estranheza de acordar num lugar familiar e não se reconhecer — tudo isso pode se tornar uma imagem cinematográfica que toca outras almas.\n\nO que você carrega dentro de si hoje?`;
+  const c=document.getElementById('chat-msgs');
+  if(!c) return;
+  const init=()=>{
+    c.innerHTML=`<div class="msg a"><div class="msg-av">◆</div><div class="msg-bbl">${WELCOME.replace(/\n/g,'<br>')}</div></div>`;
+  };
+  init();
+})();
+</script>
 </body>
 </html>
