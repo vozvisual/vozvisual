@@ -98,6 +98,34 @@
             text-decoration: none;
             font-size: 20px;
         }
+
+        /* GALERIA */
+        .galeria-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .galeria-container img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ffff55;
+        }
+
+        /* VIDEOS */
+        .video-card {
+            background: #111;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #ff00ff55;
+        }
     </style>
 </head>
 <body>
@@ -107,6 +135,8 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#materiais">Materiais</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#videos">Vídeos</a>
         <a href="#contato">Contato</a>
     </nav>
 </header>
@@ -133,6 +163,40 @@
         <p>Em breve você poderá adquirir os materiais oficiais do Voz Visual.</p>
         <button class="btn-disabled">Disponível em breve</button>
     </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" class="section">
+    <h2 class="neon">Galeria</h2>
+
+    <p>Adicione suas imagens no repositório e substitua os links abaixo.</p>
+
+    <div class="galeria-container">
+        <img src="https://via.placeholder.com/300x200/000000/00ffff?text=Imagem+1" alt="Imagem 1">
+        <img src="https://via.placeholder.com/300x200/000000/00ffff?text=Imagem+2" alt="Imagem 2">
+        <img src="https://via.placeholder.com/300x200/000000/00ffff?text=Imagem+3" alt="Imagem 3">
+    </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="section">
+    <h2 class="neon">Vídeos</h2>
+
+    <div class="video-card">
+        <h3>Vídeo 1</h3>
+        <a class="btn" href="https://www.youtube.com/watch?v=SEU_VIDEO_AQUI" target="_blank">Assistir</a>
+    </div>
+
+    <div class="video-card">
+        <h3>Vídeo 2</h3>
+        <a class="btn" href="https://www.youtube.com/watch?v=SEU_VIDEO_AQUI" target="_blank">Assistir</a>
+    </div>
+
+    <div class="video-card">
+        <h3>Vídeo 3</h3>
+        <a class="btn" href="https://www.youtube.com/watch?v=SEU_VIDEO_AQUI" target="_blank">Assistir</a>
+    </div>
+
 </section>
 
 <!-- CONTATO -->
