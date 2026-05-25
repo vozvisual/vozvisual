@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstati
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq5iPaCDPbb9Gl_pJDamyMUpjdRr9hIkE",
-  authDomain: "vozvisual-b4983.firebaseapp.com",
-  projectId: "vozvisual-b4983",
-  storageBucket: "vozvisual-b4983.firebasestorage.app",
-  messagingSenderId: "481254899304",
-  appId: "1:481254899304:web:374094321bc039b7b605dd",
-  measurementId: "G-YN01SCB7XK"
+  authDomain: "vozvisualnovo.firebaseapp.com",
+  projectId: "vozvisualnovo",
+  storageBucket: "vozvisualnovo.firebasestorage.app",
+  messagingSenderId: "976285263773",
+  appId: "1:976285263773:web:520352d6ba7d6f3dd53174",
+  measurementId: "G-RXGH46F7PD"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -23,3 +23,4 @@ window.loginGoogle = async () => {
     alert("Erro ao entrar: " + err.message);
   }
 };
+
