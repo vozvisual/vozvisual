@@ -1,248 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voz Visual — Portal</title>
-
-    <style>
-        body {
-            margin: 0;
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        h1, h2 {
-            color: #00ffff;
-            text-shadow: 0 0 15px #00ffff;
-            text-align: center;
-        }
-
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            cursor: pointer;
-        }
-
-        .portal-img {
-            width: 100%;
-            max-width: 900px;
-            border-radius: 10px;
-            box-shadow: 0 0 40px #00ffffaa;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 40px 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: #00ffff;
-            color: #000;
-            font-size: 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 0 15px #00ffffaa;
-            margin: 10px;
-        }
-
-        .btn:hover {
-            background: #00cccc;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background: #111;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00ffff55;
-            text-align: center;
-        }
-
-        .card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .video-thumb {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #ff00ff55;
-        }
-
-        .menu-title {
-            margin-top: 80px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entre no Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; }
+    .hero {
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    .arco {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #22d3ee;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: arcoAnim 0.8s ease-out forwards;
+      box-shadow: 0 0 30px #22d3ee;
+    }
+    @keyframes arcoAnim {
+      0% { transform: scale(0.2); opacity: 1; }
+      100% { transform: scale(4); opacity: 0; }
+    }
+  </style>
 </head>
-<body>
+<body class="bg-black text-zinc-200">
 
-<!-- ========================= -->
-<!--        PORTAL INICIAL     -->
-<!-- ========================= -->
-
-<div id="portalScreen" class="center">
-    <img src="SUA_IMAGEM_DO_PORTAL.png" class="portal-img" alt="Entre no Portal">
-</div>
-
-<!-- ========================= -->
-<!--        MENU PRINCIPAL     -->
-<!-- ========================= -->
-
-<div id="menuScreen" class="hidden">
-    <h1 class="menu-title">Portal Voz Visual</h1>
-
-    <div style="text-align:center;margin-top:40px;">
-        <a class="btn" onclick="showSection('videos')">Galeria de Vídeos</a>
-        <a class="btn" onclick="showSection('imagens')">Galeria de Imagens</a>
-        <a class="btn" onclick="showSection('materiais')">Materiais</a>
+  <section id="hero" class="hero relative flex items-center justify-center overflow-hidden">
+    <!-- Coloque aqui o link da imagem que você escolher -->
+    <div onclick="criarArco(event)" class="text-center z-10 cursor-pointer">
+      <h1 class="text-6xl md:text-7xl font-bold tracking-widest text-white neon-text">
+        ENTRE NO PORTAL
+      </h1>
     </div>
-</div>
+  </section>
 
-<!-- ========================= -->
-<!--      GALERIA DE VÍDEOS    -->
-<!-- ========================= -->
+  <script>
+    function criarArco(e) {
+      const arco = document.createElement('div');
+      arco.className = 'arco';
+      arco.style.left = (e.clientX - 20) + 'px';
+      arco.style.top = (e.clientY - 20) + 'px';
+      document.getElementById('hero').appendChild(arco);
 
-<div id="videos" class="hidden container">
-    <h1>Galeria de Vídeos</h1>
-
-    <div class="grid">
-
-        <div class="card">
-            <h2>Vídeo 1</h2>
-            <a href="https://www.youtube.com/watch?v=SEU_VIDEO_1" target="_blank">
-                <img class="video-thumb" src="https://img.youtube.com/vi/SEU_VIDEO_1/hqdefault.jpg">
-            </a>
-        </div>
-
-        <div class="card">
-            <h2>Vídeo 2</h2>
-            <a href="https://www.youtube.com/watch?v=SEU_VIDEO_2" target="_blank">
-                <img class="video-thumb" src="https://img.youtube.com/vi/SEU_VIDEO_2/hqdefault.jpg">
-            </a>
-        </div>
-
-        <div class="card">
-            <h2>Vídeo 3</h2>
-            <a href="https://www.youtube.com/watch?v=SEU_VIDEO_3" target="_blank">
-                <img class="video-thumb" src="https://img.youtube.com/vi/SEU_VIDEO_3/hqdefault.jpg">
-            </a>
-        </div>
-
-    </div>
-
-    <br><br>
-    <a class="btn" onclick="backToMenu()">Voltar ao Menu</a>
-</div>
-
-<!-- ========================= -->
-<!--     GALERIA DE IMAGENS    -->
-<!-- ========================= -->
-
-<div id="imagens" class="hidden container">
-    <h1>Galeria de Imagens</h1>
-
-    <div class="grid">
-
-        <div class="card">
-            <img src="IMAGEM1.png">
-        </div>
-
-        <div class="card">
-            <img src="IMAGEM2.png">
-        </div>
-
-        <div class="card">
-            <img src="IMAGEM3.png">
-        </div>
-
-    </div>
-
-    <br><br>
-    <a class="btn" onclick="backToMenu()">Voltar ao Menu</a>
-</div>
-
-<!-- ========================= -->
-<!--         MATERIAIS         -->
-<!-- ========================= -->
-
-<div id="materiais" class="hidden container">
-    <h1>Materiais</h1>
-
-    <div class="grid">
-
-        <div class="card">
-            <h2>Curso Voz Visual</h2>
-            <p>Em breve disponível.</p>
-        </div>
-
-        <div class="card">
-            <h2>E‑book Voz Visual</h2>
-            <p>Em breve disponível.</p>
-        </div>
-
-        <div class="card">
-            <h2>Downloads</h2>
-            <p>Materiais adicionais serão adicionados aqui.</p>
-        </div>
-
-    </div>
-
-    <br><br>
-    <a class="btn" onclick="backToMenu()">Voltar ao Menu</a>
-</div>
-
-<!-- ========================= -->
-<!--         SCRIPT JS         -->
-<!-- ========================= -->
-
-<script>
-    const portal = document.getElementById("portalScreen");
-    const menu = document.getElementById("menuScreen");
-
-    portal.addEventListener("click", () => {
-        portal.classList.add("hidden");
-        menu.classList.remove("hidden");
-    });
-
-    function showSection(sectionId) {
-        menu.classList.add("hidden");
-
-        document.getElementById("videos").classList.add("hidden");
-        document.getElementById("imagens").classList.add("hidden");
-        document.getElementById("materiais").classList.add("hidden");
-
-        document.getElementById(sectionId).classList.remove("hidden");
-        window.scrollTo(0, 0);
+      setTimeout(() => arco.remove(), 800);
     }
-
-    function backToMenu() {
-        document.getElementById("videos").classList.add("hidden");
-        document.getElementById("imagens").classList.add("hidden");
-        document.getElementById("materiais").classList.add("hidden");
-
-        menu.classList.remove("hidden");
-        window.scrollTo(0, 0);
-    }
-</script>
-
+  </script>
 </body>
 </html>
-
