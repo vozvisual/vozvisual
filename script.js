@@ -7,8 +7,8 @@ const firebaseConfig = {
   projectId: "vozvisual-b4983",
   storageBucket: "vozvisual-b4983.firebasestorage.app",
   messagingSenderId: "481254899304",
-  appId: "1:481254899304:web:e336fa743281684eb605dd",
-  measurementId: "G-7LJ7L35EQY"
+  appId: "1:481254899304:web:374094321bc039b7b605dd",
+  measurementId: "G-YN01SCB7XK"
 };
 
 const app = initializeApp(firebaseConfig);
