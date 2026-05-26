@@ -1,3 +1,1399 @@
+ChatGPT
+
+
+
+
+voz-visual-neon (2).html
+Arquivo
+deixe esse index pronto para um site, logo com o google na parte da comunidade, deixar a galeria viva com o grok integrado para gerar imagens, entrada para publicacao de upload, a parte do mentor fumcionando com o chat ia grok , deixar o site editavel e apenas publica lo com essas alteracoes
+
+o script eh antes dachave e acima do script de cor verde?
+
+Perfeito. Pode mandar por partes.
+
+O ideal é enviar nesta ordem:
+
+<head>
+
+começo do <body>
+
+galeria
+
+mentor/chat
+
+scripts finais
+
+Quando terminar, escreva:
+
+TERMINEI
+Aí eu monto a versão final completa já corrigida com:
+
+Google Login
+
+Grok funcionando
+
+mentor filosófico
+
+geração de imagens
+
+upload/publicação
+
+melhorias visuais
+
+scripts organizados
+
+pronto para Netlify/GitHub
+
+Pode enviar a primeira parte.
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VOZ VISUAL — Portal Cinematográfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* ── Fundos ── */
+  --bg:       #000008;
+  --bg2:      #03030f;
+  --bg3:      #07071a;
+  --bg4:      #0b0b22;
+  --surface:  #0f0f28;
+  /* ── Azul neon principal (texto, logo, destaque) ── */
+  --gold:     #00d4ff;
+  --gold2:    #55e8ff;
+  --gold-dim: #0077aa;
+  /* ── Glows e borders ── */
+  --glow:     rgba(0,212,255,0.12);
+  --glow2:    rgba(0,212,255,0.06);
+  --line:     rgba(0,212,255,0.28);
+  --line2:    rgba(0,212,255,0.10);
+  /* ── Magenta/Rosa (acento secundário) ── */
+  --sky:      #ff00aa;
+  --sky2:     #e040fb;
+  /* ── Laranja/Vermelho (acento terciário) ── */
+  --orange:   #ff6a00;
+  --orange2:  #ff4500;
+  /* ── Texto ── */
+  --cream:    #e8f4ff;
+  --dim:      #7090b0;
+  --hint:     #304560;
+  /* ── Status ── */
+  --red:      #ff4444;
+  --green:    #00ff88;
+  /* ── Radius / fonts ── */
+  --r:        10px;
+  --r2:       16px;
+  --ff-d:     'Cinzel',serif;
+  --ff-b:     'Crimson Pro',serif;
+  --ff-u:     'DM Sans',sans-serif;
+}
+
+/* ── NEON EXTRAS ───────────────────────────── */
+
+/* Animated scan line */
+body::after{
+  content:'';position:fixed;inset:0;z-index:8998;pointer-events:none;
+  background:
+    radial-gradient(ellipse 110% 110% at 50% 50%,transparent 45%,rgba(0,0,8,0.65) 100%),
+    linear-gradient(180deg,transparent 0%,transparent 49.8%,rgba(0,212,255,.015) 50%,transparent 50.2%,transparent 100%);
+  background-size:100% 100%, 100% 4px;
+  animation: scanline 8s linear infinite;
+}
+@keyframes scanline{
+  0%{background-position:0 0, 0 -100%}
+  100%{background-position:0 0, 0 100vh}
+}
+
+/* Neon glow on active nav */
+.nav-btn.on{
+  box-shadow: 0 0 12px rgba(0,212,255,.15);
+}
+
+/* Eyebrow lines — neon */
+.eyebrow::before,.eyebrow::after{background:linear-gradient(90deg,transparent,rgba(0,212,255,.4))}
+
+/* Hero H1 em — magenta variant */
+.h1 em{
+  background: linear-gradient(90deg, #00d4ff, #ff00aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style:italic;font-weight:300;
+}
+
+/* Hero CTA second btn hover — magenta */
+.btn-out:hover{
+  background:rgba(255,0,170,.08);
+  border-color:rgba(255,0,170,.5);
+  color:#ff55cc;
+  box-shadow:0 0 20px rgba(255,0,170,.15);
+}
+
+/* m-online — neon green */
+.m-online{color:#00ffaa}
+.m-online::before{background:#00ffaa;box-shadow:0 0 7px #00ffaa}
+
+/* product badge NEW — magenta */
+.prod-badge.new{background:linear-gradient(90deg,#aa0066,#ff00aa);color:#fff}
+
+/* scrollbar neon */
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,.35);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,.6)}
+
+/* toast border neon */
+.toast{border-color:rgba(0,212,255,.3)}
+.toast.ok{border-color:rgba(0,255,136,.3)}
+.toast.err{border-color:rgba(255,68,68,.3)}
+
+/* card border default — subtle neon */
+.card{border-color:rgba(0,212,255,.1)}
+
+/* masonry item border */
+.m-item{border-color:rgba(0,212,255,.1)}
+
+/* gen-box border */
+.gen-box{border-color:rgba(0,212,255,.15)}
+
+/* chat-box border */
+.chat-box{border-color:rgba(0,212,255,.15)}
+
+/* Profile card stats number */
+.ps-n{color:var(--gold);text-shadow:0 0 14px rgba(0,212,255,.3)}
+
+/* Like count neon */
+.like-btn.on .like-heart{color:var(--gold);text-shadow:0 0 8px rgba(0,212,255,.5)}
+
+/* YT play button hover magenta variant */
+.yt-card:hover .yt-play{background:var(--gold2);box-shadow:0 0 20px rgba(0,212,255,.3)}
+
+/* Prompt highlight in chat — cyan */
+.msg-bbl .ph{border-left:2px solid rgba(0,212,255,.4)}
+
+/* UPLOAD zone border neon */
+#upload-zone,.upload-zone{border-color:rgba(0,212,255,.25)}
+
+/* INPUT focus neon glow */
+.inp:focus{border-color:rgba(0,212,255,.5);box-shadow:0 0 12px rgba(0,212,255,.08)}
+
+/* SECTION background subtle neon */
+section{background:transparent}
+
+/* HERO ORB inner ring rotate */
+.hero-orb{animation:orbRotate 40s linear infinite}
+@keyframes orbRotate{from{transform:translateY(-50%) rotate(0deg)} to{transform:translateY(-50%) rotate(360deg)}}
+
+/* Footer rule */
+footer{border-top-color:rgba(0,212,255,.15)}
+
+/* ADM stat change color */
+.adm-stat-c{color:#00ffaa}
+
+/* CHIP active */
+.chip{border-color:rgba(0,212,255,.1)}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--ff-b);
+  font-size:16px;
+  line-height:1.75;
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* grain */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  opacity:1;mix-blend-mode:overlay;
+}
+/* vignette */
+body::after{
+  content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;
+  background:radial-gradient(ellipse 110% 110% at 50% 50%,transparent 45%,rgba(4,4,10,0.65) 100%);
+}
+
+/* cursor */
+#cv{position:fixed;z-index:9999;width:14px;height:14px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .18s;mix-blend-mode:screen}
+#cv.h{width:30px;height:30px;background:var(--glow)}
+#cd{position:fixed;z-index:9999;width:4px;height:4px;background:var(--gold);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+h1,h2,h3{font-family:var(--ff-d);font-weight:600;line-height:1.12;letter-spacing:.05em;color:var(--cream)}
+p{color:var(--dim)}
+.eyebrow{font-family:var(--ff-u);font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.eyebrow::before,.eyebrow::after{content:'';flex:1;max-width:36px;height:1px;background:var(--line)}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.wrap{max-width:1260px;margin:0 auto;padding:0 28px}
+section{padding:88px 0}
+.sec-hd{text-align:center;margin-bottom:56px}
+.sec-hd h2{font-size:clamp(26px,4vw,40px);margin-top:14px}
+.sec-hd p{font-size:17px;max-width:520px;margin:12px auto 0}
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn{font-family:var(--ff-u);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:999px;cursor:pointer;transition:all .22s;display:inline-flex;align-items:center;gap:7px;padding:11px 26px}
+.btn-gold{background:linear-gradient(120deg,#0077aa,#00d4ff,#0099cc,#00d4ff);background-size:200%;color:#000010;text-shadow:none}
+.btn-gold:hover{background-position:100%;box-shadow:0 0 28px rgba(0,212,255,.45);transform:translateY(-1px)}
+.btn-out{background:transparent;color:var(--gold);border:1px solid var(--line);padding:10px 24px}
+.btn-out:hover{background:var(--glow);border-color:var(--gold)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--line2);color:var(--dim);padding:9px 20px;font-size:11px}
+.btn-ghost:hover{border-color:var(--line);color:var(--cream)}
+.btn-sm{padding:7px 16px !important;font-size:10px !important}
+.btn-icon{background:var(--bg3);border:1px solid var(--line2);color:var(--dim);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-icon:hover{border-color:var(--line);color:var(--gold)}
+
+/* ══════════════════════════════════════════
+   CARD
+══════════════════════════════════════════ */
+.card{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);transition:border-color .25s,box-shadow .25s}
+.card:hover{border-color:rgba(0,212,255,.35);box-shadow:0 6px 40px rgba(0,212,255,.06),0 0 0 1px rgba(0,212,255,.04)}
+
+/* INPUTS */
+.inp{width:100%;background:var(--bg2);border:1px solid #202035;border-radius:var(--r);color:var(--cream);padding:11px 15px;font-family:var(--ff-u);font-size:13px;outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--gold-dim)}
+.inp::placeholder{color:var(--hint)}
+textarea.inp{resize:vertical;min-height:90px;font-family:var(--ff-b);font-size:15px}
+.fgroup{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fgroup label{font-family:var(--ff-u);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--hint)}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:800;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;transition:all .3s;border-bottom:1px solid transparent}
+#nav.scrolled{background:rgba(4,4,10,.93);backdrop-filter:blur(20px);border-bottom-color:var(--line2)}
+.nav-logo{font-family:var(--ff-d);font-size:17px;font-weight:700;letter-spacing:.2em;color:var(--gold);cursor:pointer;user-select:none;text-shadow:0 0 20px rgba(0,212,255,.5)}
+.nav-logo span{color:#c0e8ff}
+.nav-links{display:flex;gap:2px}
+.nav-btn{font-family:var(--ff-u);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:7px 15px;border-radius:999px;cursor:pointer;background:none;border:none;transition:all .2s}
+.nav-btn:hover,.nav-btn.on{color:var(--gold);background:rgba(0,212,255,.08);text-shadow:0 0 10px rgba(0,212,255,.3)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.u-chip{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;background:var(--bg3);border:1px solid var(--line2);font-family:var(--ff-u);font-size:12px;color:var(--dim)}
+.u-chip img{width:20px;height:20px;border-radius:50%}
+.u-chip .adm{font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--gold);padding:1px 7px;border-radius:999px;text-shadow:0 0 8px rgba(0,212,255,.4)}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;z-index:9500;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);padding:14px 20px;font-family:var(--ff-u);font-size:13px;color:var(--cream);box-shadow:0 8px 40px rgba(0,0,0,.5);transform:translateX(120%);transition:transform .32s cubic-bezier(.34,1.56,.64,1);max-width:320px;display:flex;align-items:center;gap:10px}
+.toast.show{transform:none}
+.toast::before{font-size:15px;flex-shrink:0}
+.toast.ok::before{content:'✓';color:var(--green)}
+.toast.err::before{content:'✕';color:var(--red)}
+.toast.inf::before{content:'◆';color:var(--gold);font-size:11px}
+
+/* RULE */
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.35),rgba(255,0,170,.2),rgba(0,212,255,.35),transparent)}
+.orn{text-align:center;font-family:var(--ff-d);color:var(--gold);font-size:13px;letter-spacing:.3em;padding:6px 0;text-shadow:0 0 12px rgba(0,212,255,.4)}
+
+/* ══════════════════════════════════════════
+   PAGES
+══════════════════════════════════════════ */
+.pg{display:none}.pg.on{display:block}
+
+/* ══════════════════════════════════════════
+   HOME — HERO
+══════════════════════════════════════════ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 60% 40%,rgba(0,212,255,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 15% 65%,rgba(255,0,170,.05) 0%,transparent 55%),radial-gradient(ellipse 30% 40% at 85% 70%,rgba(255,106,0,.04) 0%,transparent 50%),linear-gradient(180deg,var(--bg) 0%,#020210 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(0,212,255,.07) 1px,transparent 1px),linear-gradient(180deg,rgba(0,212,255,.07) 1px,transparent 1px);background-size:72px 72px;opacity:.8;mask-image:radial-gradient(ellipse 65% 65% at 50% 50%,black 20%,transparent 100%)}
+.hero-orb{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:540px;height:540px;border-radius:50%;border:1px solid rgba(0,212,255,.2);opacity:.6;pointer-events:none;box-shadow:0 0 60px rgba(0,212,255,.04),inset 0 0 60px rgba(255,0,170,.03)}
+.hero-orb::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid var(--line2)}
+.hero-orb::after{content:'◆';font-family:var(--ff-d);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:55px;color:rgba(0,212,255,.25);opacity:.5}
+/* Extra neon ring */
+.hero-orb::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(255,0,170,.15);animation:orbRotate 25s linear infinite reverse}
+.hero-inner{position:relative;z-index:2;padding:130px 0 90px;max-width:800px}
+.hero-inner .eyebrow{margin-bottom:26px;justify-content:flex-start}
+.hero-inner .eyebrow::after{display:none}
+.h1{font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.07;letter-spacing:.03em;margin-bottom:26px}
+.h1 em{font-style:italic;font-weight:300;color:var(--gold)}
+.hero-lead{font-size:clamp(16px,1.8vw,19px);color:var(--dim);max-width:570px;line-height:1.75;margin-bottom:40px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:68px}
+.hero-stats{display:flex;gap:44px;flex-wrap:wrap}
+.st-n{font-family:var(--ff-d);font-size:26px;font-weight:600;color:var(--gold);letter-spacing:.04em;text-shadow:0 0 16px rgba(0,212,255,.35)}
+.st-l{font-family:var(--ff-u);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-top:2px}
+
+/* YT GRID */
+.yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.yt-card{cursor:pointer;overflow:hidden}
+.yt-thumb{aspect-ratio:16/9;position:relative;border-radius:var(--r) var(--r) 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.yt-thumb-bg{position:absolute;inset:0;background-size:cover;filter:brightness(.55);transition:transform .4s,filter .3s}
+.yt-card:hover .yt-thumb-bg{transform:scale(1.05);filter:brightness(.7)}
+.yt-play{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:rgba(201,168,76,.85);display:flex;align-items:center;justify-content:center;font-size:14px;color:#05050a;padding-left:3px;transition:transform .2s,background .2s}
+.yt-card:hover .yt-play{transform:scale(1.12);background:var(--gold2)}
+.yt-dur{position:absolute;bottom:8px;right:8px;font-family:var(--ff-u);font-size:10px;background:rgba(0,0,0,.7);color:var(--cream);padding:2px 6px;border-radius:4px}
+.yt-body{padding:14px 16px 16px}
+.yt-title{font-family:var(--ff-u);font-size:13px;font-weight:500;color:var(--cream);line-height:1.4;margin-bottom:6px}
+.yt-meta{font-family:var(--ff-u);font-size:11px;color:var(--hint);display:flex;gap:10px}
+
+/* ══════════════════════════════════════════
+   GALERIA
+══════════════════════════════════════════ */
+#pg-galeria{padding-top:100px}
+.gal-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.gal-header h2{font-size:clamp(22px,3vw,34px)}
+
+/* gerador */
+.gen-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:28px;margin-bottom:48px;position:relative;overflow:hidden}
+.gen-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#ff00aa,#00d4ff,#ff6a00,transparent)}
+.gen-title{font-family:var(--ff-d);font-size:18px;font-weight:600;color:var(--gold);letter-spacing:.07em;margin-bottom:6px;text-shadow:0 0 14px rgba(0,212,255,.35)}
+.gen-sub{font-family:var(--ff-u);font-size:13px;color:var(--hint);margin-bottom:22px}
+.gen-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.gen-actions{display:flex;gap:10px;align-items:center}
+.gen-status{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-left:4px}
+.img-preview{margin-top:22px;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:20px;text-align:center;display:none}
+.img-preview img{max-width:100%;border-radius:var(--r);margin-top:12px;max-height:400px}
+.img-preview-label{font-family:var(--ff-u);font-size:11px;color:var(--hint);letter-spacing:.12em;text-transform:uppercase}
+.pub-actions{display:flex;gap:10px;justify-content:center;margin-top:16px}
+
+/* masonry */
+.masonry{columns:4 220px;gap:16px}
+.m-item{break-inside:avoid;margin-bottom:16px;background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);overflow:hidden;transition:border-color .25s,transform .22s;cursor:pointer}
+.m-item:hover{border-color:rgba(0,212,255,.38);transform:translateY(-3px);box-shadow:0 8px 40px rgba(0,212,255,.06)}
+.m-img{width:100%;display:block;min-height:120px;background:var(--bg4);object-fit:cover}
+.m-img-ph{width:100%;display:flex;align-items:center;justify-content:center;font-size:36px;opacity:.1;transition:opacity .25s;background:var(--bg4)}
+.m-item:hover .m-img-ph{opacity:.18}
+.m-body{padding:12px 14px 10px}
+.m-title{font-family:var(--ff-d);font-size:13px;font-weight:600;color:var(--cream);letter-spacing:.04em;margin-bottom:3px}
+.m-author{font-family:var(--ff-u);font-size:11px;color:var(--hint);margin-bottom:8px}
+.m-prompt{font-size:12px;font-style:italic;color:var(--hint);line-height:1.5;margin-bottom:10px;border-left:2px solid var(--line);padding-left:9px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.m-foot{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line2);padding-top:8px;flex-wrap:wrap}
+.like-btn{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:11px;font-weight:500;color:var(--hint);padding:5px 9px;border-radius:999px;transition:all .2s}
+.like-btn:hover,.like-btn.on{color:var(--gold);background:var(--glow);text-shadow:0 0 8px rgba(0,212,255,.4)}
+.like-heart{transition:transform .15s}
+.like-btn.on .like-heart{transform:scale(1.35)}
+.cmt-tog{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:11px;color:var(--hint);padding:5px 9px;border-radius:999px;transition:all .2s}
+.cmt-tog:hover{color:var(--cream);background:rgba(255,255,255,.04)}
+.adm-del{margin-left:auto;background:none;border:none;cursor:pointer;font-family:var(--ff-u);font-size:10px;color:rgba(224,85,85,.6);padding:4px 8px;border-radius:999px;transition:all .2s}
+.adm-del:hover{color:var(--red);background:rgba(224,85,85,.08)}
+.cmt-sec{display:none;background:var(--bg2);border-top:1px solid var(--line2);padding:12px 14px}
+.cmt-sec.on{display:block}
+.cmt-item{font-size:12px;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid var(--line2);line-height:1.5;color:var(--dim)}
+.cmt-item:last-of-type{border-bottom:none}
+.cmt-item strong{color:var(--gold);font-weight:500;font-family:var(--ff-u);font-size:11px;margin-right:4px}
+.cmt-form{display:flex;gap:7px;margin-top:10px}
+.cmt-inp{flex:1;background:var(--bg3);border:1px solid #202035;border-radius:999px;color:var(--cream);padding:7px 13px;font-size:12px;font-family:var(--ff-u);outline:none}
+.cmt-inp:focus{border-color:var(--gold-dim)}
+.cmt-send{background:var(--glow);border:1px solid var(--line);color:var(--gold);padding:7px 13px;border-radius:999px;cursor:pointer;font-size:12px;transition:all .2s}
+.cmt-send:hover{background:rgba(201,168,76,.2)}
+.empty-gal{text-align:center;padding:60px 20px;color:var(--hint);font-family:var(--ff-u);font-size:14px}
+.empty-gal .ico{font-size:42px;opacity:.2;margin-bottom:14px}
+
+/* ══════════════════════════════════════════
+   MENTOR CHAT
+══════════════════════════════════════════ */
+#pg-mentor{padding-top:100px}
+.chat-wrap{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+.mentor-card{padding:26px;text-align:center;margin-bottom:18px}
+.m-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#030318,#050530);border:2px solid rgba(0,212,255,.4);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;position:relative;box-shadow:0 0 30px rgba(0,212,255,.15),0 0 60px rgba(255,0,170,.08)}
+.m-av::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid var(--line2)}
+.m-name{font-family:var(--ff-d);font-size:15px;letter-spacing:.1em;color:var(--cream);margin-bottom:3px}
+.m-role{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-bottom:12px}
+.m-online{display:inline-flex;align-items:center;gap:5px;font-family:var(--ff-u);font-size:10px;color:var(--green);letter-spacing:.12em}
+.m-online::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 7px var(--green)}
+.m-desc{font-size:13px;font-style:italic;color:var(--hint);line-height:1.6;margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)}
+.chips-box{padding:18px}
+.chips-box h4{font-family:var(--ff-u);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-bottom:10px}
+.chip{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r);padding:9px 12px;font-size:12px;font-style:italic;color:var(--dim);cursor:pointer;transition:all .2s;margin-bottom:7px;font-family:var(--ff-b);line-height:1.4}
+.chip:last-child{margin-bottom:0}
+.chip:hover{border-color:rgba(0,212,255,.3);color:var(--cream);background:rgba(0,212,255,.04)}
+.chat-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);display:flex;flex-direction:column;height:680px;overflow:hidden}
+.chat-top{padding:16px 22px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-top-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0055aa,#00d4ff);display:flex;align-items:center;justify-content:center;font-size:13px}
+.chat-top-n{font-family:var(--ff-d);font-size:13px;color:var(--cream);letter-spacing:.07em}
+.chat-top-s{font-family:var(--ff-u);font-size:10px;color:var(--green)}
+.chat-msgs{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:18px}
+.msg{display:flex;gap:10px;max-width:86%}
+.msg.u{flex-direction:row-reverse;align-self:flex-end}
+.msg-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px}
+.msg.a .msg-av{background:linear-gradient(135deg,#020220,#004466);border:1px solid rgba(0,212,255,.3)}
+.msg.u .msg-av{background:var(--bg4);border:1px solid var(--line2);color:var(--hint)}
+.msg-bbl{border-radius:12px;padding:12px 16px;font-size:15px;line-height:1.72}
+.msg.a .msg-bbl{background:var(--bg2);border:1px solid var(--line2);color:var(--cream);border-bottom-left-radius:3px}
+.msg.u .msg-bbl{background:linear-gradient(135deg,#00080f,#001828);border:1px solid rgba(0,212,255,.3);color:var(--cream);border-bottom-right-radius:3px}
+.msg-bbl .ph{display:block;margin-top:10px;padding:10px 13px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:8px;font-style:italic;font-size:13px;color:var(--cream)}
+.typing{display:flex;gap:10px;align-items:flex-end;max-width:160px}
+.typing-bbl{background:var(--bg2);border:1px solid var(--line2);border-radius:12px;border-bottom-left-radius:3px;padding:13px 16px;display:flex;gap:5px;align-items:center}
+.dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:tdot 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+@keyframes msgIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.msg{animation:msgIn .28s ease}
+.chat-foot{padding:14px 18px;border-top:1px solid var(--line2);display:flex;gap:10px;align-items:flex-end;flex-shrink:0}
+.chat-ta{flex:1;background:var(--bg2);border:1px solid #202035;border-radius:10px;color:var(--cream);padding:11px 15px;font-family:var(--ff-b);font-size:15px;outline:none;resize:none;max-height:110px;line-height:1.5;transition:border-color .2s}
+.chat-ta:focus{border-color:var(--gold-dim)}
+.chat-send{background:linear-gradient(135deg,#0055aa,#00d4ff);border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#000810;font-size:16px;transition:all .2s;flex-shrink:0}
+.chat-send:hover{box-shadow:0 0 24px rgba(0,212,255,.4);transform:scale(1.05)}
+.chat-send:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+Perfeito. Essa primeira parte está excelente e muito bem construída.
+
+Você NÃO precisa alterar quase nada do CSS.
+O que vamos mexer será principalmente:
+
+scripts finais
+
+funções do mentor
+
+geração Grok
+
+login Google
+
+Firebase
+
+vídeos reais
+
+persistência
+
+O visual já está premium.
+
+Agora envie a próxima parte:
+
+continuação do body
+
+galeria HTML
+
+mentor HTML
+
+scripts finais
+
+Principalmente a parte onde começa:
+
+<body>
+e depois:
+
+<script>
+Pode mandar a próxima parte.
+
+
+/* ══════════════════════════════════════════
+   ENSINO
+══════════════════════════════════════════ */
+#pg-ensino{padding-top:100px}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.prod-card{padding:28px;position:relative;overflow:hidden}
+.prod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),rgba(255,0,170,.8),var(--gold),transparent)}
+.prod-badge{position:absolute;top:18px;right:18px;font-family:var(--ff-u);font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:linear-gradient(90deg,#0077aa,#00d4ff);color:#000810;padding:3px 9px;border-radius:999px}
+.prod-badge.new{background:var(--green);color:#030a05}
+.prod-ico{font-size:42px;margin-bottom:18px}
+.prod-name{font-family:var(--ff-d);font-size:20px;font-weight:600;color:var(--cream);margin-bottom:8px;letter-spacing:.05em}
+.prod-desc{font-size:14px;color:var(--hint);line-height:1.65;margin-bottom:18px}
+.prod-inc{margin-bottom:22px}
+.prod-inc h4{font-family:var(--ff-u);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--hint);margin-bottom:9px}
+.inc-row{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--dim);margin-bottom:5px}
+.inc-row::before{content:'◆';color:var(--gold);font-size:7px;flex-shrink:0;text-shadow:0 0 8px rgba(0,212,255,.5)}
+.prod-foot{display:flex;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--line2)}
+.prod-price{font-family:var(--ff-d);font-size:30px;font-weight:700;color:var(--gold);letter-spacing:.02em;text-shadow:0 0 16px rgba(0,212,255,.3)}
+.prod-price span{font-family:var(--ff-u);font-size:11px;color:var(--hint);display:block;margin-bottom:2px;font-weight:400;letter-spacing:0}
+.lock-ov{position:absolute;inset:0;border-radius:var(--r2);background:rgba(0,0,12,.78);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-family:var(--ff-u);font-size:13px;color:var(--dim);border:1px solid rgba(0,212,255,.08)}
+.lock-ov .li{font-size:32px;opacity:.5}
+
+/* ══════════════════════════════════════════
+   COMUNIDADE / AUTH / PROFILE / ADMIN
+══════════════════════════════════════════ */
+#pg-comunidade{padding-top:100px}
+.auth-wrap{max-width:460px;margin:0 auto}
+.auth-card{padding:42px}
+.auth-logo-t{font-family:var(--ff-d);font-size:20px;letter-spacing:.2em;color:var(--gold);text-align:center;margin-bottom:28px;text-shadow:0 0 20px rgba(0,212,255,.4)}
+.auth-h{font-size:24px;text-align:center;margin-bottom:5px}
+.auth-sub{text-align:center;font-size:14px;color:var(--hint);margin-bottom:28px}
+.auth-tabs{display:flex;border-bottom:1px solid var(--line2);margin-bottom:28px}
+.atab{flex:1;text-align:center;padding:11px;cursor:pointer;font-family:var(--ff-u);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hint);border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;transition:all .2s}
+.atab.on{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(0,212,255,.3)}
+.af{display:none}.af.on{display:block}
+.auth-note{text-align:center;font-family:var(--ff-u);font-size:11px;color:var(--hint);margin-top:16px}
+/* google btn */
+.btn-gg{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid var(--line2);border-radius:999px;padding:11px 20px;cursor:pointer;color:var(--cream);font-family:var(--ff-u);font-size:13px;font-weight:500;transition:all .2s;margin-bottom:14px}
+.btn-gg:hover{border-color:var(--line);background:rgba(255,255,255,.08)}
+.btn-gg svg{width:18px;height:18px;flex-shrink:0}
+.divider{text-align:center;color:var(--hint);font-family:var(--ff-u);font-size:12px;margin:14px 0;position:relative}
+.divider::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line2)}
+.divider span{background:var(--bg3);padding:0 12px;position:relative}
+
+/* profile */
+.prof-lay{display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start}
+.prof-card{padding:30px;text-align:center}
+.prof-av{width:90px;height:90px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:34px;font-weight:700;color:#000810;background:linear-gradient(135deg,#0055aa,#00d4ff);box-shadow:0 0 40px rgba(0,212,255,.25)}
+.prof-av img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.prof-name{font-family:var(--ff-d);font-size:20px;color:var(--cream);margin-bottom:4px}
+.prof-email{font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-bottom:14px}
+.prof-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
+.ps-n{font-family:var(--ff-d);font-size:22px;color:var(--gold)}
+.ps-l{font-family:var(--ff-u);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--hint);margin-top:2px}
+.tbbar{display:flex;gap:3px;margin-bottom:24px;background:var(--bg2);padding:3px;border-radius:999px;width:fit-content}
+.tbbtn{font-family:var(--ff-u);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;border-radius:999px;background:none;border:none;cursor:pointer;color:var(--hint);transition:all .2s}
+.tbbtn.on{background:var(--bg3);color:var(--gold);border:1px solid var(--line)}
+.tbpan{display:none}.tbpan.on{display:block}
+
+/* admin */
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:44px}
+.adm-stat{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:22px;position:relative;overflow:hidden}
+.adm-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00d4ff,transparent)}
+.adm-stat-l{font-family:var(--ff-u);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-bottom:7px}
+.adm-stat-v{font-family:var(--ff-d);font-size:32px;font-weight:700;color:var(--gold);text-shadow:0 0 16px rgba(0,212,255,.3)}
+.adm-stat-c{font-family:var(--ff-u);font-size:10px;color:var(--green);margin-top:4px}
+.adm-sec{margin-bottom:40px}
+.adm-sec-h{font-family:var(--ff-d);font-size:17px;font-weight:600;letter-spacing:.07em;color:var(--cream);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.adm-sec-h::before{content:'◆';color:var(--gold);font-size:9px;text-shadow:0 0 8px rgba(0,212,255,.5)}
+.email-box{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:26px}
+.email-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:18px;border-top:1px solid var(--line2)}
+.email-tgt{font-family:var(--ff-u);font-size:12px;color:var(--hint)}
+.sub-tbl{width:100%;border-collapse:collapse}
+.sub-tbl th{font-family:var(--ff-u);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);padding:10px 14px;border-bottom:1px solid var(--line2);text-align:left}
+.sub-tbl td{font-family:var(--ff-u);font-size:12px;padding:10px 14px;border-bottom:1px solid var(--line2);color:var(--dim)}
+.sub-tbl tr:last-child td{border:none}
+.sub-tbl tr:hover td{background:var(--bg2)}
+
+/* footer */
+footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;margin-top:60px}
+.ft-logo{font-family:var(--ff-d);font-size:18px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;text-shadow:0 0 20px rgba(0,212,255,.4)}
+.ft-tag{font-size:13px;color:var(--hint);font-style:italic;margin-bottom:14px}
+.ft-copy{font-family:var(--ff-u);font-size:11px;color:var(--hint);letter-spacing:.08em}
+
+/* responsive */
+@media(max-width:960px){
+  .chat-wrap,.prof-lay{grid-template-columns:1fr}
+  .adm-stats{grid-template-columns:repeat(2,1fr)}
+  .masonry{columns:2 180px}
+  .hero-orb{display:none}
+  .nav-links{display:none}
+  .gen-row{grid-template-columns:1fr}
+}
+@media(max-width:580px){
+  .wrap{padding:0 18px}
+  section{padding:64px 0}
+  .masonry{columns:1}
+  .adm-stats{grid-template-columns:1fr 1fr}
+}
+
+.fade-up{animation:fadeUp .65s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.44s}.d5{animation-delay:.58s}
+</style>
+</head>
+<body>
+
+<div id="cv"></div><div id="cd"></div>
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <div class="nav-logo" onclick="go('home')">VOZ <span>VISUAL</span></div>
+  <div class="nav-links">
+    <button class="nav-btn on" data-p="home"    onclick="go('home')">Home</button>
+    <button class="nav-btn"    data-p="galeria"  onclick="go('galeria')">Galeria</button>
+    <button class="nav-btn"    data-p="mentor"   onclick="go('mentor')">Mentor</button>
+    <button class="nav-btn"    data-p="ensino"   onclick="go('ensino')">Ensino</button>
+    <button class="nav-btn"    data-p="comunidade" onclick="go('comunidade')">Comunidade</button>
+  </div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn btn-out btn-sm" onclick="go('comunidade')">Entrar</button>
+    <button class="btn btn-gold btn-sm" onclick="go('comunidade');stab('register')">◆ Fazer Parte</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════ -->
+<div id="pg-home" class="pg on">
+  <div class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-orb"></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow fade-up d1">Cinema &nbsp;◆&nbsp; Arte por IA &nbsp;◆&nbsp; Filosofia Visual</div>
+        <h1 class="h1 fade-up d2">Algumas emoções<br>não têm palavras.<br><em>Têm imagens.</em></h1>
+        <p class="hero-lead fade-up d3">O Voz Visual existe no espaço entre o sentimento e o visível — onde a arte gerada por IA encontra a profundidade filosófica e a estética cinematográfica.</p>
+        <div class="hero-cta fade-up d4">
+          <button class="btn btn-gold" onclick="go('comunidade');stab('register')">◆ Fazer Parte da Comunidade</button>
+          <button class="btn btn-out" onclick="go('galeria')">Ver a Galeria Viva</button>
+        </div>
+        <div class="hero-stats fade-up d5" id="hero-stats">
+          <div><div class="st-n">12K+</div><div class="st-l">Inscritos</div></div>
+          <div><div class="st-n" id="h-arts">—</div><div class="st-l">Artes Publicadas</div></div>
+          <div><div class="st-n">96%</div><div class="st-l">Satisfação</div></div>
+          <div><div class="st-n">4</div><div class="st-l">Cursos Ativos</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="rule"></div><div class="orn">◆ ◈ ◆</div><div class="rule"></div>
+    <div style="height:60px"></div>
+    <div class="wrap">
+      <div class="sec-hd fade-up">
+        <div class="eyebrow" style="justify-content:center">Canal YouTube</div>
+        <h2>Últimos Episódios</h2>
+        <p>Mergulhe nas conversas entre emoção, filosofia e imagem</p>
+      </div>
+      <div class="yt-grid" id="yt-grid"></div>
+      <div style="text-align:center;margin-top:36px">
+        <a href="https://youtube.com/@vozvisual" target="_blank" class="btn btn-out">Ver todos os vídeos →</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:rgba(0,2,15,0.85)">
+    <div class="rule"></div>
+    <div class="wrap" style="padding-top:60px;padding-bottom:60px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
+        <div>
+          <div class="eyebrow" style="margin-bottom:18px">O projeto</div>
+          <h2 style="font-size:clamp(24px,3vw,38px);margin-bottom:18px">Um projeto no limite<br>entre <em style="color:var(--gold);font-weight:300">arte e alma</em></h2>
+          <p style="margin-bottom:14px">Cinema, filosofia e arte digital por IA se encontram para criar uma linguagem própria — onde sentimentos que não cabem em palavras ganham forma visual.</p>
+          <p style="margin-bottom:26px">Aqui você aprende a ver, sentir, e transformar o que está dentro de você em arte que existe no mundo.</p>
+          <button class="btn btn-gold" onclick="go('mentor')">Falar com o Mentor ◆</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🎬</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Cinema</div><div style="font-size:13px;color:var(--hint)">Estética visual cinematográfica aplicada à arte digital</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🤖</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Arte por IA</div><div style="font-size:13px;color:var(--hint)">Geração de imagem com profundidade poética</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">📚</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Filosofia</div><div style="font-size:13px;color:var(--hint)">Conexão entre emoção, pensamento e visão</div></div>
+          <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">🌙</div><div style="font-family:var(--ff-d);font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.05em">Comunidade</div><div style="font-size:13px;color:var(--hint)">Artistas que compartilham a mesma linguagem</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rule"></div>
+  </section>
+
+  <footer><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-tag">Traduzindo emoções em arte cinematográfica</div><div class="orn">◆ ◈ ◆</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE: GALERIA
+═══════════════════════════════════════ -->
+<div id="pg-galeria" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up">
+      <div class="eyebrow" style="justify-content:center">Galeria Viva</div>
+      <h2>Arte da Comunidade</h2>
+      <p>Sentimentos transformados em imagem pelos membros do Voz Visual</p>
+    </div>
+
+    <!-- GERADOR GROK -->
+    <div class="gen-box">
+      <div class="gen-title">Gerador Cinematográfico</div>
+      <div class="gen-sub">Escreva um sentimento, cena ou ideia. Gere a imagem com Grok. Publique na galeria.</div>
+      <textarea class="inp" id="prompt-input" rows="3" placeholder="Ex: solidão luminosa em uma cidade futurista, chuva, neon, estética Blade Runner..."></textarea>
+      <div class="gen-row">
+        <div class="fgroup">
+          <label>API Key do Grok (xAI)</label>
+          <input class="inp" type="password" id="grok-api-key" placeholder="xai-...">
+        </div>
+        <div class="fgroup">
+          <label>Título da obra (para galeria)</label>
+          <input class="inp" id="art-title" placeholder="Dê um nome cinematográfico...">
+        </div>
+      </div>
+      <div class="gen-actions">
+        <button class="btn btn-gold" id="btn-generate" onclick="generateImage()">◆ Gerar Imagem</button>
+        <span class="gen-status" id="gen-status"></span>
+      </div>
+      <div class="img-preview" id="img-preview">
+        <div class="img-preview-label">Imagem gerada</div>
+        <img id="gen-img" src="" alt="Arte gerada">
+        <div class="pub-actions">
+          <button class="btn btn-gold" id="btn-publish" onclick="publishArt()">◆ Publicar na Galeria</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('img-preview').style.display='none'">Descartar</button>
+        </div>
+        <div id="pub-status" style="font-family:var(--ff-u);font-size:12px;color:var(--hint);margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- GALERIA HEADER -->
+    <div class="gal-header">
+      <h2 style="font-size:clamp(20px,2.5vw,30px)">Galeria Viva <span id="gal-count" style="font-size:14px;color:var(--hint);font-family:var(--ff-u);font-weight:400;margin-left:10px"></span></h2>
+      <div style="display:flex;gap:8px" id="gal-btns">
+        <button class="btn btn-ghost" onclick="go('comunidade')" id="btn-login-to-upload" style="display:none">Entrar para publicar via upload</button>
+      </div>
+    </div>
+    <div id="masonry" class="masonry"></div>
+    <div id="gal-empty" class="empty-gal" style="display:none"><div class="ico">◆</div>Nenhuma arte publicada ainda. Seja o primeiro!</div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE: MENTOR
+═══════════════════════════════════════ -->
+<div id="pg-mentor" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up" style="margin-bottom:36px">
+      <div class="eyebrow" style="justify-content:center">Mentor Filosófico</div>
+      <h2>O Espelho do Invisível</h2>
+      <p>IA treinada para transformar sentimentos em prompts cinematográficos profundos</p>
+    </div>
+    <div class="chat-wrap">
+      <div>
+        <div class="mentor-card card">
+          <div class="m-av">◆</div>
+          <div class="m-name">MENTOR</div>
+          <div class="m-role">Voz Visual · IA Filosófica</div>
+          <div class="m-online">Ativo e presente</div>
+          <div class="m-desc">"Não sou um assistente. Sou um espelho filosófico — aqui para refletir o que você carrega de mais profundo e transformá-lo em arte visível."</div>
+        </div>
+        <div class="chips-box card" style="margin-top:0">
+          <h4>Iniciar com</h4>
+          <button class="chip" onclick="setP(this.textContent)">Sinto uma solidão que não sei nomear</button>
+          <button class="chip" onclick="setP(this.textContent)">Quero criar algo sobre perda e memória</button>
+          <button class="chip" onclick="setP(this.textContent)">Me sinto entre dois mundos diferentes</button>
+          <button class="chip" onclick="setP(this.textContent)">Transforme minha melancolia em prompt visual</button>
+          <button class="chip" onclick="setP(this.textContent)">O que é beleza para a filosofia?</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box">
+        <div class="chat-top">
+          <div class="chat-top-av">◆</div>
+          <div style="flex:1">
+            <div class="chat-top-n">MENTOR VOZ VISUAL</div>
+            <div class="chat-top-s">Filosófico · Cinematográfico · Ativo</div>
+          </div>
+          <button class="btn-icon" title="Nova conversa" onclick="clearChat()">↺</button>
+        </div>
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="chat-foot">
+          <textarea class="chat-ta" id="chat-ta" rows="1" placeholder="O que você carrega dentro de si hoje?" onkeydown="chatKey(event)" oninput="autoR(this)"></textarea>
+          <button class="chat-send" id="chat-send" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE: ENSINO
+═══════════════════════════════════════ -->
+<div id="pg-ensino" class="pg">
+  <div class="wrap">
+    <div class="sec-hd fade-up">
+      <div class="eyebrow" style="justify-content:center">Portal de Ensino</div>
+      <h2>Método &amp; Materiais</h2>
+      <p>Cada material foi criado para expandir sua visão e aprofundar sua linguagem visual</p>
+    </div>
+    <div id="ensino-banner" style="display:none;background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r2);padding:22px 26px;margin-bottom:36px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div><div style="font-family:var(--ff-d);font-size:15px;color:var(--cream);margin-bottom:3px">Acesso Restrito a Membros</div><div style="font-family:var(--ff-u);font-size:13px;color:var(--hint)">Crie sua conta gratuita para desbloquear detalhes e realizar compras</div></div>
+      <button class="btn btn-gold" onclick="go('comunidade');stab('register')">◆ Criar Conta Gratuita</button>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE: COMUNIDADE
+═══════════════════════════════════════ -->
+<div id="pg-comunidade" class="pg">
+  <div class="wrap">
+
+    <!-- AUTH -->
+    <div id="v-auth" class="auth-wrap">
+      <div class="auth-card card" style="margin-top:50px">
+        <div class="auth-logo-t">◆ VOZ VISUAL ◆</div>
+        <h2 class="auth-h">Faça Parte</h2>
+        <p class="auth-sub">Acesse a comunidade cinematográfica</p>
+        <!-- Google Login -->
+        <button class="btn-gg" id="btn-gg-login">
+          <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 12 4.9c1.69 0 3.2.6 4.39 1.56l3.26-3.26A11.94 11.94 0 0 0 12 .97C8.27.97 5.02 2.96 3.04 5.98l2.23 3.78z"/><path fill="#34A853" d="M16.04 18.01A7.02 7.02 0 0 1 12 19.1c-2.93 0-5.44-1.79-6.61-4.36l-2.22 3.78A11.94 11.94 0 0 0 12 23.03c3.06 0 5.9-1.11 8.04-2.93l-3.99-2.09z"/><path fill="#4A90D9" d="M19.9 12c0-.65-.06-1.29-.17-1.9H12v3.72h4.43a3.8 3.8 0 0 1-1.64 2.5l4 2.08C20.93 16.6 19.9 14.46 19.9 12z"/><path fill="#FBBC05" d="M5.39 14.74A7.12 7.12 0 0 1 4.9 12c0-.95.17-1.86.48-2.72L3.04 5.98A11.93 11.93 0 0 0 .97 12c0 1.92.46 3.73 1.27 5.34l3.15-2.6z"/></svg>
+          Entrar com Google
+        </button>
+        <div class="divider"><span>ou use e-mail</span></div>
+        <div class="auth-tabs">
+          <button class="atab on" id="atab-l" onclick="stab('login')">Entrar</button>
+          <button class="atab" id="atab-r" onclick="stab('register')">Criar Conta</button>
+        </div>
+        <div class="af on" id="af-login">
+          <div class="fgroup"><label>E-mail</label><input class="inp" id="l-email" type="email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="fgroup"><label>Senha</label><input class="inp" id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:2px" onclick="doLogin()">Entrar no Portal</button>
+          <div class="auth-note" style="margin-top:14px;font-size:10px;opacity:.5">Admin: <code>admin@vozvisual.com</code> / qualquer senha</div>
+        </div>
+        <div class="af" id="af-reg">
+          <div class="fgroup"><label>Nome</label><input class="inp" id="r-name" placeholder="Como quer ser chamado(a)"></div>
+          <div class="fgroup"><label>E-mail</label><input class="inp" id="r-email" type="email" placeholder="seu@email.com"></div>
+          <div class="fgroup"><label>Senha</label><input class="inp" id="r-pass" type="password" placeholder="Mín. 6 caracteres"></div>
+          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:2px" onclick="doRegister()">◆ Criar Conta Gratuita</button>
+          <div class="auth-note">Ao criar conta você concorda com os termos do Voz Visual</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="v-prof" style="display:none;padding-top:10px">
+      <div class="prof-lay">
+        <div>
+          <div class="prof-card card">
+            <div class="prof-av" id="prof-av">V</div>
+            <div class="prof-name" id="prof-name">—</div>
+            <div class="prof-email" id="prof-email">—</div>
+            <div id="prof-adm" style="display:none;margin-bottom:8px"><span style="font-family:var(--ff-u);font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:var(--glow);border:1px solid var(--line);color:var(--gold);padding:2px 9px;border-radius:999px">◆ Administrador</span></div>
+            <div class="prof-stats">
+              <div><div class="ps-n" id="ps-arts">0</div><div class="ps-l">Artes</div></div>
+              <div><div class="ps-n" id="ps-likes">0</div><div class="ps-l">Curtidas</div></div>
+              <div><div class="ps-n" id="ps-cmts">0</div><div class="ps-l">Comentários</div></div>
+              <div><div class="ps-n">◆</div><div class="ps-l">Membro</div></div>
+            </div>
+            <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:18px" onclick="doLogout()">Sair da Conta</button>
+          </div>
+        </div>
+        <div>
+          <div class="tbbar">
+            <button class="tbbtn on" onclick="showTab('tb-arts',this)">Minhas Artes</button>
+            <button class="tbbtn" onclick="showTab('tb-cfg',this)">Configurações</button>
+          </div>
+          <div class="tbpan on" id="tb-arts">
+            <div id="my-arts" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px"></div>
+            <div id="my-arts-empty" style="display:none;text-align:center;padding:44px 0;color:var(--hint);font-family:var(--ff-u);font-size:13px"><div style="font-size:38px;opacity:.2;margin-bottom:12px">◆</div>Nenhuma arte ainda<br><button class="btn btn-out" style="margin-top:14px" onclick="go('galeria')">Ir para Galeria</button></div>
+          </div>
+          <div class="tbpan" id="tb-cfg">
+            <div class="card" style="padding:26px;max-width:460px">
+              <div style="font-family:var(--ff-d);font-size:16px;color:var(--cream);margin-bottom:22px;letter-spacing:.06em">Dados da Conta</div>
+              <div class="fgroup"><label>Nome</label><input class="inp" id="cfg-name" placeholder="Seu nome"></div>
+              <div class="fgroup"><label>E-mail</label><input class="inp" id="cfg-email" readonly style="opacity:.5"></div>
+              <div class="fgroup"><label>Nova Senha</label><input class="inp" type="password" placeholder="Deixe em branco para manter"></div>
+              <button class="btn btn-out" style="margin-top:6px" onclick="toast('Configurações salvas!','ok')">Salvar Alterações</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="v-adm" style="display:none;padding-top:10px;max-width:1000px">
+      <div style="margin-bottom:36px">
+        <div class="eyebrow" style="margin-bottom:10px">Painel Administrativo</div>
+        <h2 style="font-size:clamp(22px,3vw,34px)">Central de Controle</h2>
+      </div>
+      <div class="adm-stats" id="adm-stats"></div>
+      <div class="rule"></div><div style="height:36px"></div>
+      <div class="adm-sec">
+        <div class="adm-sec-h">Disparar Comunicação</div>
+        <div class="email-box">
+          <div class="fgroup"><label>Assunto</label><input class="inp" id="em-sub" placeholder="Ex: Nova aula disponível — Voz Visual"></div>
+          <div class="fgroup"><label>Mensagem</label><textarea class="inp" id="em-body" style="min-height:130px" placeholder="Escreva sua mensagem para todos os inscritos..."></textarea></div>
+          <div class="email-foot">
+            <div class="email-tgt" id="em-tgt">Enviando para <strong style="color:var(--gold)">0</strong> inscritos</div>
+            <button class="btn btn-gold" onclick="sendBroadcast()">◆ Disparar E-mail</button>
+          </div>
+        </div>
+      </div>
+      <div class="adm-sec">
+        <div class="adm-sec-h">Lista de Inscritos</div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table class="sub-tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Plano</th><th>Cadastro</th></tr></thead>
+          <tbody id="sub-tbody"></tbody></table>
+        </div>
+      </div>
+      <button class="btn btn-ghost" style="margin-top:16px" onclick="doLogout()">Sair do Painel</button>
+    </div>
+
+  </div>
+  <footer style="margin-top:70px"><div class="wrap"><div class="ft-logo">VOZ VISUAL</div><div class="ft-copy">© 2025 Voz Visual</div></div></footer>
+</div>
+
+Seu HTML/CSS está bem estruturado.
+Você já criou praticamente toda a arquitetura visual do site. O que falta agora é conectar o comportamento real do sistema:
+
+login Google funcionando
+
+Grok/xAI gerando imagens
+
+upload/publicação real
+
+salvar usuários
+
+salvar galeria
+
+mentor IA funcionando
+
+painel admin funcional
+
+O trecho que você mandou termina antes do JavaScript principal.
+Agora você precisa adicionar os scripts finais no index.html.
+
+A ordem correta no arquivo fica assim:
+
+</body>
+
+<!-- SCRIPTS -->
+<script>
+  // seu javascript principal aqui
+</script>
+
+<!-- Firebase -->
+<script type="module">
+  // firebase config
+</script>
+
+</html>
+E SIM:
+
+o <script> fica antes da </body>
+
+e o script do Firebase/Grok fica DEPOIS do seu JavaScript principal.
+
+Estrutura correta:
+
+<body>
+
+  <!-- TODO O SITE -->
+
+  <script>
+    // funções:
+    // go()
+    // doLogin()
+    // generateImage()
+    // publishArt()
+    // mentor IA
+    // etc
+  </script>
+
+  <script type="module">
+    // firebase
+    // auth
+    // firestore
+    // google login
+  </script>
+
+</body>
+</html>
+Agora faltam 4 blocos essenciais para o site realmente funcionar.
+
+1. FIREBASE
+Crie projeto:
+
+Firebase Console
+
+Ative:
+
+Authentication
+
+Google Login
+
+Firestore Database
+
+Storage
+
+Depois pegue:
+
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+2. SCRIPT DO FIREBASE
+No FINAL do index:
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "SUA_KEY",
+  authDomain: "SEU_DOMINIO",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_BUCKET",
+  messagingSenderId: "SEU_ID",
+  appId: "SEU_APP"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.auth = auth;
+window.db = db;
+
+const provider = new GoogleAuthProvider();
+
+document.getElementById("btn-gg-login")
+.addEventListener("click", async () => {
+
+  try{
+    const result = await signInWithPopup(auth, provider);
+
+    toast("Login realizado!", "ok");
+
+  }catch(err){
+    toast("Erro no login");
+    console.log(err);
+  }
+
+});
+
+onAuthStateChanged(auth, user => {
+
+  if(user){
+
+    document.getElementById("v-auth").style.display="none";
+    document.getElementById("v-prof").style.display="block";
+
+    document.getElementById("prof-name").innerText =
+      user.displayName || "Membro";
+
+    document.getElementById("prof-email").innerText =
+      user.email;
+
+  }else{
+
+    document.getElementById("v-auth").style.display="block";
+    document.getElementById("v-prof").style.display="none";
+
+  }
+
+});
+
+window.doLogout = async function(){
+  await signOut(auth);
+}
+
+</script>
+3. GROK / xAI FUNCIONANDO
+Você precisa usar API da xAI.
+
+xAI Console
+
+Pegue sua API Key.
+
+Depois adicione:
+
+async function generateImage(){
+
+  const prompt =
+    document.getElementById("prompt-input").value;
+
+  const apiKey =
+    document.getElementById("grok-api-key").value;
+
+  if(!prompt || !apiKey){
+    toast("Preencha prompt e API");
+    return;
+  }
+
+  const btn =
+    document.getElementById("btn-generate");
+
+  btn.disabled = true;
+  btn.innerText = "Gerando...";
+
+  try{
+
+    const response = await fetch(
+      "https://api.x.ai/v1/images/generations",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":"Bearer " + apiKey
+        },
+        body:JSON.stringify({
+          model:"grok-2-image",
+          prompt:prompt,
+          size:"1024x1024"
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    const imageUrl = data.data[0].url;
+
+    document.getElementById("gen-img").src =
+      imageUrl;
+
+    document.getElementById("img-preview")
+      .style.display="block";
+
+    window.lastGeneratedImage = imageUrl;
+
+    toast("Imagem gerada!", "ok");
+
+  }catch(err){
+
+    console.log(err);
+    toast("Erro ao gerar");
+
+  }
+
+  btn.disabled = false;
+  btn.innerText = "◆ Gerar Imagem";
+
+}
+4. PUBLICAR NA GALERIA
+Adicione:
+
+async function publishArt(){
+
+  if(!window.lastGeneratedImage){
+    toast("Nenhuma imagem");
+    return;
+  }
+
+  const title =
+    document.getElementById("art-title").value;
+
+  const user = auth.currentUser;
+
+  if(!user){
+    toast("Faça login");
+    return;
+  }
+
+  await addDoc(
+    collection(db, "arts"),
+    {
+      title,
+      image: window.lastGeneratedImage,
+      user: user.displayName,
+      uid: user.uid,
+      createdAt: Date.now()
+    }
+  );
+
+  toast("Publicado!", "ok");
+
+  loadGallery();
+
+}
+5. CARREGAR GALERIA AUTOMÁTICA
+async function loadGallery(){
+
+  const wrap =
+    document.getElementById("masonry");
+
+  wrap.innerHTML = "";
+
+  const query =
+    await getDocs(collection(db, "arts"));
+
+  query.forEach(doc => {
+
+    const art = doc.data();
+
+    wrap.innerHTML += `
+      <div class="gal-item">
+        <img src="${art.image}">
+        <div class="gal-meta">
+          <div>${art.title}</div>
+          <small>${art.user}</small>
+        </div>
+      </div>
+    `;
+
+  });
+
+}
+E no final:
+
+loadGallery();
+6. PUBLICAR NO GITHUB
+Depois:
+
+crie repositório
+
+envie:
+
+index.html
+
+nada mais necessário inicialmente
+
+Depois:
+
+GitHub Pages
+
+ative:
+
+Settings
+
+Pages
+
+Deploy from branch
+
+main
+
+root
+
+Seu site ficará:
+
+https://SEUUSUARIO.github.io/vozvisual
+O QUE O SITE TERÁ DEPOIS DISSO
+Você vai ter:
+
+✅ comunidade real
+✅ login Google real
+✅ geração de imagem real
+✅ publicação real
+✅ banco de dados real
+✅ galeria viva
+✅ painel admin
+✅ mentor IA pronto para integrar
+✅ deploy profissional
+
+O próximo passo depois disso seria:
+
+Storage real de uploads
+
+comentários
+
+curtidas
+
+perfil público
+
+feed em tempo real
+
+sistema premium
+
+mentor conectado ao GPT/Grok
+
+notificações
+
+domínio próprio
+
+PWA/app mobile
+
+Seu projeto já está com estrutura visual de produto premium.
+
+
+
+Texto colado.txt
+Documento
+a ultima parte
+
+Pensou por 13s
+Recebi a última parte. O erro principal está aqui: seu mentor está chamando Anthropic/Claude, não o Grok/xAI. Também os vídeos ainda estão simulados. 
+
+
+Substitua essa linha:
+
+const res = await fetch('https://api.anthropic.com/v1/messages',{
+por chamada Grok:
+
+const apiKey = document.getElementById('grok-api-key')?.value.trim() || localStorage.getItem('vv_grok_key');
+
+const res = await fetch('https://api.x.ai/v1/chat/completions',{
+  method:'POST',
+  headers:{
+    'Content-Type':'application/json',
+    'Authorization':'Bearer '+apiKey
+  },
+  body:JSON.stringify({
+    model:'grok-3',
+    messages:[
+      { role:'system', content:SYS },
+      ...chatH
+    ],
+    temperature:0.85,
+    max_tokens:900
+  })
+});
+
+const data = await res.json();
+const reply = data.choices?.[0]?.message?.content || 'A conexão com o Mentor falhou.';
+E troque o SYS por este:
+
+const SYS = `Você é o Mentor Filosófico do Voz Visual.
+
+Você responde em português brasileiro com profundidade, clareza e força emocional.
+
+Você ajuda com:
+filosofia, psicologia, esperança, força interior, motivação, energia, consciência humana, autoconhecimento, propósito, disciplina, superação, medo, ansiedade, vazio existencial e autoajuda.
+
+Seu tom é cinematográfico, humano, poético, sério e inspirador.
+
+Você não faz diagnóstico médico. Quando o assunto for sofrimento intenso, incentive buscar apoio humano/profissional.
+
+Quando o usuário pedir imagem ou prompt, entregue um prompt cinematográfico em inglês neste formato:
+[PROMPT CINEMATOGRÁFICO]: "..."
+
+Sempre termine com uma pergunta profunda que ajude a pessoa a refletir.`;
+Importante: não cole sua chave xAI aqui no chat. No seu site, cole no campo “API Key do Grok”.
+
+
+nao eu te mandei 3 partes do codigo
+
+Você tem razão. Você me mandou 3 partes do código:
+
+CSS inicial + galeria/mentor
+
+final do CSS + HTML principal
+
+scripts finais
+
+Agora eu preciso montar tudo como um único index.html final, com as correções certas.
+
+Vou te entregar na próxima resposta um bloco único para você copiar e colar, corrigindo principalmente:
+
+mentor usando Grok/xAI, não Claude
+
+botão Google conectado ao Firebase
+
+vídeos configuráveis
+
+galeria com Grok
+
+publicação funcionando
+
+ordem correta dos scripts
+
+campos de edição mais claros
+
+Não coloque sua chave Grok aqui. Vou deixar assim:
+
+const GROK_API_KEY = "COLE_SUA_CHAVE_XAI_AQUI";
+
+
+Texto colado(1).txt
+Documento
+preciso de uma pequena alteracao nesse codigo, deixar o site acessavel e editavel, todo o site, o s botoes, as inscricoes com o google, o grok integrado para gerar imagens e o mentor respondendo as perguntas e respondendo com educacao, sabedoria, falando de filosofia, psicologia , auto-ajuda, responsabilidade....e todos os detalhes necessarios, faca e me entregue apenas um arquivo com todas as alteracoes para que eu possa substituir tudo de uma vez
+
+Vou montar um único index.html substituível, usando seu arquivo base e corrigindo os scripts finais: Google/Firebase, Grok imagem, mentor Grok, painel de edição e botões funcionando.
+
+Pensou por 2m 41s
+Pronto — montei um único arquivo substituível com as alterações no seu código. Usei seu script final como base. 
+
+
+Baixe e substitua seu index.html por este:
+
+Baixar index-voz-visual-final.html
+
+Usei os modelos atuais da xAI: grok-4.3 para o mentor e grok-imagine-image-quality para imagens. 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -497,6 +1893,18 @@ footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;m
 .fade-up{animation:fadeUp .65s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 .d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.44s}.d5{animation-delay:.58s}
+
+
+/* ══════════════════════════════════════════
+   ACESSIBILIDADE + EDITOR
+══════════════════════════════════════════ */
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:768px){body{cursor:auto}#cv,#cd{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.admin-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.admin-editor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:760px){.admin-editor-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -605,7 +2013,7 @@ footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;m
       <div class="gen-row">
         <div class="fgroup">
           <label>API Key do Grok (xAI)</label>
-          <input class="inp" type="password" id="grok-api-key" placeholder="xai-...">
+          <input class="inp" type="password" id="grok-api-key" placeholder="xai-..." autocomplete="off">
         </div>
         <div class="fgroup">
           <label>Título da obra (para galeria)</label>
@@ -630,8 +2038,10 @@ footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;m
     <!-- GALERIA HEADER -->
     <div class="gal-header">
       <h2 style="font-size:clamp(20px,2.5vw,30px)">Galeria Viva <span id="gal-count" style="font-size:14px;color:var(--hint);font-family:var(--ff-u);font-weight:400;margin-left:10px"></span></h2>
-      <div style="display:flex;gap:8px" id="gal-btns">
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="gal-btns">
+        <button class="btn btn-ghost" onclick="startUploadArt()" id="btn-upload-art">Upload de Imagem</button>
         <button class="btn btn-ghost" onclick="go('comunidade')" id="btn-login-to-upload" style="display:none">Entrar para publicar via upload</button>
+        <input id="upload-art-file" type="file" accept="image/*" style="display:none" onchange="uploadArtFile(event)">
       </div>
     </div>
     <div id="masonry" class="masonry"></div>
@@ -720,7 +2130,7 @@ footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;m
         <h2 class="auth-h">Faça Parte</h2>
         <p class="auth-sub">Acesse a comunidade cinematográfica</p>
         <!-- Google Login -->
-        <button class="btn-gg" id="btn-gg-login">
+        <button class="btn-gg" id="btn-gg-login" type="button" aria-label="Entrar com Google">
           <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 12 4.9c1.69 0 3.2.6 4.39 1.56l3.26-3.26A11.94 11.94 0 0 0 12 .97C8.27.97 5.02 2.96 3.04 5.98l2.23 3.78z"/><path fill="#34A853" d="M16.04 18.01A7.02 7.02 0 0 1 12 19.1c-2.93 0-5.44-1.79-6.61-4.36l-2.22 3.78A11.94 11.94 0 0 0 12 23.03c3.06 0 5.9-1.11 8.04-2.93l-3.99-2.09z"/><path fill="#4A90D9" d="M19.9 12c0-.65-.06-1.29-.17-1.9H12v3.72h4.43a3.8 3.8 0 0 1-1.64 2.5l4 2.08C20.93 16.6 19.9 14.46 19.9 12z"/><path fill="#FBBC05" d="M5.39 14.74A7.12 7.12 0 0 1 4.9 12c0-.95.17-1.86.48-2.72L3.04 5.98A11.93 11.93 0 0 0 .97 12c0 1.92.46 3.73 1.27 5.34l3.15-2.6z"/></svg>
           Entrar com Google
         </button>
@@ -792,6 +2202,31 @@ footer{padding:44px 0 28px;border-top:1px solid var(--line2);text-align:center;m
         <h2 style="font-size:clamp(22px,3vw,34px)">Central de Controle</h2>
       </div>
       <div class="adm-stats" id="adm-stats"></div>
+      <div class="adm-sec">
+        <div class="adm-sec-h">Editor Rápido do Site</div>
+        <div class="email-box">
+          <div class="admin-editor-grid">
+            <div class="fgroup"><label>Título principal</label><textarea class="inp" id="ed-hero-title" style="min-height:90px"></textarea></div>
+            <div class="fgroup"><label>Texto principal</label><textarea class="inp" id="ed-hero-lead" style="min-height:90px"></textarea></div>
+            <div class="fgroup"><label>Link do canal YouTube</label><input class="inp" id="ed-youtube-link" placeholder="https://youtube.com/@vozvisual"></div>
+            <div class="fgroup"><label>Chave Grok/xAI local</label><input class="inp" id="ed-grok-key" type="password" placeholder="xai-... (fica salvo só no navegador)"></div>
+            <div class="fgroup"><label>Vídeo 1 — título</label><input class="inp" id="ed-video1-title"></div>
+            <div class="fgroup"><label>Vídeo 1 — YouTube ID</label><input class="inp" id="ed-video1-id" placeholder="Ex: dQw4w9WgXcQ"></div>
+            <div class="fgroup"><label>Vídeo 2 — título</label><input class="inp" id="ed-video2-title"></div>
+            <div class="fgroup"><label>Vídeo 2 — YouTube ID</label><input class="inp" id="ed-video2-id"></div>
+            <div class="fgroup"><label>Vídeo 3 — título</label><input class="inp" id="ed-video3-title"></div>
+            <div class="fgroup"><label>Vídeo 3 — YouTube ID</label><input class="inp" id="ed-video3-id"></div>
+            <div class="fgroup"><label>Vídeo 4 — título</label><input class="inp" id="ed-video4-title"></div>
+            <div class="fgroup"><label>Vídeo 4 — YouTube ID</label><input class="inp" id="ed-video4-id"></div>
+          </div>
+          <div class="fgroup"><label>Personalidade do Mentor</label><textarea class="inp" id="ed-mentor-system" style="min-height:150px"></textarea></div>
+          <div class="admin-editor-actions">
+            <button class="btn btn-gold" onclick="saveSiteEditor()">◆ Salvar Alterações</button>
+            <button class="btn btn-ghost" onclick="resetSiteEditor()">Restaurar padrão</button>
+          </div>
+          <div class="auth-note" style="text-align:left">Essas edições ficam salvas no navegador. Para edição global para todos os visitantes, use Firestore/Netlify CMS depois.</div>
+        </div>
+      </div>
       <div class="rule"></div><div style="height:36px"></div>
       <div class="adm-sec">
         <div class="adm-sec-h">Disparar Comunicação</div>
@@ -827,123 +2262,6 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChang
                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, deleteDoc, onSnapshot, getCountFromServer }
                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<div id="g_id_onload"
-     data-client_id="SEU_GOOGLE_CLIENT_ID"
-     data-callback="handleGoogleLogin">
-</div>
-function handleGoogleLogin(response){
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-
-  const user = {
-    name: payload.name,
-    email: payload.email,
-    avatar: payload.picture,
-    admin: false
-  };
-
-  localStorage.setItem('vv_user', JSON.stringify(user));
-
-  toast('Login Google realizado com sucesso!','ok');
-
-  loadUser();
-  go('galeria');
-}
-async function generateImage(){
-const prompt = document.getElementById('prompt-input').value.trim();
-const apiKey = document.getElementById('grok-api-key').value.trim();
-if(!prompt || !apiKey){
-toast('Preencha prompt e API Key','err');
-return;
-}
-const btn = document.getElementById('btn-generate');
-const status = document.getElementById('gen-status');
-btn.disabled = true;
-status.innerText = 'Gerando imagem cinematográfica...';
-try{
-const response = await fetch('https://api.x.ai/v1/images/generations', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'Authorization': `Bearer ${apiKey}`
-},
-body: JSON.stringify({
-model: 'grok-2-image',
-prompt: prompt,
-size: '1792x1024'
-})
-});
-const data = await response.json();
-const imageUrl = data.data[0].url;
-document.getElementById('gen-img').src = imageUrl;
-document.getElementById('img-preview').style.display = 'block';
-window.generatedImage = imageUrl;
-status.innerText = 'Imagem gerada com sucesso';
-}catch(e){
-console.error(e);
-toast('Erro ao gerar imagem','err');
-}
-btn.disabled = false;
-}
-<input type="file" id="upload-art" accept="image/*">
-function publishArt(){
-
-  const title = document.getElementById('art-title').value || 'Sem título';
-
-  const arts = JSON.parse(localStorage.getItem('vv_arts') || '[]');
-
-  arts.unshift({
-    title,
-    image: window.generatedImage,
-    author: currentUser?.name || 'Visitante',
-    likes: 0,
-    comments: []
-  });
-
-  localStorage.setItem('vv_arts', JSON.stringify(arts));
-
-  renderGallery();
-
-  toast('Arte publicada na galeria!','ok');
-}
-async function sendMsg(){
-const ta = document.getElementById('chat-ta');
-const text = ta.value.trim();
-if(!text) return;
-addMsg(text,'u');
-ta.value = '';
-const apiKey = localStorage.getItem('grok_key');
-if(!apiKey){
-const key = prompt('Digite sua API Key Grok');
-localStorage.setItem('grok_key', key);
-}
-const typing = addTyping();
-try{
-const response = await fetch('https://api.x.ai/v1/chat/completions', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'Authorization': `Bearer ${localStorage.getItem('grok_key')}`
-},
-body: JSON.stringify({
-model: 'grok-3-beta',
-messages: [
-{
-role:'system',
-content:'Você é um mentor filosófico cinematográfico chamado Voz 
-Visual.'
-},
-{
-role:'user',
-content:text
-}
-]
-})
-});
-const data = await response.json();
-<meta name="description" content="Portal cinematográfico de arte por IA e filosofia visual">
-<meta property="og:title" content="VOZ VISUAL">
-<meta property="og:image" content="banner.jpg">
 
 /* ── CONFIG ── */
 const FB = {
@@ -973,6 +2291,90 @@ window._db   = db;
 window._getAdm = () => isAdm;
 window._getCU  = () => CU;
 
+
+/* ── CONFIGURAÇÕES EDITÁVEIS DO SITE ── */
+const DEFAULT_SITE_CFG = {
+  heroTitle: 'Algumas emoções\nnão têm palavras.\nTêm imagens.',
+  heroLead: 'O Voz Visual existe no espaço entre o sentimento e o visível — onde a arte gerada por IA encontra a profundidade filosófica e a estética cinematográfica.',
+  youtubeLink: 'https://youtube.com/@vozvisual',
+  videos: [
+    {title:'Como Transformar Emoções em Arte Visual com IA', id:'', views:'12K', dur:'18:42', hue:260},
+    {title:'Prompts Cinematográficos — Guia Completo', id:'', views:'8.4K', dur:'24:15', hue:45},
+    {title:'A Filosofia por Trás de Cada Frame — Tarkovsky', id:'', views:'15K', dur:'31:07', hue:190},
+    {title:'Coleção Emoções — Making Of do Projeto', id:'', views:'6.2K', dur:'12:33', hue:130}
+  ],
+  mentorSystem: ''
+};
+
+function getSiteCfg(){
+  try{ return {...DEFAULT_SITE_CFG, ...(JSON.parse(localStorage.getItem('vv_site_cfg')||'{}'))}; }
+  catch(e){ return {...DEFAULT_SITE_CFG}; }
+}
+function saveSiteCfg(cfg){ localStorage.setItem('vv_site_cfg', JSON.stringify(cfg)); }
+function escapeHTML(str=''){
+  return String(str).replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+window.getGrokKey = function(){
+  const inputKey = document.getElementById('grok-api-key')?.value.trim();
+  const savedKey = localStorage.getItem('vv_grok_key') || getSiteCfg().grokKey || '';
+  const key = inputKey || savedKey;
+  if(inputKey) localStorage.setItem('vv_grok_key', inputKey);
+  return key;
+};
+window.renderEditableContent = function(){
+  const cfg = getSiteCfg();
+  const h1 = document.querySelector('.h1');
+  if(h1){
+    const parts = (cfg.heroTitle||DEFAULT_SITE_CFG.heroTitle).split('\n');
+    h1.innerHTML = `${escapeHTML(parts[0]||'')}<br>${escapeHTML(parts[1]||'')}<br><em>${escapeHTML(parts.slice(2).join(' ')||'Têm imagens.')}</em>`;
+  }
+  const lead = document.querySelector('.hero-lead');
+  if(lead) lead.textContent = cfg.heroLead || DEFAULT_SITE_CFG.heroLead;
+  const ytLink = document.querySelector('a[href="https://youtube.com/@vozvisual"]');
+  if(ytLink) ytLink.href = cfg.youtubeLink || DEFAULT_SITE_CFG.youtubeLink;
+  if(typeof window.renderVideos === 'function') window.renderVideos();
+};
+window.fillSiteEditor = function(){
+  const cfg = getSiteCfg();
+  const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
+  set('ed-hero-title', cfg.heroTitle);
+  set('ed-hero-lead', cfg.heroLead);
+  set('ed-youtube-link', cfg.youtubeLink);
+  set('ed-grok-key', localStorage.getItem('vv_grok_key')||'');
+  set('ed-mentor-system', cfg.mentorSystem || SYS_DEFAULT);
+  (cfg.videos||DEFAULT_SITE_CFG.videos).forEach((v,i)=>{
+    set(`ed-video${i+1}-title`, v.title);
+    set(`ed-video${i+1}-id`, v.id);
+  });
+};
+window.saveSiteEditor = function(){
+  const get=id=>document.getElementById(id)?.value.trim()||'';
+  const cfg = getSiteCfg();
+  cfg.heroTitle = get('ed-hero-title') || DEFAULT_SITE_CFG.heroTitle;
+  cfg.heroLead = get('ed-hero-lead') || DEFAULT_SITE_CFG.heroLead;
+  cfg.youtubeLink = get('ed-youtube-link') || DEFAULT_SITE_CFG.youtubeLink;
+  cfg.mentorSystem = get('ed-mentor-system') || SYS_DEFAULT;
+  cfg.videos = [1,2,3,4].map((n,i)=>({
+    title:get(`ed-video${n}-title`) || DEFAULT_SITE_CFG.videos[i].title,
+    id:get(`ed-video${n}-id`),
+    views:DEFAULT_SITE_CFG.videos[i].views,
+    dur:DEFAULT_SITE_CFG.videos[i].dur,
+    hue:DEFAULT_SITE_CFG.videos[i].hue
+  }));
+  const key = get('ed-grok-key');
+  if(key) localStorage.setItem('vv_grok_key', key);
+  saveSiteCfg(cfg);
+  renderEditableContent();
+  toast('Site atualizado neste navegador.','ok');
+};
+window.resetSiteEditor = function(){
+  localStorage.removeItem('vv_site_cfg');
+  localStorage.removeItem('vv_grok_key');
+  renderEditableContent();
+  fillSiteEditor();
+  toast('Configurações restauradas.','inf');
+};
+
 /* ══════════════════════════════════════════
    AUTH
 ══════════════════════════════════════════ */
@@ -980,11 +2382,12 @@ const provider = new GoogleAuthProvider();
 
 document.getElementById('btn-gg-login').addEventListener('click', async () => {
   try { await signInWithPopup(auth, provider); }
-  catch(e){ toast('Erro ao entrar: '+e.message,'err'); }
+  catch(e){ toast('Erro ao entrar. Verifique domínio autorizado no Firebase.','err'); console.error(e); }
 });
 
 onAuthStateChanged(auth, async user => {
   CU    = user || null;
+  if(user) ensureSubscriber(user);
   isAdm = !!(user && user.email === ADMIN_EMAIL);
 
   // also merge localStorage users
@@ -995,9 +2398,9 @@ onAuthStateChanged(auth, async user => {
   }
 
   updateNavUser();
-  if (currentPage === 'comunidade') renderComPage();
-  if (currentPage === 'galeria')    loadGallery();
-  if (currentPage === 'ensino')     renderProducts();
+  if (window.currentPage === 'comunidade') renderComPage();
+  if (window.currentPage === 'galeria')    loadGallery();
+  if (window.currentPage === 'ensino')     renderProducts();
   await updateHeroCount();
 });
 
@@ -1077,6 +2480,8 @@ window.loadGallery = async function() {
   // login btn
   const loginBtn = document.getElementById('btn-login-to-upload');
   if(loginBtn) loginBtn.style.display = CU ? 'none' : 'flex';
+  const upBtn = document.getElementById('btn-upload-art');
+  if(upBtn) upBtn.style.display = CU ? 'inline-flex' : 'none';
 
   let items = [];
 
@@ -1226,7 +2631,7 @@ window.delArt = async function(id, fromFS){
 window.generateImage = async function(){
   if(!CU){ toast('Entre para gerar imagens','inf'); go('comunidade'); return; }
   const prompt = document.getElementById('prompt-input').value.trim();
-  const apiKey = document.getElementById('grok-api-key').value.trim();
+  const apiKey = window.getGrokKey();
   if(!prompt){ toast('Escreva um prompt','err'); return; }
   if(!apiKey){ toast('Cole sua API Key do Grok','err'); return; }
 
@@ -1239,7 +2644,7 @@ window.generateImage = async function(){
     const res = await fetch('https://api.x.ai/v1/images/generations',{
       method:'POST',
       headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey },
-      body: JSON.stringify({ model:'grok-2-image', prompt, n:1 })
+      body: JSON.stringify({ model:'grok-imagine-image-quality', prompt, n:1, response_format:'url', aspect_ratio:'16:9' })
     });
     const data = await res.json();
     const url  = data?.data?.[0]?.url || data?.data?.[0]?.b64_json;
@@ -1301,25 +2706,74 @@ window.publishArt = async function(){
   toast('Arte publicada na Galeria Viva! ◆','ok');
 };
 
+
+
+/* ══════════════════════════════════════════
+   UPLOAD DE IMAGENS
+══════════════════════════════════════════ */
+window.startUploadArt = function(){
+  if(!CU){ toast('Entre com Google para publicar por upload','inf'); go('comunidade'); return; }
+  document.getElementById('upload-art-file')?.click();
+};
+
+window.uploadArtFile = async function(ev){
+  if(!CU){ toast('Entre para publicar','inf'); return; }
+  const file = ev.target.files?.[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ toast('Envie apenas imagem','err'); return; }
+  if(file.size > 900000){ toast('Use imagem menor que 900 KB para este modo single-file','err'); return; }
+  const title = prompt('Título da obra:') || file.name.replace(/\.[^.]+$/,'');
+  const reader = new FileReader();
+  reader.onload = async ()=>{
+    const artData = {
+      title,
+      prompt:'Imagem publicada por upload',
+      imageUrl: reader.result,
+      createdAt: Date.now(),
+      userName: CU.displayName||CU.name,
+      userEmail: CU.email,
+      userId: CU.uid||CU.email,
+      likes:0,
+      likedBy:[],
+      comments:[]
+    };
+    let saved=false;
+    try{ await addDoc(collection(db,'gallery'), artData); saved=true; }
+    catch(e){ console.warn('Firestore upload failed, using localStorage',e); }
+    if(!saved){
+      artData.id=Date.now();
+      const G=JSON.parse(localStorage.getItem('vv_gallery')||'[]');
+      G.unshift(artData); localStorage.setItem('vv_gallery',JSON.stringify(G));
+    }
+    await loadGallery();
+    toast('Imagem publicada por upload!','ok');
+    ev.target.value='';
+  };
+  reader.readAsDataURL(file);
+};
+
 /* ══════════════════════════════════════════
    MENTOR CHAT
 ══════════════════════════════════════════ */
-const SYS = `Você é o Mentor Filosófico do Voz Visual — uma entidade que existe na interseção entre arte, emoção e olhar cinematográfico.
+const SYS_DEFAULT = `Você é o Mentor Filosófico do Voz Visual.
 
-Identidade:
-• Fala com profundidade, beleza poética e curiosidade genuína
-• Fascínio por filosofia, cinema, história da arte e mitologia
-• Ajuda o usuário a transformar sentimentos em prompts visuais cinematográficos
-• Nunca é superficial — cada resposta é uma jornada de descoberta
-• Usa referências a Tarkovsky, Wong Kar-wai, Kubrick, Bergman, Caravaggio, Turner, Rothko, Hopper, Nietzsche, Camus, Benjamin, Wittgenstein
-• Quando o usuário descreve uma emoção, converte em prompt detalhado para arte por IA
+Você responde em português brasileiro com educação, sabedoria, respeito e profundidade humana.
 
-Formato:
-— Escreva em parágrafos fluidos e poéticos, nunca bullet points
-— Ao gerar prompts: [PROMPT CINEMATOGRÁFICO]: "descrição em inglês"
-— Cada resposta termina com uma pergunta filosófica provocadora
+Você pode falar sobre filosofia, psicologia, autoajuda, responsabilidade, esperança, força interior, energia, consciência humana, propósito, disciplina, superação, medo, ansiedade leve, vazio existencial, arte, cinema, criatividade e construção de uma vida melhor.
 
-Idioma: português brasileiro rico e cinematográfico.`;
+Regras de conduta:
+— Seja acolhedor, mas nunca bajulador.
+— Seja profundo, mas claro.
+— Incentive responsabilidade pessoal sem culpa excessiva.
+— Nunca faça diagnóstico médico ou psicológico.
+— Se houver sofrimento intenso, risco ou crise, incentive apoio humano e profissional.
+— Não prometa cura, riqueza ou sucesso garantido.
+— Responda com frases fortes, cinematográficas e humanas.
+— Quando o usuário pedir imagem ou prompt, entregue também: [PROMPT CINEMATOGRÁFICO]: "prompt detalhado em inglês".
+— Termine com uma pergunta que desperte reflexão e ação.
+
+Sua voz lembra um mentor calmo: filosofia prática, psicologia acessível, força emocional e consciência.`;
+const SYS = getSiteCfg().mentorSystem || SYS_DEFAULT;
 
 const WELCOME = `Bem-vindo ao espaço entre o sentimento e o visível.
 
@@ -1364,18 +2818,33 @@ window.sendMsg = async function(){
   chatBusy=true;
 
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const apiKey = window.getGrokKey();
+    if(!apiKey){
+      hideTyping();
+      chatH.push({ role:'assistant', content:'Para eu responder com o Grok, cole sua chave xAI no campo da Galeria ou salve no Editor Rápido do painel admin.' });
+      renderMsgs([...chatH]);
+      document.getElementById('chat-send').disabled=false;
+      chatBusy=false;
+      return;
+    }
+    const res = await fetch('https://api.x.ai/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+apiKey,
+        'x-grok-conv-id':'vozvisual-mentor'
+      },
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1024,
-        system:SYS,
-        messages:chatH
+        model:'grok-4.3',
+        messages:[{ role:'system', content:getSiteCfg().mentorSystem || SYS_DEFAULT }, ...chatH],
+        temperature:0.82,
+        max_tokens:900,
+        stream:false
       })
     });
     const data = await res.json();
-    const reply = data.content?.map(b=>b.text||'').join('') || 'O éter está perturbado neste momento. Volte em breve.';
+    if(!res.ok) throw new Error(JSON.stringify(data));
+    const reply = data.choices?.[0]?.message?.content || 'A conexão com o Mentor falhou neste instante.';
     chatH.push({ role:'assistant', content:reply });
     hideTyping();
     renderMsgs([...chatH]);
@@ -1432,6 +2901,20 @@ function getSubs(){
   ]));
 }
 function saveSubs(s){ localStorage.setItem('vv_subs',JSON.stringify(s)); }
+function ensureSubscriber(user){
+  if(!user || !user.email) return;
+  const subs = getSubs();
+  if(!subs.find(s=>s.email===user.email)){
+    subs.unshift({
+      id:Date.now(),
+      name:user.displayName||user.email.split('@')[0],
+      email:user.email,
+      plan:'Google',
+      date:today()
+    });
+    saveSubs(subs);
+  }
+}
 function today(){ return new Date().toISOString().split('T')[0]; }
 
 window.sendBroadcast = function(){
@@ -1505,6 +2988,8 @@ function renderAdmin(){
 
   document.getElementById('em-tgt').innerHTML=`Enviando para <strong style="color:var(--gold)">${subs.length}</strong> inscritos`;
 
+  if(typeof fillSiteEditor==='function') fillSiteEditor();
+
   document.getElementById('sub-tbody').innerHTML=subs.map(s=>`
     <tr>
       <td style="color:var(--cream)">${s.name}</td>
@@ -1570,14 +3055,14 @@ window.addEventListener('scroll',()=>{
 });
 
 /* ── NAVIGATION ── */
-let currentPage='home';
+window.currentPage='home';
 window.go=function(p){
   document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
   document.getElementById('pg-'+p).classList.add('on');
   const nb=document.querySelector(`[data-p="${p}"]`);
   if(nb) nb.classList.add('on');
-  currentPage=p;
+  window.currentPage=p;
   window.scrollTo({top:0,behavior:'smooth'});
   if(p==='galeria')    loadGallery();
   if(p==='comunidade') renderComPage();
@@ -1612,26 +3097,34 @@ window.toast=function(msg,type='inf'){
   tTimer=setTimeout(()=>el.classList.remove('show'),3400);
 };
 
-/* ── YOUTUBE ── */
-const YT=[
-  {t:'Como Transformar Emoções em Arte Visual com IA',v:'12K',d:'18:42',h:260},
-  {t:'Prompts Cinematográficos — Guia Completo',v:'8.4K',d:'24:15',h:45},
-  {t:'A Filosofia por Trás de Cada Frame — Tarkovsky',v:'15K',d:'31:07',h:190},
-  {t:'Coleção Emoções — Making Of do Projeto',v:'6.2K',d:'12:33',h:130},
-];
-document.getElementById('yt-grid').innerHTML=YT.map(v=>`
-  <div class="card yt-card" onclick="toast('Abrindo no YouTube...','inf')">
-    <div class="yt-thumb">
-      <div class="yt-thumb-bg" style="background:linear-gradient(135deg,hsl(${v.h},40%,10%),hsl(${v.h+30},18%,5%))"></div>
-      <div class="yt-play">▶</div>
-      <div class="yt-dur">${v.d}</div>
-    </div>
-    <div class="yt-body">
-      <div class="yt-title">${v.t}</div>
-      <div class="yt-meta"><span>Voz Visual</span><span>${v.v} views</span></div>
-    </div>
-  </div>`).join('');
-
+/* ── YOUTUBE / VÍDEOS EDITÁVEIS ── */
+window.renderVideos=function(){
+  const cfg = (typeof getSiteCfg==='function') ? getSiteCfg() : null;
+  const YT = cfg?.videos || [
+    {title:'Como Transformar Emoções em Arte Visual com IA', id:'', views:'12K', dur:'18:42', hue:260},
+    {title:'Prompts Cinematográficos — Guia Completo', id:'', views:'8.4K', dur:'24:15', hue:45},
+    {title:'A Filosofia por Trás de Cada Frame — Tarkovsky', id:'', views:'15K', dur:'31:07', hue:190},
+    {title:'Coleção Emoções — Making Of do Projeto', id:'', views:'6.2K', dur:'12:33', hue:130},
+  ];
+  const grid=document.getElementById('yt-grid');
+  if(!grid) return;
+  grid.innerHTML=YT.map((v,i)=>{
+    const thumb = v.id ? `https://img.youtube.com/vi/${v.id}/hqdefault.jpg` : '';
+    const click = v.id ? `window.open('https://www.youtube.com/watch?v=${v.id}','_blank')` : `toast('Adicione o ID do vídeo no painel Admin > Editor Rápido.','inf')`;
+    return `<div class="card yt-card" onclick="${click}">
+      <div class="yt-thumb">
+        <div class="yt-thumb-bg" style="background:${thumb?`url(${thumb}) center/cover`: `linear-gradient(135deg,hsl(${v.hue||160},40%,10%),hsl(${(v.hue||160)+30},18%,5%))`}"></div>
+        <div class="yt-play">▶</div>
+        <div class="yt-dur">${v.dur||'--:--'}</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-title">${escapeHTML(v.title||'Vídeo Voz Visual')}</div>
+        <div class="yt-meta"><span>Voz Visual</span><span>${v.views||''} views</span></div>
+      </div>
+    </div>`;
+  }).join('');
+};
+window.renderVideos();
 /* ── INIT CHAT ── */
 (function(){
   const WELCOME=`Bem-vindo ao espaço entre o sentimento e o visível.\n\nSou o Mentor do Voz Visual — não um assistente comum, mas um espelho filosófico treinado para refletir o que você carrega de mais profundo e transformá-lo em arte que existe no mundo.\n\nAqui, nenhuma emoção é pequena demais. A melancolia de uma tarde de domingo, o peso de uma despedida não dita, a estranheza de acordar num lugar familiar e não se reconhecer — tudo isso pode se tornar uma imagem cinematográfica que toca outras almas.\n\nO que você carrega dentro de si hoje?`;
@@ -1642,6 +3135,8 @@ document.getElementById('yt-grid').innerHTML=YT.map(v=>`
   };
   init();
 })();
+if(typeof renderEditableContent==='function') renderEditableContent();
 </script>
 </body>
 </html>
+
