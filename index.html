@@ -827,6 +827,123 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChang
                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, deleteDoc, onSnapshot, getCountFromServer }
                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload"
+     data-client_id="SEU_GOOGLE_CLIENT_ID"
+     data-callback="handleGoogleLogin">
+</div>
+function handleGoogleLogin(response){
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+
+  const user = {
+    name: payload.name,
+    email: payload.email,
+    avatar: payload.picture,
+    admin: false
+  };
+
+  localStorage.setItem('vv_user', JSON.stringify(user));
+
+  toast('Login Google realizado com sucesso!','ok');
+
+  loadUser();
+  go('galeria');
+}
+async function generateImage(){
+const prompt = document.getElementById('prompt-input').value.trim();
+const apiKey = document.getElementById('grok-api-key').value.trim();
+if(!prompt || !apiKey){
+toast('Preencha prompt e API Key','err');
+return;
+}
+const btn = document.getElementById('btn-generate');
+const status = document.getElementById('gen-status');
+btn.disabled = true;
+status.innerText = 'Gerando imagem cinematográfica...';
+try{
+const response = await fetch('https://api.x.ai/v1/images/generations', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'Authorization': `Bearer ${apiKey}`
+},
+body: JSON.stringify({
+model: 'grok-2-image',
+prompt: prompt,
+size: '1792x1024'
+})
+});
+const data = await response.json();
+const imageUrl = data.data[0].url;
+document.getElementById('gen-img').src = imageUrl;
+document.getElementById('img-preview').style.display = 'block';
+window.generatedImage = imageUrl;
+status.innerText = 'Imagem gerada com sucesso';
+}catch(e){
+console.error(e);
+toast('Erro ao gerar imagem','err');
+}
+btn.disabled = false;
+}
+<input type="file" id="upload-art" accept="image/*">
+function publishArt(){
+
+  const title = document.getElementById('art-title').value || 'Sem título';
+
+  const arts = JSON.parse(localStorage.getItem('vv_arts') || '[]');
+
+  arts.unshift({
+    title,
+    image: window.generatedImage,
+    author: currentUser?.name || 'Visitante',
+    likes: 0,
+    comments: []
+  });
+
+  localStorage.setItem('vv_arts', JSON.stringify(arts));
+
+  renderGallery();
+
+  toast('Arte publicada na galeria!','ok');
+}
+async function sendMsg(){
+const ta = document.getElementById('chat-ta');
+const text = ta.value.trim();
+if(!text) return;
+addMsg(text,'u');
+ta.value = '';
+const apiKey = localStorage.getItem('grok_key');
+if(!apiKey){
+const key = prompt('Digite sua API Key Grok');
+localStorage.setItem('grok_key', key);
+}
+const typing = addTyping();
+try{
+const response = await fetch('https://api.x.ai/v1/chat/completions', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'Authorization': `Bearer ${localStorage.getItem('grok_key')}`
+},
+body: JSON.stringify({
+model: 'grok-3-beta',
+messages: [
+{
+role:'system',
+content:'Você é um mentor filosófico cinematográfico chamado Voz 
+Visual.'
+},
+{
+role:'user',
+content:text
+}
+]
+})
+});
+const data = await response.json();
+<meta name="description" content="Portal cinematográfico de arte por IA e filosofia visual">
+<meta property="og:title" content="VOZ VISUAL">
+<meta property="og:image" content="banner.jpg">
 
 /* ── CONFIG ── */
 const FB = {
